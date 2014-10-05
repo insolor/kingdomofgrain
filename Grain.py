@@ -24,7 +24,6 @@ def fn_S(K):
 #  30 DIM Q(VAL "22")
 q = [0 for x in range(22)]
 
-#  50 GO SUB CLS: RANDOMIZE USR VAL "51304"
 def cls():
     #4015 POKE VAL "23659",VAL "2": CLS : POKE VAL "23659",NOT PI: RETURN 
     #4017 CLS : RETURN 
@@ -315,14 +314,31 @@ def save_load():
     #4300 RETURN 
     pass
 
+def start_progra():
+    pass
+
 def sub_input():
     #4020 POKE VAL "23659",VAL "2": POKE VAL "23613",NOT PI: INPUT LINE F$: POKE VAL "23659",NOT PI: IF F$="" THEN LET F$="0": GO TO VAL "4026"
-    #4021 IF F$="k" OR f$="K" THEN LET OI=SGN PI: GO SUB OITOG: GO TO VAL "50"
-    #4022 IF F$="d" OR f$="D" THEN GO SUB VAL "4040": GO SUB VAL "120"
-    #4024 FOR N=SGN PI TO LEN F$: IF CODE F$(N)<VAL "48" OR CODE F$(N)>VAL "57" THEN GO TO VAL "4020"
-    #4025 NEXT N
-    #4026 RETURN 
-    pass
+    while True:
+        f = input()
+        if f=='':
+            f = '0'
+        #4021 IF F$="k" OR f$="K" THEN LET OI=SGN PI: GO SUB OITOG: GO TO VAL "50"
+        if f=='k' or f=='K':
+            OI = 1
+            oitog()
+            raise
+        #4022 IF F$="d" OR f$="D" THEN GO SUB VAL "4040": GO SUB VAL "120"
+        if f=='d' or f=='D':
+            save_load()
+            start_program()
+            raise
+        
+        #4024 FOR N=SGN PI TO LEN F$: IF CODE F$(N)<VAL "48" OR CODE F$(N)>VAL "57" THEN GO TO VAL "4020"
+        #4025 NEXT N
+        #4026 RETURN 
+        if all(x>='0' and x<='9' for x in f):
+            return f
 
 def pus():
     #4030 PRINT AT VAL "20",BIN ;S$: RETURN 
@@ -330,6 +346,7 @@ def pus():
 
 while True:
     while True:
+        #  50 GO SUB CLS: RANDOMIZE USR VAL "51304"
         cls()
         #  53 PRINT AT VAL "9",VAL "7";"\{i6}korolewstwo zerna"
         #  55 PRINT AT VAL "12",VAL "9";"\{i5}1 sTART IGRY"
@@ -365,7 +382,7 @@ while True:
     #  80 REM \#017\#001\#019\#001na~alxnye ustanowki\#017\#000
     # Начальные установки
 
-    #  90 LET UMER=NOT PI: LET ROD=NOT PI: LET UMERGOL=NOT PI: LET UMERWSEGO=NOT PI: LET ZAHW=NOT PI: LET POGIB=NOT PI: LET PROIZ=VAL "10": LET PREDEL=VAL "15"
+    #  90 LET UMER=NOT PI: LET ROD=NOT PI: # LET UMERGOL=NOT PI: LET UMERWSEGO=NOT PI: LET ZAHW=NOT PI: LET POGIB=NOT PI: LET PROIZ=VAL "10": LET PREDEL=VAL "15"
     umer = 0
     rod = 0
     umergol = 0
