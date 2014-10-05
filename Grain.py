@@ -126,16 +126,42 @@ def torg():
         break
 
 def ohrana():
+    global ost, zerno
     # 610 REM \#017\#001OHRANA\#017\#000
-    # 620 LET UBITO=NOT PI: LET Z=-1
-    # 630 GO SUB PUS: PRINT AT VAL "20",VAL "5";"u NAS ";NAS;" ^ELOWEK"
-    # 640 PRINT AT VAL "21",INT PI;"sKOLXKO PO[LEM W WOJSKO?": GO SUB INPUT: LET Z=VAL F$: GO SUB PUS
-    # 650 IF Z<NOT PI THEN GO TO VAL "620"
-    # 660 IF Z>NAS THEN PRINT AT VAL "20",VAL "6";"u NAS MALO L\@DEJ!!!": GO SUB KEY: GO SUB PUS: GO TO VAL "620"
-    # 670 IF Z>INT (ZERNO/VAL "5") THEN PRINT AT VAL "20",SGN PI;"zERNA HWATIT NA ";INT (ZERNO/5);" WOINOW": GO SUB KEY: GO SUB PUS: GO TO VAL "620"
-    # 680 IF Z>NOT PI THEN LET OST=NAS-Z: LET ZERNO=ZERNO-Z*5: RETURN 
-    # 690 LET OST=NAS: RETURN 
-    pass
+    while True:
+        # 620 LET UBITO=NOT PI: LET Z=-1
+        ubito = 0
+        z = -1
+        # 630 GO SUB PUS: PRINT AT VAL "20",VAL "5";"u NAS ";NAS;" ^ELOWEK"
+        pus()
+        print("У нас %d человек" % nas)
+        # 640 PRINT AT VAL "21",INT PI;"sKOLXKO PO[LEM W WOJSKO?": GO SUB INPUT: LET Z=VAL F$: GO SUB PUS
+        print("Сколько пошлём в войско?")
+        z = int(sub_input())
+        pus()
+        # 650 IF Z<NOT PI THEN GO TO VAL "620"
+        if z<0:
+            continue
+        # 660 IF Z>NAS THEN PRINT AT VAL "20",VAL "6";"u NAS MALO L\@DEJ!!!": GO SUB KEY: GO SUB PUS: GO TO VAL "620"
+        if z>nas:
+            print("У нас мало людей!!!")
+            key()
+            pus()
+            continue
+        # 670 IF Z>INT (ZERNO/VAL "5") THEN PRINT AT VAL "20",SGN PI;"zERNA HWATIT NA ";INT (ZERNO/5);" WOINOW": GO SUB KEY: GO SUB PUS: GO TO VAL "620"
+        if z>int(zerno/5):
+            print("Зерна хватит на %d воинов" % (zerno/5))
+            key()
+            pus()
+            continue
+        # 680 IF Z>NOT PI THEN LET OST=NAS-Z: LET ZERNO=ZERNO-Z*5: RETURN 
+        if z>0:
+            ost=nas-z
+            zerno-=z*5
+        else:
+            # 690 LET OST=NAS: RETURN 
+            ost=nas
+        return
 
 def korm():
     # 700 REM \#017\#001KORMEVKA\#017\#000
