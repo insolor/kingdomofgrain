@@ -164,21 +164,65 @@ def ohrana():
         return
 
 def korm():
+    global zerno, umergol, umervsego, nas, oi, u
     # 700 REM \#017\#001KORMEVKA\#017\#000
     # 710 LET K=-1: IF OST<=NOT PI THEN RETURN 
-    # 720 PRINT AT VAL "20",SGN PI;"mOVNO DATX ";INT (ZERNO/OST);" BU[ NA ^ELOWEKA": PRINT AT VAL "21",VAL "6";"sKOLXKO DA[X?"
-    # 730 GO SUB INPUT: LET K=VAL F$: GO SUB PUS: IF K<BIN THEN : GO TO VAL "720"
-    # 740 IF K*OST>ZERNO THEN PRINT AT VAL "20",INT PI;"u NAS NET STOLXKO ZERNA!!!": GO SUB KEY: GO SUB PUS: GO TO VAL "720"
-    # 750 LET ZERNO=ZERNO-K*OST
-    # 760 IF K<VAL "20" THEN LET UMERGOL=OST*INT (SGN PI-K/VAL "20"): LET UMERWSEGO=UMERWSEGO+UMERGOL: LET NAS=NAS-UMERGOL
-    # 770 IF NAS<=NOT PI OR K=NOT PI THEN GO SUB CLS: RANDOMIZE USR VAL "53620": PRINT AT VAL "11",INT PI;"\{i2}ty UMORIL WSEH GOLODOM!!!": GO SUB KEY: LET OI=BIN : LET U=SGN PI: GO SUB OITOG: RETURN 
-    # 780 IF K<=VAL "10" THEN PRINT AT VAL "20",VAL "10";"\{i3}du{egub!!!": GO SUB KEY: GO SUB PUS: GO TO VAL "800"
-    # 790 IF K<=VAL "21" THEN PRINT AT VAL "20",VAL "10";"\{i5}vadina!!!": GO SUB KEY: GO SUB PUS
-    # 800 IF K>VAL "20" THEN LET UMERGOL=BIN 
-    # 810 IF K>VAL "70" THEN PRINT AT VAL "20",BIN ;"\{i6}w..WY...wypx..pxem!!!za tebq!!!": GO SUB KEY: GO SUB PUS: GO TO VAL "830"
-    # 820 IF K>VAL "50" THEN PRINT AT VAL "20",VAL "5";"\{i4}bLAGODETELX ty NA[!!!": GO SUB KEY: GO SUB PUS
-    # 830 RETURN 
-    pass
+    k=-1
+    if ost<=0:
+        return
+    while True:
+        # 720 PRINT AT VAL "20",SGN PI;"mOVNO DATX ";INT (ZERNO/OST);" BU[ NA ^ELOWEKA": PRINT AT VAL "21",VAL "6";"sKOLXKO DA[X?"
+        print("Можно дать %d буш на человека" % (zerno//ost))
+        # 730 GO SUB INPUT: LET K=VAL F$: GO SUB PUS: IF K<BIN THEN : GO TO VAL "720"
+        k = int(sub_input())
+        if k<0:
+            continue
+        # 740 IF K*OST>ZERNO THEN PRINT AT VAL "20",INT PI;"u NAS NET STOLXKO ZERNA!!!": GO SUB KEY: GO SUB PUS: GO TO VAL "720"
+        if k*ost>zerno:
+            print("У нас нет столько зерна!!!")
+            key()
+            continue
+        # 750 LET ZERNO=ZERNO-K*OST
+        zerno-=k*ost
+        # 760 IF K<VAL "20" THEN LET UMERGOL=OST*INT (SGN PI-K/VAL "20"): LET UMERWSEGO=UMERWSEGO+UMERGOL: LET NAS=NAS-UMERGOL
+        if k<20:
+            umergol=ost*int(1-k/20)
+            umervsego+=umergol
+            nas-=umergol
+        # 770 IF NAS<=NOT PI OR K=NOT PI THEN GO SUB CLS: RANDOMIZE USR VAL "53620": PRINT AT VAL "11",INT PI;"\{i2}ty UMORIL WSEH GOLODOM!!!": GO SUB KEY: LET OI=BIN : LET U=SGN PI: GO SUB OITOG: RETURN 
+        if nas<=0 or k==0:
+            cls()
+            print("Ты уморил всех голодом!!!")
+            key()
+            oi=0
+            u=1
+            oitog()
+            return
+        # 780 IF K<=VAL "10" THEN PRINT AT VAL "20",VAL "10";"\{i3}du{egub!!!": GO SUB KEY: GO SUB PUS: GO TO VAL "800"
+        if k<=18:
+            print("ДУШЕГУБ!!!")
+            key()
+            pus()
+        # 790 IF K<=VAL "21" THEN PRINT AT VAL "20",VAL "10";"\{i5}vadina!!!": GO SUB KEY: GO SUB PUS
+        elif k<=21:
+            print("ЖАДИНА!!!")
+            key()
+            pus()
+        # 800 IF K>VAL "20" THEN LET UMERGOL=BIN 
+        if k>20:
+            umergol=0
+        # 810 IF K>VAL "70" THEN PRINT AT VAL "20",BIN ;"\{i6}w..WY...wypx..pxem!!!za tebq!!!": GO SUB KEY: GO SUB PUS: GO TO VAL "830"
+        if k>70:
+            print("В..вы...ВЫПЬ..ПЬЕМ!!!ЗА ТЕБЯ!!!")
+            key()
+            pus()
+        # 820 IF K>VAL "50" THEN PRINT AT VAL "20",VAL "5";"\{i4}bLAGODETELX ty NA[!!!": GO SUB KEY: GO SUB PUS
+        elif k>50:
+            print("Благодетель ты НАШ!!!")
+            key()
+            pus()
+        # 830 RETURN 
+        return
 
 def posev():
     # 840 REM \#017\#001POSEW\#017\#000
