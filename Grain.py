@@ -173,6 +173,7 @@ def korm():
     while True:
         # 720 PRINT AT VAL "20",SGN PI;"mOVNO DATX ";INT (ZERNO/OST);" BU[ NA ^ELOWEKA": PRINT AT VAL "21",VAL "6";"sKOLXKO DA[X?"
         print("Можно дать %d буш на человека" % (zerno//ost))
+        print("Сколько дать?")
         # 730 GO SUB INPUT: LET K=VAL F$: GO SUB PUS: IF K<BIN THEN : GO TO VAL "720"
         k = int(sub_input())
         if k<0:
@@ -237,8 +238,8 @@ def posev():
         return
     # 880 PRINT AT VAL "18",SGN PI;"u NAS ";ZEML;" AKROW ZEMLI": PRINT AT VAL "19",BIN ;"l\@DI MOGUT ZASEQTX ";PROIZ*OST;" AKROW": PRINT AT VAL "20",VAL "2";"zERNA HWATIT NA ";ZERNO*2;" AKROW"
     print("У нас %d акров земли" % zeml)
-    print("Люди могут засеять %d акров" % proiz*ost)
-    print("Зерна хватит на %d акров" % zerno/0.5)
+    print("Люди могут засеять %d акров" % (proiz*ost))
+    print("Зерна хватит на %d акров" % (zerno/0.5))
     while True:
         # 890 PRINT AT VAL "21",VAL "7";"sKOLXKO ZASEEM?"
         print("Сколько засеем?")
