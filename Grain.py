@@ -83,18 +83,47 @@ def info():
     # 490 RETURN
 
 def torg():
+    global zerno, zeml
     # 500 REM \#017\#001TORGOWLQ\#017\#000
-    # 510 LET ZEM=-1: PRINT AT VAL "20",VAL "5";"sKOLXKO KUPIM ZEMLI?"
-    # 520 GO SUB INPUT: LET ZEM=VAL F$: GO SUB PUS: IF ZEM<BIN THEN GO TO VAL "510"
-    # 530 IF CENA*ZEM>ZERNO THEN PRINT AT VAL "20",BIN ;"u NAS TOLXKO ";ZERNO;" BU[ELEJ ZERNA!!!": GO SUB KEY: GO SUB PUS: GO TO VAL "510"
-    # 540 LET ZEML=ZEML+ZEM: LET ZERNO=ZERNO-CENA*ZEM
-    # 550 PRINT AT VAL "20",SGN PI;"u NAS ";ZERNO;" BU[ELEJ ZERNA": GO SUB KEY: GO SUB PUS
-    # 560 LET ZEM=-1: PRINT AT VAL "20",VAL "4";"sKOLXKO ZEMLI PRODADIM?"
-    # 570 GO SUB INPUT: LET ZEM=VAL F$: IF ZEM<BIN THEN GO TO VAL "560"
-    # 580 IF ZEM>ZEML THEN PRINT AT VAL "20",BIN ;"u NAS TOLXKO ";ZEML;" AKROW ZEMLI!!!": GO SUB KEY: GO SUB PUS: GO TO VAL "560"
-    # 590 LET ZEML=ZEML-ZEM: LET ZERNO=ZERNO+ZEM*CENA
-    # 600 RETURN 
-    pass
+    while True:
+        # 510 LET ZEM=-1: PRINT AT VAL "20",VAL "5";"sKOLXKO KUPIM ZEMLI?"
+        zem = -1
+        print("Сколько купим земли?")
+        # 520 GO SUB INPUT: LET ZEM=VAL F$: GO SUB PUS: IF ZEM<BIN THEN GO TO VAL "510"
+        zem = int(sub_input())
+        pus()
+        # 530 IF CENA*ZEM>ZERNO THEN PRINT AT VAL "20",BIN ;"u NAS TOLXKO ";ZERNO;" BU[ELEJ ZERNA!!!": GO SUB KEY: GO SUB PUS: GO TO VAL "510"
+        if cena*zem>zerno:
+            print("У нас только %d бушелей зерна!!!" % zerno)
+            key()
+            pus()
+            continue
+        # 540 LET ZEML=ZEML+ZEM: LET ZERNO=ZERNO-CENA*ZEM
+        zeml += zem
+        zerno -= cena*zem
+        # 550 PRINT AT VAL "20",SGN PI;"u NAS ";ZERNO;" BU[ELEJ ZERNA": GO SUB KEY: GO SUB PUS
+        print("У нас %d бушелей зерна" % zerno)
+        key()
+        pus()
+        break
+    
+    while True:
+        # 560 LET ZEM=-1: PRINT AT VAL "20",VAL "4";"sKOLXKO ZEMLI PRODADIM?"
+        zem = -1
+        print("Сколько земли продадим?")
+        # 570 GO SUB INPUT: LET ZEM=VAL F$: IF ZEM<BIN THEN GO TO VAL "560"
+        zem = int(sub_input())
+        # 580 IF ZEM>ZEML THEN PRINT AT VAL "20",BIN ;"u NAS TOLXKO ";ZEML;" AKROW ZEMLI!!!": GO SUB KEY: GO SUB PUS: GO TO VAL "560"
+        if zem>zeml:
+            print("У нас только %d акров земли!!!")
+            key()
+            pus()
+            continue
+        # 590 LET ZEML=ZEML-ZEM: LET ZERNO=ZERNO+ZEM*CENA
+        zeml -= zem
+        zerno += zem*cena
+        # 600 RETURN 
+        break
 
 def ohrana():
     # 610 REM \#017\#001OHRANA\#017\#000
@@ -314,7 +343,7 @@ def save_load():
     #4300 RETURN 
     pass
 
-def start_progra():
+def start_program():
     pass
 
 def sub_input():
