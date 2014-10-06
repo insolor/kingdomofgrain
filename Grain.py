@@ -276,18 +276,38 @@ def posev():
         return
 
 def pobeda():
+    global nas, zeml, zerno, pogib, zahv, ost
     #1150 REM \#017\#001POBEDA\#017\#000
     #1155 GO SUB CLS: RANDOMIZE USR VAL "54778"
+    cls()
     #1160 PRINT AT VAL "11",VAL "2";"\{i6}w hAMONII ODERVANA pobeda!!!"
+    print("В хамонии одержана победа!!!")
     #1170 LET T(INT PI)=INT (NAS*(RND/3+0.3)): LET T(SGN PI)=INT (ZAHW*(FN S(VAL "10")+VAL "4")): LET T(VAL "2")=INT (ZEML*(RND/VAL "2"+0.3)): LET NAS=NAS+T(INT PI): LET ZEML=ZEML+T(VAL "2"): LET ZERNO=ZERNO+T(SGN PI)
+    t[2]=int(nas*(random()/3+0.3))
+    t[0]=int(zahv*fn_S(10)+4)
+    t[1]=int(zeml*(random()/2+0.3))
+    nas+=t[2]
+    zeml+=t[1]
+    zerno+=t[0]
     #1180 LET UBITO=INT (ZAHW*(RND/5+0.3)): LET POGIB=POGIB+UBITO: LET NAS=NAS+ZAHW-UBITO
+    ubito=int(zahv(random()/5+0.3))
+    pogib+=ubito
+    nas+=zahv-ubito
     #1190 PRINT AT VAL "13",BIN ;"u WRAGA ZAHWA^ENO:"
+    print("У врага захвачено:")
     #1200 PRINT AT VAL "14",SGN PI;"zERNA - ";T(1);" BU[ELEJ": PRINT " zEMLI - ";T(2);" AKROW": PRINT " pLENNYH - ";T(3);" ^ELOWEK"
+    print("Зерна - %d бушелей" % t[0])
+    print("Земли - %d акров" % t[1])
+    print("Пленных - %d человек" % t[2])
     #1210 PRINT AT VAL "18",VAL "6";"iZ ";ZAHW;" WOINOW ";UBITO;AT VAL "19",VAL "10";"PALO SMERTX\@ HRABRYH!"
+    print("Из %d воинов %d пало сметрью храбрых!" % (zahv, ubito))
     #1220 LET ZAHW=BIN : LET OST=NAS-Z-INT (ZAS/PROIZ)
+    zahv=0
+    ost=nas-z-int(zas/proiz)
     #1225 GO SUB KEY: GO SUB CLS
+    key()
+    cls()
     #1230 RETURN 
-    pass
 
 def porazh():
     #1240 REM \#017\#001PORAVENIE\#017\#000
