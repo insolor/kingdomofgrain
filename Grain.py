@@ -310,15 +310,25 @@ def pobeda():
     #1230 RETURN 
 
 def porazh():
+    global nas, pogib, zahv, ost
     #1240 REM \#017\#001PORAVENIE\#017\#000
     #1245 GO SUB CLS: RANDOMIZE USR VAL "54778"
+    cls()
     #1250 PRINT AT VAL "11",VAL "5";"\{i3}poravenie w hAMONII!!!"
+    print("ПОРАЖЕНИЕ В Хамонии!!!")
     #1260 LET UBITO=INT (ZAHW*(0.8+RND/5)): LET NAS=NAS+ZAHW-UBITO: LET POGIB=POGIB+UBITO
+    ubito=int(zahv*(0.8+random()/5))
+    nas+=zahv-ubito
+    pogib+=ubito
     #1270 PRINT AT VAL "13",SGN PI;"pOGIBLO - ";UBITO;" WOINOW"
+    print("Погибло - %d воинов" % ubito)
     #1280 LET ZAHW=BIN : LET OST=NAS-Z-INT (ZAS/PROIZ)
+    zahv=0
+    ost=nas-z-int(zas/proiz)
     #1285 GO SUB KEY: GO SUB CLS
+    key()
+    cls()
     #1290 RETURN 
-    pass
 
 def instr():
     #1510 REM \#017\#001instrukciq\#017\#000
