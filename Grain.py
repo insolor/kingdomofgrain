@@ -61,7 +61,7 @@ def info():
     # 410 PRINT "\{b0}zEMLI - ";ZEML;" AKROW"
     print("Земли - %d акров" % zeml)
     # 420 PRINT "uROVAJ - ";UROV;" BU[/AKR"
-    print("Урожай - %d буш/акр" % urov)
+    print("Урожай - %d буш/акр" % urozh)
     # 430 IF KRYS>BIN THEN PRINT "kRYSY SOVRALI ";KRYS;" BU[."
     if krys>0:
         print("Крысы сожрали %d буш." % krys)
@@ -164,7 +164,7 @@ def ohrana():
         return
 
 def korm():
-    global zerno, umergol, umervsego, nas, oi, u
+    global zerno, umergol, umervsego, nas, oi, u, k
     # 700 REM \#017\#001KORMEVKA\#017\#000
     # 710 LET K=-1: IF OST<=NOT PI THEN RETURN 
     k=-1
@@ -226,7 +226,7 @@ def korm():
         return
 
 def posev():
-    global zerno, ost
+    global zerno, ost, zas
     # 840 REM \#017\#001POSEW\#017\#000
     # 850 LET ZAS=-1: LET UROV=NOT PI: LET SBOR=NOT PI
     zas=-1
@@ -283,14 +283,14 @@ def pobeda():
     #1160 PRINT AT VAL "11",VAL "2";"\{i6}w hAMONII ODERVANA pobeda!!!"
     print("В хамонии одержана победа!!!")
     #1170 LET T(INT PI)=INT (NAS*(RND/3+0.3)): LET T(SGN PI)=INT (ZAHW*(FN S(VAL "10")+VAL "4")): LET T(VAL "2")=INT (ZEML*(RND/VAL "2"+0.3)): LET NAS=NAS+T(INT PI): LET ZEML=ZEML+T(VAL "2"): LET ZERNO=ZERNO+T(SGN PI)
-    t[2]=int(nas*(random()/3+0.3))
+    t[2]=int(nas*(random.random()/3+0.3))
     t[0]=int(zahv*fn_S(10)+4)
-    t[1]=int(zeml*(random()/2+0.3))
+    t[1]=int(zeml*(random.random()/2+0.3))
     nas+=t[2]
     zeml+=t[1]
     zerno+=t[0]
     #1180 LET UBITO=INT (ZAHW*(RND/5+0.3)): LET POGIB=POGIB+UBITO: LET NAS=NAS+ZAHW-UBITO
-    ubito=int(zahv(random()/5+0.3))
+    ubito=int(zahv(random.random()/5+0.3))
     pogib+=ubito
     nas+=zahv-ubito
     #1190 PRINT AT VAL "13",BIN ;"u WRAGA ZAHWA^ENO:"
@@ -317,7 +317,7 @@ def porazh():
     #1250 PRINT AT VAL "11",VAL "5";"\{i3}poravenie w hAMONII!!!"
     print("ПОРАЖЕНИЕ В Хамонии!!!")
     #1260 LET UBITO=INT (ZAHW*(0.8+RND/5)): LET NAS=NAS+ZAHW-UBITO: LET POGIB=POGIB+UBITO
-    ubito=int(zahv*(0.8+random()/5))
+    ubito=int(zahv*(0.8+random.random()/5))
     nas+=zahv-ubito
     pogib+=ubito
     #1270 PRINT AT VAL "13",SGN PI;"pOGIBLO - ";UBITO;" WOINOW"
@@ -413,7 +413,7 @@ def hamony():
     elif zahv<nas//2:
         porazh()
     #1110 IF RND>0.5 THEN GO SUB POBEDA: GO TO VAL "1140"
-    elif random()>0.5:
+    elif random.random()>0.5:
         pobeda()
     #1120 GO SUB PORAV
     else:
@@ -421,7 +421,7 @@ def hamony():
     #1140 RETURN 
 
 def uborka():
-    global proiz, zerno
+    global proiz, zerno, urozh
     #1300 REM \#017\#001UBORKA\#017\#000
     #1305 GO SUB CLS
     cls()
@@ -453,7 +453,7 @@ def uborka():
         key()
         cls()
     #1370 LET UROV=SGN PI+FN S(VAL "6")-IST: LET J=FN S(VAL "21")
-    urov=1+fn_S(6)
+    urozh=1+fn_S(6)
     j=fn_S(21)
     #1380 IF J>=VAL "18" THEN LET UROV=VAL "10"
     if j>=18:
@@ -491,7 +491,7 @@ def uborka():
     #1460 LET SBOR=ZAS*UROV
     sbor=zas*urozh
     #1470 IF RND>0.7 THEN LET SAR=4+FN S(8): LET SBOR=SBOR-INT (SBOR/SAR): RANDOMIZE USR VAL "61726": PRINT AT VAL "11",SGN PI;"sARAN^A POGUBILA 1/";SAR;" UROVAQ!": GO SUB KEY: GO SUB CLS
-    if random()>0.7:
+    if random.random()>0.7:
         sar=4+fn_S(8)
         sbor-=sbor//sar
         print("Саранча погубила 1/%d урожая!" % sar)
@@ -689,7 +689,7 @@ while True:
     zeml = 900+fn_S(200)
 
     # 110 LET UROV=INT (SBOR/ZEML): LET KRYS=150+FN S(VAL "200"): LET ZERNO=SBOR-KRYS: LET TIME=SGN PI: LET U=NOT PI: LET BEV=5+FN S(VAL "5"): LET AGENT=NOT PI: LET NBOG=CENA*ZEML+ZERNO: LET IST=NOT PI
-    urov = int(sbor/zeml)
+    urozh = sbor//zeml
     krys = 150+fn_S(200)
     zerno = sbor-krys
     time = 1
