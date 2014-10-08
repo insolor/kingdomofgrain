@@ -1,4 +1,4 @@
-import random
+from random import random
 
 # BAS file "" created by ZX-Modules
 
@@ -19,7 +19,7 @@ t = [0,0,0]
 
 #  21 DEF FN S(K)=INT (RND*K-0.0000001)+SGN PI
 def fn_S(K):
-    return int(random.random()*K-0.0000001)+1
+    return int(random()*K-0.0000001)+1
 
 #  30 DIM Q(VAL "22")
 q = [0 for x in range(22)]
@@ -283,14 +283,14 @@ def pobeda():
     #1160 PRINT AT VAL "11",VAL "2";"\{i6}w hAMONII ODERVANA pobeda!!!"
     print("В хамонии одержана победа!!!")
     #1170 LET T(INT PI)=INT (NAS*(RND/3+0.3)): LET T(SGN PI)=INT (ZAHW*(FN S(VAL "10")+VAL "4")): LET T(VAL "2")=INT (ZEML*(RND/VAL "2"+0.3)): LET NAS=NAS+T(INT PI): LET ZEML=ZEML+T(VAL "2"): LET ZERNO=ZERNO+T(SGN PI)
-    t[2]=int(nas*(random.random()/3+0.3))
+    t[2]=int(nas*(random()/3+0.3))
     t[0]=int(zahv*fn_S(10)+4)
-    t[1]=int(zeml*(random.random()/2+0.3))
+    t[1]=int(zeml*(random()/2+0.3))
     nas+=t[2]
     zeml+=t[1]
     zerno+=t[0]
     #1180 LET UBITO=INT (ZAHW*(RND/5+0.3)): LET POGIB=POGIB+UBITO: LET NAS=NAS+ZAHW-UBITO
-    ubito=int(zahv(random.random()/5+0.3))
+    ubito=int(zahv(random()/5+0.3))
     pogib+=ubito
     nas+=zahv-ubito
     #1190 PRINT AT VAL "13",BIN ;"u WRAGA ZAHWA^ENO:"
@@ -317,7 +317,7 @@ def porazh():
     #1250 PRINT AT VAL "11",VAL "5";"\{i3}poravenie w hAMONII!!!"
     print("ПОРАЖЕНИЕ В Хамонии!!!")
     #1260 LET UBITO=INT (ZAHW*(0.8+RND/5)): LET NAS=NAS+ZAHW-UBITO: LET POGIB=POGIB+UBITO
-    ubito=int(zahv*(0.8+random.random()/5))
+    ubito=int(zahv*(0.8+random()/5))
     nas+=zahv-ubito
     pogib+=ubito
     #1270 PRINT AT VAL "13",SGN PI;"pOGIBLO - ";UBITO;" WOINOW"
@@ -413,7 +413,7 @@ def hamony():
     elif zahv<nas//2:
         porazh()
     #1110 IF RND>0.5 THEN GO SUB POBEDA: GO TO VAL "1140"
-    elif random.random()>0.5:
+    elif random()>0.5:
         pobeda()
     #1120 GO SUB PORAV
     else:
@@ -491,7 +491,7 @@ def uborka():
     #1460 LET SBOR=ZAS*UROV
     sbor=zas*urozh
     #1470 IF RND>0.7 THEN LET SAR=4+FN S(8): LET SBOR=SBOR-INT (SBOR/SAR): RANDOMIZE USR VAL "61726": PRINT AT VAL "11",SGN PI;"sARAN^A POGUBILA 1/";SAR;" UROVAQ!": GO SUB KEY: GO SUB CLS
-    if random.random()>0.7:
+    if random()>0.7:
         sar=4+fn_S(8)
         sbor-=sbor//sar
         print("Саранча погубила 1/%d урожая!" % sar)
