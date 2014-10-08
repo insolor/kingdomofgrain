@@ -357,23 +357,67 @@ def instr():
 def hamony():
     # 960 REM \#017\#001hAMONIQ\#017\#000
     # 970 IF (OST<=BIN ) OR (ZERNO<=5) THEN LET POS=BIN : GO TO VAL "1030"
-    # 980 PRINT AT VAL "19",SGN PI;"u NAS ";OST;" NEZANQTYH L\@DEJ": PRINT AT VAL "20",BIN ;"zERNA HWATIT NA ";INT (ZERNO/5);" WOINOW"
-    # 990 LET POS=-1: PRINT AT VAL "21",INT PI;"sKOLXKO PO[LEM W hAMONI\@?"
-    #1000 GO SUB INPUT: LET POS=VAL F$: PRINT AT VAL "18",BIN ;S$: GO SUB PUS: IF POS<BIN THEN GO TO VAL "990"
-    #1010 IF POS>OST THEN PRINT AT VAL "20",VAL "5";"u NAS MALO L\@DEJ!!!": GO SUB KEY: GO SUB PUS: GO TO VAL "990"
-    #1020 IF POS>INT (ZERNO/5) THEN PRINT AT VAL "20",VAL "6";"u NAS MALO ZERNA!!!": GO SUB KEY: GO SUB PUS: GO TO VAL "990"
+    if ost<=0 or zerno<5:
+        pos=0
+    else:
+        # 980 PRINT AT VAL "19",SGN PI;"u NAS ";OST;" NEZANQTYH L\@DEJ": PRINT AT VAL "20",BIN ;"zERNA HWATIT NA ";INT (ZERNO/5);" WOINOW"
+        print("У нас %d незанятых людей" % ost)
+        print("Зерна хватит на %d воинов" % (zerno/5))
+        while True:
+            # 990 LET POS=-1: PRINT AT VAL "21",INT PI;"sKOLXKO PO[LEM W hAMONI\@?"
+            pos=-1
+            print("Сколько пошлём в Хамонию?")
+            #1000 GO SUB INPUT: LET POS=VAL F$: PRINT AT VAL "18",BIN ;S$: GO SUB PUS: IF POS<BIN THEN GO TO VAL "990"
+            pos=int(sub_input())
+            fn_S()
+            pus()
+            if pos<0:
+                continue
+            #1010 IF POS>OST THEN PRINT AT VAL "20",VAL "5";"u NAS MALO L\@DEJ!!!": GO SUB KEY: GO SUB PUS: GO TO VAL "990"
+            if pos>ost:
+                print("У нас мало людей!!!")
+                key()
+                pus()
+                continue
+            #1020 IF POS>INT (ZERNO/5) THEN PRINT AT VAL "20",VAL "6";"u NAS MALO ZERNA!!!": GO SUB KEY: GO SUB PUS: GO TO VAL "990"
+            if pos*5>zerno:
+                print("У нас мало зерна!!!")
+                key()
+                pus()
+                continue
+            break
     #1030 IF POS<=NOT PI THEN GO TO VAL "1070"
-    #1040 LET NAS=NAS-POS: LET OST=OST-POS: LET ZERNO=ZERNO-POS*5
-    #1050 IF ZAHW>BIN THEN LET ZAHW=ZAHW+POS: GO TO VAL "1070"
-    #1060 LET ZAHW=POS: LET SROK=TIME+FN S(4)
+    if pos>0:            
+        #1040 LET NAS=NAS-POS: LET OST=OST-POS: LET ZERNO=ZERNO-POS*5
+        nas-=pos
+        ost-=pos
+        zerno-=pos*5
+        #1050 IF ZAHW>BIN THEN LET ZAHW=ZAHW+POS: GO TO VAL "1070"
+        if zahv>0:
+            zahv+=pos
+        else:
+            #1060 LET ZAHW=POS: LET SROK=TIME+FN S(4)
+            zahv=pos
+            srok=time+fn_S(4)
     #1070 IF ZAHW<=NOT PI THEN GO TO VAL "1140"
+    if zahv<=0:
+        pass
     #1080 IF SROK<>TIME THEN GO TO VAL "1140"
+    elif srok!=time:
+        pass
     #1090 IF ZAHW>NAS*VAL "2" THEN GO SUB POBEDA: GO TO VAL "1140"
+    elif zahv>nas*2:
+        pobeda()
     #1100 IF ZAHW<INT (NAS/VAL "2") THEN GO SUB PORAV: GO TO VAL "1140"
+    elif zahv<nas//2:
+        porazh()
     #1110 IF RND>0.5 THEN GO SUB POBEDA: GO TO VAL "1140"
+    elif random()>0.5:
+        pobeda()
     #1120 GO SUB PORAV
+    else:
+        porazh()
     #1140 RETURN 
-    pass
 
 def uborka():
     #1300 REM \#017\#001UBORKA\#017\#000
