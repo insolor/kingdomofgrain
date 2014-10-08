@@ -510,17 +510,52 @@ def uborka():
     #1500 RETURN 
 
 def nn():
+    global nas, u, oi, umer
     #1550 REM \#017\#001NN\#017\#000
     #1555 GO SUB CLS
+    cls()
     #1560 LET BEV=INT (RND*INT (NAS/4))
+    bezh=int(random()*(nas//4))
     #1570 IF (RASST<20) AND (RND>.5) THEN LET BEV=BEV+INT (RND*BEV): PRINT AT VAL "11",INT PI;"pRITOK BEVENCEW SPASA\@]IHSQ";AT VAL "12",VAL "7";"OT ZAHWAT^IKOW!!!": GO SUB KEY: GO SUB CLS
+    if rasst<20 and random()>0.5:
+        bezh+=int(random()*bezh)
+        print("Приток беженцев, спасающихся\nот захватчиков!!!")
+        key()
+        cls()
     #1580 LET NAS=NAS+BEV
+    nas+=bezh
     #1590 IF (K<10) OR (UMERWSEGO>NAS*10) THEN RANDOMIZE USR VAL "55936": PRINT AT VAL "11",SGN PI;"nAROD WOSSTAL PROTIW TIRANA!!!": GO SUB KEY: GO SUB CLS: GO TO VAL "1610"
+    if k<10 or umervsego>nas*10:
+        print("Народ восстал против тирана!!!")
+        key()
+        cls()
+        #1610 IF (Z>(NAS-Z)/3) AND (Z<UMERGOL) THEN RANDOMIZE USR "54778": PRINT AT VAL "11",SGN PI;"nO WOJSKA PODAWILI WOSSTANIE!": LET WOSST=(NAS-Z)*INT (RND/5+0.1): LET POGIB=POGIB+WOSST: LET NAS=NAS-WOSST: PRINT AT VAL "12",VAL "5";"w ULI^NYH BOQH POLEGLO";AT VAL "13",VAL "8";WOSST;" VITELEJ": GO SUB KEY: GO SUB CLS: GO TO VAL "1630"
+        if z>(nas-z)/3 and z<umergol:
+            print("Но войска подавили восстание!")
+            vosst=(nas-z)*int(random()/5+0.1)
+            pogib+=vosst
+            nas-=vosst
+            print("В уличных боях полегло %d жителей" % vosst)
+            key()
+            cls()
+        else:
+            #1620 PRINT AT VAL "11",VAL "4";"wOJSKA PERE[LI NA STORONU";AT VAL "12",VAL "6";"WOSSTAW[EGO NARODA": PRINT AT VAL "14",VAL "5";"\{i4}monarhiq swergnuta!!!": GO SUB KEY: GO SUB CLS: LET U=SGN PI: LET OI=BIN : GO SUB OITOG: RETURN
+            print("Войска перешли на сторону\nвосставшего народа")
+            print("МОНАРХИЯ СВЕРГНУТА!!!")
+            key()
+            cls()
+            u = 1
+            oi = 0
+            oitog()
+            return
     #1600 GO TO VAL "1630"
-    #1610 IF (Z>(NAS-Z)/3) AND (Z<UMERGOL) THEN RANDOMIZE USR "54778": PRINT AT VAL "11",SGN PI;"nO WOJSKA PODAWILI WOSSTANIE!": LET WOSST=(NAS-Z)*INT (RND/5+0.1): LET POGIB=POGIB+WOSST: LET NAS=NAS-WOSST: PRINT AT VAL "12",VAL "5";"w ULI^NYH BOQH POLEGLO";AT VAL "13",VAL "8";WOSST;" VITELEJ": GO SUB KEY: GO SUB CLS: GO TO VAL "1630"
-    #1620 PRINT AT VAL "11",VAL "4";"wOJSKA PERE[LI NA STORONU";AT VAL "12",VAL "6";"WOSSTAW[EGO NARODA": PRINT AT VAL "14",VAL "5";"\{i4}monarhiq swergnuta!!!": GO SUB KEY: GO SUB CLS: LET U=SGN PI: LET OI=BIN : GO SUB OITOG: RETURN 
     #1630 LET UMER=UMER+INT (RND*2.5/100*NAS): LET ROD=INT (RND*(4+K/20)/100*NAS)
+    umer+=int(random()*2.5/100*nas)
+    rod+=int(random()*(4+K/20)/100*nas)
     #1640 IF FN S(VAL "12")=SGN PI THEN LET CHUMA=INT (RND*50+VAL "5"): RANDOMIZE USR VAL "53620": PRINT AT VAL "11",INT PI;"~UMA UNESLA ";CHUMA;"% NASELENIQ!": LET UMER=UMER+INT (NAS*CHUMA/100): GO SUB KEY: GO SUB CLS
+    if fn_S(12)=1:
+        chuma=int(random()*50+5)
+        print("Чума унесла %d%% населения!" % chuma)
     #1650 IF FN S(VAL "100")<VAL "5" THEN RANDOMIZE USR VAL "46225": PRINT AT VAL "11",VAL "4";"dEMOGRAFI^ESKIJ WZRYW!!!": LET DEM=INT ((RND/VAL "2"+0.5)*NAS): LET ROD=ROD+DEM: GO SUB KEY: GO SUB CLS
     #1660 IF (FN S(VAL "20"))=VAL "5" THEN RANDOMIZE USR VAL "52462": PRINT AT VAL "11",VAL "6";"\{i2}pova - a - a - ar!!!": LET SGOR=INT (NAS*(RND/3+0.3)): LET SGORZER=INT (ZERNO*(RND/4+0.1)): GO SUB KEY: GO SUB CLS: GO TO VAL "1666"
     #1663 GO TO VAL "1670"
