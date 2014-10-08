@@ -355,6 +355,7 @@ def instr():
     #1540 RETURN 
 
 def hamony():
+    global ost, zerno, zahv
     # 960 REM \#017\#001hAMONIQ\#017\#000
     # 970 IF (OST<=BIN ) OR (ZERNO<=5) THEN LET POS=BIN : GO TO VAL "1030"
     if ost<=0 or zerno<5:
