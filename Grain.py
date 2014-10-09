@@ -674,12 +674,20 @@ def nn():
     #1850 RETURN 
 
 def war():
+    global rasst
     #1860 REM \#017\#001WTORVENIE\#017\#000
     #1870 LET RASST=RASST-FN S(VAL "5")-VAL "10"
+    rasst-=fn_S(5)+10
     #1880 IF RASST<FN S(VAL "\{f0}5") THEN GO SUB ATAKA: GO TO VAL "1900"
+    if rasst<fn_S(5):
+        ataka()
     #1890 IF (RASST<VAL "15") AND (RND<0.1) THEN PRINT AT VAL "11",SGN PI;"wRAGI SOWER[ILI STREMITELXNYJ";AT VAL "12",VAL "9";"MAR[ - BROSOK!": GO SUB KEY: GO SUB CLS:: GO SUB ATAKA
+    elif rasst<15 and random()<0.1:
+        print("Враги совершили стремительный марш - бросок!")
+        key()
+        cls()
+        ataka()
     #1900 RETURN 
-    pass
 
 def ataka():
     #1910 REM \#017\#001ATAKA\#017\#000
