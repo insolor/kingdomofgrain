@@ -66,7 +66,7 @@ def info():
     if krys>0:
         print("Крысы сожрали %d буш." % krys)
     # 440 PRINT "\{b0}zAPASY ZERNA ";ZERNO;" BU[."
-    print("Запасы зерны %d буш." % zerno)
+    print("Запасы зерна %d буш." % zerno)
     # 450 PRINT "cENA ZEMLI ";CENA;" BU[/AKR"
     print("Цена земли %d буш/акр" % cena)
     # 460 PRINT "\{b0}hLEBOROB ZASEWAET ";PROIZ;" AKROW"
@@ -126,7 +126,7 @@ def torg():
         break
 
 def ohrana():
-    global ost, zerno
+    global ost, zerno, z
     # 610 REM \#017\#001OHRANA\#017\#000
     while True:
         # 620 LET UBITO=NOT PI: LET Z=-1
@@ -709,7 +709,7 @@ def ataka():
     else:
         print("но атака отбита! Ура-а-а!!!")
         #1950 IF FN S(3)=SGN PI THEN PRINT AT VAL "15",INT PI;"pROIZO[LA RE[A\@]AQ BITWA!!!"
-        if fn_S(3)=1:
+        if fn_S(3)==1:
             print("Произошла решающая битва!!!")
         #1960 LET POGIBZ=INT (WRAGI/3)+INT (RND*Z/6): LET POGIB=POGIB+POGIBZ: LET NAS=NAS-POGIB: LET RASST=25+FN S(20): LET WRAGI=INT (NAS/4)+INT (RND*NAS/5)
         pogibz=int(vragi/3)+int(random()*z/6)
@@ -917,5 +917,4 @@ while True:
             war()
         # 290 LET TIME=TIME+SGN PI: GO TO VAL "120"
         time+=1
-        break
-    break
+    
