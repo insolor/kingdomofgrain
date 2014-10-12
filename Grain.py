@@ -197,7 +197,7 @@ def korm():
             key()
             oi=0
             u=1
-            oitog()
+            oitog(oi)
             return
         # 780 IF K<=VAL "10" THEN PRINT AT VAL "20",VAL "10";"\{i3}du{egub!!!": GO SUB KEY: GO SUB PUS: GO TO VAL "800"
         if k<=18:
@@ -546,7 +546,7 @@ def nn():
             cls()
             u = 1
             oi = 0
-            oitog()
+            oitog(oi)
             return
     #1600 GO TO VAL "1630"
     #1630 LET UMER=UMER+INT (RND*2.5/100*NAS): LET ROD=INT (RND*(4+K/20)/100*NAS)
@@ -640,7 +640,7 @@ def nn():
             oi=1
             key()
             cls()
-            oitog()
+            oitog(oi)
             return
         else:
             #1790 PRINT AT VAL "13",VAL "2";"NO WERNYE wAM WOJSKA RAZBILI";AT VAL "14",VAL "11";"MQTEVNIKOW": GO SUB KEY: GO SUB CLS
@@ -704,7 +704,7 @@ def ataka():
         cls()
         u=1
         oi=0
-        oitog()
+        oitog(oi)
         #1940 IF Z*J>WRAGI THEN PRINT AT VAL "13",INT PI;"NO ATAKA OTBITA! uRA-A-A!!!"
     else:
         print("но атака отбита! Ура-а-а!!!")
@@ -722,7 +722,7 @@ def ataka():
         cls()
         #1970 RETURN 
 
-def oitog():
+def oitog(oi):
     #1980 REM \#017\#001OITOG\#017\#000
     #1985 GO SUB CLS
     cls()
@@ -789,8 +789,8 @@ def sub_input():
             f = '0'
         #4021 IF F$="k" OR f$="K" THEN LET OI=SGN PI: GO SUB OITOG: GO TO VAL "50"
         if f=='k' or f=='K':
-            OI = 1
-            oitog()
+            oi = 1
+            oitog(oi)
             raise
         #4022 IF F$="d" OR f$="D" THEN GO SUB VAL "4040": GO SUB VAL "120"
         if f=='d' or f=='D':
@@ -917,4 +917,4 @@ while True:
             war()
         # 290 LET TIME=TIME+SGN PI: GO TO VAL "120"
         time+=1
-    
+    break
