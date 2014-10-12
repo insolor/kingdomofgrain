@@ -506,7 +506,7 @@ def uborka():
     #1500 RETURN 
 
 def nn():
-    global nas, umer, agent, proiz, predel, ist
+    global nas, umer, agent, proiz, predel, ist, zerno
     #1550 REM \#017\#001NN\#017\#000
     #1555 GO SUB CLS
     cls()
@@ -819,8 +819,8 @@ while True:
         def key():
             #4010 IF INKEY$<>"" THEN GO TO VAL "4012"
             #4011 GO TO VAL "4010"
-            #4012 RETURN 
-            pass
+            #4012 RETURN
+            return input()
     
         inkey = key()
         if inkey == '1':
