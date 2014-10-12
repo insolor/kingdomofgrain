@@ -164,7 +164,7 @@ def ohrana():
         return
 
 def korm():
-    global zerno, umergol, umervsego, nas, oi, u, k
+    global zerno, umergol, umervsego, nas, k
     # 700 REM \#017\#001KORMEVKA\#017\#000
     # 710 LET K=-1: IF OST<=NOT PI THEN RETURN 
     k=-1
@@ -195,10 +195,7 @@ def korm():
             cls()
             print("Ты уморил всех голодом!!!")
             key()
-            oi=0
-            u=1
-            oitog(oi)
-            return
+            return oi
         # 780 IF K<=VAL "10" THEN PRINT AT VAL "20",VAL "10";"\{i3}du{egub!!!": GO SUB KEY: GO SUB PUS: GO TO VAL "800"
         if k<=18:
             print("ДУШЕГУБ!!!")
@@ -355,7 +352,7 @@ def instr():
     #1540 RETURN 
 
 def hamony():
-    global ost, zerno, zahv
+    global nas, ost, zerno, zahv
     # 960 REM \#017\#001hAMONIQ\#017\#000
     # 970 IF (OST<=BIN ) OR (ZERNO<=5) THEN LET POS=BIN : GO TO VAL "1030"
     if ost<=0 or zerno<5:
@@ -370,7 +367,6 @@ def hamony():
             print("Сколько пошлём в Хамонию?")
             #1000 GO SUB INPUT: LET POS=VAL F$: PRINT AT VAL "18",BIN ;S$: GO SUB PUS: IF POS<BIN THEN GO TO VAL "990"
             pos=int(sub_input())
-            fn_S()
             pus()
             if pos<0:
                 continue
@@ -510,7 +506,7 @@ def uborka():
     #1500 RETURN 
 
 def nn():
-    global nas, u, oi, umer, agent, proiz, predel, ist
+    global nas, umer, agent, proiz, predel, ist
     #1550 REM \#017\#001NN\#017\#000
     #1555 GO SUB CLS
     cls()
@@ -544,10 +540,7 @@ def nn():
             print("МОНАРХИЯ СВЕРГНУТА!!!")
             key()
             cls()
-            u = 1
-            oi = 0
-            oitog(oi)
-            return
+            return oi
     #1600 GO TO VAL "1630"
     #1630 LET UMER=UMER+INT (RND*2.5/100*NAS): LET ROD=INT (RND*(4+K/20)/100*NAS)
     umer+=int(random()*2.5/100*nas)
@@ -636,12 +629,9 @@ def nn():
         #1780 IF (FN S(VAL "2")=SGN PI) OR (Z<NAS/VAL "10") THEN PRINT AT VAL "13",VAL "2";"wY SWERGNUTY S PRESTOLA!!!": LET U=SGN PI: LET OI=SGN PI: GO SUB KEY: GO SUB CLS: GO SUB OITOG: RETURN 
         if fn_S(2)==1 or z<nas/10:
             print("Вы свергнуты с престола!!!")
-            u=1
-            oi=1
             key()
             cls()
-            oitog(oi)
-            return
+            return oi
         else:
             #1790 PRINT AT VAL "13",VAL "2";"NO WERNYE wAM WOJSKA RAZBILI";AT VAL "14",VAL "11";"MQTEVNIKOW": GO SUB KEY: GO SUB CLS
             print("но верные Вам войска разбили мятежников")
@@ -702,9 +692,7 @@ def ataka():
         print("Город пал, ведь его защищало мало солдат")
         key()
         cls()
-        u=1
-        oi=0
-        oitog(oi)
+        return oi
         #1940 IF Z*J>WRAGI THEN PRINT AT VAL "13",INT PI;"NO ATAKA OTBITA! uRA-A-A!!!"
     else:
         print("но атака отбита! Ура-а-а!!!")
@@ -869,7 +857,7 @@ while True:
     krys = 150+fn_S(200)
     zerno = sbor-krys
     time = 1
-    u = 0
+    u = None
     bezh = 5+fn_S(5)
     agent = 0
     nbog = cena*zeml+zerno
@@ -879,7 +867,7 @@ while True:
     # Start program
 
     # 130 IF U<>NOT PI THEN GO TO VAL "50"
-    while u==0:
+    while u is None:
         # 140 LET CENA=VAL "10"+FN S(VAL "40")
         cena = 10+fn_S(40)
         # 145 REM RANDOMIZE USR VAL "42675": GO SUB CLS
@@ -892,29 +880,26 @@ while True:
         umer = 0
         rod = 0
         # 170 IF U=NOT PI THEN GO SUB TORG
-        if u==0:
-            torg()
+        torg()
         # 180 IF U=NOT PI THEN GO SUB OHRANA
-        if u==0:
-            ohrana()
+        ohrana()
         # 190 IF U=NOT PI THEN GO SUB KORM
-        if u==0:
-            korm()
+        u = korm()
+        if u is not None:
+            break
         # 200 IF U=NOT PI THEN GO SUB POSEW
-        if u==0:
-            posev()
+        posev()
         # 210 IF U=NOT PI THEN GO SUB HAMONY
-        if u==0:
-            hamony()
+        hamony()
         # 220 IF U=NOT PI THEN GO SUB UBORKA
-        if u==0:
-            uborka()
+        uborka()
         # 230 IF U=NOT PI THEN GO SUB NN
-        if u==0:
-            nn()
+        u = nn()
+        if u is not None:
+            break
         # 240 IF U=NOT PI THEN GO SUB WAR
-        if u==0:
-            war()
+        war()
         # 290 LET TIME=TIME+SGN PI: GO TO VAL "120"
         time+=1
+    oitog(u)
     break
