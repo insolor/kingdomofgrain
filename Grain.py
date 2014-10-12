@@ -352,7 +352,7 @@ def instr():
     #1540 RETURN 
 
 def hamony():
-    global nas, ost, zerno, zahv
+    global nas, ost, zerno, zahv, srok
     # 960 REM \#017\#001hAMONIQ\#017\#000
     # 970 IF (OST<=BIN ) OR (ZERNO<=5) THEN LET POS=BIN : GO TO VAL "1030"
     if ost<=0 or zerno<5:
@@ -384,7 +384,7 @@ def hamony():
                 continue
             break
     #1030 IF POS<=NOT PI THEN GO TO VAL "1070"
-    if pos>0:            
+    if pos>0:
         #1040 LET NAS=NAS-POS: LET OST=OST-POS: LET ZERNO=ZERNO-POS*5
         nas-=pos
         ost-=pos
@@ -540,7 +540,7 @@ def nn():
             print("МОНАРХИЯ СВЕРГНУТА!!!")
             key()
             cls()
-            return oi
+            return 0
     #1600 GO TO VAL "1630"
     #1630 LET UMER=UMER+INT (RND*2.5/100*NAS): LET ROD=INT (RND*(4+K/20)/100*NAS)
     umer+=int(random()*2.5/100*nas)
@@ -631,7 +631,7 @@ def nn():
             print("Вы свергнуты с престола!!!")
             key()
             cls()
-            return oi
+            return 1
         else:
             #1790 PRINT AT VAL "13",VAL "2";"NO WERNYE wAM WOJSKA RAZBILI";AT VAL "14",VAL "11";"MQTEVNIKOW": GO SUB KEY: GO SUB CLS
             print("но верные Вам войска разбили мятежников")
@@ -680,7 +680,7 @@ def war():
     #1900 RETURN 
 
 def ataka():
-    global nas, pogib, u, oi, rasst, vragi
+    global nas, pogib, rasst, vragi
     #1910 REM \#017\#001ATAKA\#017\#000
     #1920 RANDOMIZE USR VAL "54778": PRINT AT VAL "11",VAL "7";"\{i3}gorod atakowan!!!": GO SUB KEY: LET I=INT (INT (10*RND)*0.1)+0.5: LET J=I+INT (INT (10*RND)*0.15)+0.5
     print("ГОРОД АТАКОВАН!!!")
@@ -692,10 +692,10 @@ def ataka():
         print("Город пал, ведь его защищало мало солдат")
         key()
         cls()
-        return oi
+        return 0
         #1940 IF Z*J>WRAGI THEN PRINT AT VAL "13",INT PI;"NO ATAKA OTBITA! uRA-A-A!!!"
     else:
-        print("но атака отбита! Ура-а-а!!!")
+        print("Но атака отбита! Ура-а-а!!!")
         #1950 IF FN S(3)=SGN PI THEN PRINT AT VAL "15",INT PI;"pROIZO[LA RE[A\@]AQ BITWA!!!"
         if fn_S(3)==1:
             print("Произошла решающая битва!!!")
@@ -723,16 +723,17 @@ def oitog(oi):
     #2000 LET BOG=ZEML*CENA+ZERNO
     bog = zeml*cena+zerno
     #2010 IF (BOG>NBOG) AND (OI=1) THEN PRINT AT VAL "14",BIN ;"wY UWELI^ILI BOGATSTWO W ";INT (BOG/NBOG);" RAZ!": GO TO VAL "2030"
-    if bog>nbog and oi==1:
-        print("Вы увеличили богатство в %d раз!" % int(bog/nbog))
-    #2020 IF OI=SGN PI THEN PRINT AT VAL "14",VAL "5";"wY RAZORILI STRANU!!!"
-    elif oi==1:
-        print("Вы разорили страну!!!")
+    if oi==1:
+        if bog>nbog:
+            print("Вы увеличили богатство в %d раз!" % int(bog/nbog))
+        #2020 IF OI=SGN PI THEN PRINT AT VAL "14",VAL "5";"wY RAZORILI STRANU!!!"
+        else:
+            print("Вы разорили страну!!!")
     #2030 IF OI=SGN PI THEN PRINT AT VAL "17",VAL "7";"\{i4}do swidaniq!!!": GO TO VAL "2045"
     if oi==1:
         print("До свидания!!!")
     #2040 IF OI=BIN THEN PRINT AT VAL "9",BIN ;"\{i2}tAKIH NADO GNATX IZ PRAWITELEJ!!";AT VAL "11",SGN PI;"wY EDWA PRODERVALISX U WLASTI";AT VAL "12",VAL "10";TIME;" LET": PRINT AT VAL "14",BIN ;"\{i2}I UMORILI GOLODOM ";UMERWSEGO;" ^ELOWEK": PRINT AT VAL "16",VAL "5";"\{i2}kUDA \\TO GODITSQ?!"
-    elif oi==0:
+    else:
         print("Таких надо гнать из правителей!!")
         print("Вы едва продержались у власти %d лет" % time)
         if umervsego>0:
