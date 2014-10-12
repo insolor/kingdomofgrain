@@ -435,7 +435,7 @@ def uborka():
         cls()
     #1340 IF K<VAL "20" THEN PRINT AT VAL "11",VAL "4";"pLOHOE PITANIE SNIVAET": PRINT AT VAL "12",VAL "5";" PROIZWODITELXNOSTX!": LET PROIZ=PROIZ-INT (30/K): GO SUB KEY: GO SUB CLS
     if k<20:
-        print("Плохо питание снижает\n производительность!")
+        print("Плохое питание снижает\n производительность!")
         proiz-=30//k
         key()
         cls()
