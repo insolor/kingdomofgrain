@@ -262,7 +262,9 @@ def korm():
             cls()
             print("Ты уморил всех голодом!!!")
             key()
-            return oi
+            u = 1
+            oitog(0)
+            return
         # 780 IF K<=VAL "10" THEN
         #   PRINT AT VAL "20",VAL "10";"\{i3}du{egub!!!":
         #   GO SUB KEY:
@@ -1117,12 +1119,21 @@ def save_load():
     pass
 
 
-def start_program():
-    pass
+def key():
+    # 4010 IF INKEY$<>"" THEN GO TO VAL "4012"
+    # 4011 GO TO VAL "4010"
+    # 4012 RETURN
+    return input()
 
 
 def sub_input():
-    # 4020 POKE VAL "23659",VAL "2": POKE VAL "23613",NOT PI: INPUT LINE F$: POKE VAL "23659",NOT PI: IF F$="" THEN LET F$="0": GO TO VAL "4026"
+    # 4020 POKE VAL "23659",VAL "2":
+    #   POKE VAL "23613",NOT PI:
+    #   INPUT LINE F$:
+    #   POKE VAL "23659",NOT PI:
+    #   IF F$="" THEN
+    #       LET F$="0":
+    #       GO TO VAL "4026"
     while True:
         f = input()
         if f == '':
@@ -1135,7 +1146,7 @@ def sub_input():
         # 4022 IF F$="d" OR f$="D" THEN GO SUB VAL "4040": GO SUB VAL "120"
         if f == 'd' or f == 'D':
             save_load()
-            start_program()
+            # start_program()
             raise
 
         # 4024 FOR N=SGN PI TO LEN F$: IF CODE F$(N)<VAL "48" OR CODE F$(N)>VAL "57" THEN GO TO VAL "4020"
@@ -1150,130 +1161,131 @@ def pus():
     pass
 
 
-while True:
+def main():
+    global time, nbog, cena, bezh, krys, rod
     while True:
-        #  50 GO SUB CLS: RANDOMIZE USR VAL "51304"
-        cls()
-        #  53 PRINT AT VAL "9",VAL "7";"\{i6}korolewstwo zerna"
-        #  55 PRINT AT VAL "12",VAL "9";"\{i5}1 sTART IGRY"
-        #  56 PRINT AT VAL "14",VAL "9";"\{i5}2 iNSTRUKCII"
-        #  57 PRINT AT VAL "16",VAL "9";"\{i5}3 aWTORY"
-        #  59 PRINT AT VAL "21",VAL "9";"\{i4}1992  mOSKWA"
-        print("КОРОЛЕВСТВО ЗЕРНА")
-        print("1 Старт игры")
-        print("2 Инструкции")
-        print("3 Авторы")
-        print("1992 Москва")
+        while True:
+            #  50 GO SUB CLS: RANDOMIZE USR VAL "51304"
+            cls()
+            #  53 PRINT AT VAL "9",VAL "7";"\{i6}korolewstwo zerna"
+            #  55 PRINT AT VAL "12",VAL "9";"\{i5}1 sTART IGRY"
+            #  56 PRINT AT VAL "14",VAL "9";"\{i5}2 iNSTRUKCII"
+            #  57 PRINT AT VAL "16",VAL "9";"\{i5}3 aWTORY"
+            #  59 PRINT AT VAL "21",VAL "9";"\{i4}1992  mOSKWA"
+            print("КОРОЛЕВСТВО ЗЕРНА")
+            print("1 Старт игры")
+            print("2 Инструкции")
+            print("3 Авторы")
+            print("1992 Москва")
 
-        #  60 GO SUB KEY: IF INKEY$="1" THEN GO TO VAL "80"
-        #  62 IF INKEY$="2" THEN GO SUB INSTR: GO SUB KEY: GO TO VAL "50"
-        #  64 IF INKEY$="3" THEN RANDOMIZE USR VAL "48541": GO SUB KEY: GO TO VAL "50"
-        #  66 GO TO VAL "60"
-        def key():
-            # 4010 IF INKEY$<>"" THEN GO TO VAL "4012"
-            # 4011 GO TO VAL "4010"
-            # 4012 RETURN
-            return input()
+            #  60 GO SUB KEY: IF INKEY$="1" THEN GO TO VAL "80"
+            #  62 IF INKEY$="2" THEN GO SUB INSTR: GO SUB KEY: GO TO VAL "50"
+            #  64 IF INKEY$="3" THEN RANDOMIZE USR VAL "48541": GO SUB KEY: GO TO VAL "50"
+            #  66 GO TO VAL "60"
 
-        inkey = key()
-        if inkey == '1':
+            inkey = key()
+            if inkey == '1':
+                break
+            elif inkey == '2':
+                instr()
+            elif inkey == '3':
+                pass  # Credits
+
             break
-        elif inkey == '2':
-            instr()
-        elif inkey == '3':
-            pass  # Credits
 
-        break
+        #  80 REM \#017\#001\#019\#001na~alxnye ustanowki\#017\#000
+        # Начальные установки
 
-    #  80 REM \#017\#001\#019\#001na~alxnye ustanowki\#017\#000
-    # Начальные установки
-
-    #  90 LET UMER=NOT PI:
-    #   LET ROD=NOT PI:
-    #   LET UMERGOL=NOT PI:
-    #   LET UMERWSEGO=NOT PI:
-    #   LET ZAHW=NOT PI:
-    #   LET POGIB=NOT PI:
-    #   LET PROIZ=VAL "10":
-    #   LET PREDEL=VAL "15"
-    umer = 0
-    rod = 0
-    umergol = 0
-    umervsego = 0
-    zahv = 0
-    pogib = 0
-    proiz = 10
-    predel = 15
-
-    # 100 LET WRAGI=FN S(VAL "10")+VAL "25":
-    #   LET RASST=FN S(VAL "10")+VAL "25":
-    #   LET CENA=FN S(VAL "10")+VAL "15":
-    #   LET SBOR=VAL "2100"+FN S(VAL "600"):
-    #   LET NAS=VAL "80"+FN S(VAL "20"):
-    #   LET ZEML=VAL "900"+FN S(VAL "200")
-    vragi = fn_s(10) + 25
-    rasst = fn_s(10) + 25
-    cena = fn_s(10) + 15
-    sbor = 2100 + fn_s(600)
-    nas = 80 + fn_s(20)
-    zeml = 900 + fn_s(200)
-
-    # 110 LET UROV=INT (SBOR/ZEML):
-    #   LET KRYS=150+FN S(VAL "200"):
-    #   LET ZERNO=SBOR-KRYS:
-    #   LET TIME=SGN PI:
-    #   LET U=NOT PI:
-    #   LET BEV=5+FN S(VAL "5"):
-    #   LET AGENT=NOT PI:
-    #   LET NBOG=CENA*ZEML+ZERNO:
-    #   LET IST=NOT PI
-    urozh = sbor // zeml
-    krys = 150 + fn_s(200)
-    zerno = sbor - krys
-    time = 1
-    u = None
-    bezh = 5 + fn_s(5)
-    agent = 0
-    nbog = cena * zeml + zerno
-    ist = 0
-
-    # 120 REM \#017\#001**START PROGRAM**\#017\#000
-    # Start program
-
-    # 130 IF U<>NOT PI THEN GO TO VAL "50"
-    while u is None:
-        # 140 LET CENA=VAL "10"+FN S(VAL "40")
-        cena = 10 + fn_s(40)
-        # 145 REM RANDOMIZE USR VAL "42675": GO SUB CLS
-        cls()
-        # 150 GO SUB INFO
-        info()
-        # 160 LET KRYS=NOT PI: LET POGIB=NOT PI: LET UMER=NOT PI: LET ROD=NOT PI
-        krys = 0
-        pogib = 0
+        #  90 LET UMER=NOT PI:
+        #   LET ROD=NOT PI:
+        #   LET UMERGOL=NOT PI:
+        #   LET UMERWSEGO=NOT PI:
+        #   LET ZAHW=NOT PI:
+        #   LET POGIB=NOT PI:
+        #   LET PROIZ=VAL "10":
+        #   LET PREDEL=VAL "15"
         umer = 0
         rod = 0
-        # 170 IF U=NOT PI THEN GO SUB TORG
-        torg()
-        # 180 IF U=NOT PI THEN GO SUB OHRANA
-        ohrana()
-        # 190 IF U=NOT PI THEN GO SUB KORM
-        u = korm()
-        if u is not None:
-            break
-        # 200 IF U=NOT PI THEN GO SUB POSEW
-        posev()
-        # 210 IF U=NOT PI THEN GO SUB HAMONY
-        hamony()
-        # 220 IF U=NOT PI THEN GO SUB UBORKA
-        uborka()
-        # 230 IF U=NOT PI THEN GO SUB NN
-        u = nn()
-        if u is not None:
-            break
-        # 240 IF U=NOT PI THEN GO SUB WAR
-        war()
-        # 290 LET TIME=TIME+SGN PI: GO TO VAL "120"
-        time += 1
-    oitog(u)
-    break
+        umergol = 0
+        umervsego = 0
+        zahv = 0
+        pogib = 0
+        proiz = 10
+        predel = 15
+
+        # 100 LET WRAGI=FN S(VAL "10")+VAL "25":
+        #   LET RASST=FN S(VAL "10")+VAL "25":
+        #   LET CENA=FN S(VAL "10")+VAL "15":
+        #   LET SBOR=VAL "2100"+FN S(VAL "600"):
+        #   LET NAS=VAL "80"+FN S(VAL "20"):
+        #   LET ZEML=VAL "900"+FN S(VAL "200")
+        vragi = fn_s(10) + 25
+        rasst = fn_s(10) + 25
+        cena = fn_s(10) + 15
+        sbor = 2100 + fn_s(600)
+        nas = 80 + fn_s(20)
+        zeml = 900 + fn_s(200)
+
+        # 110 LET UROV=INT (SBOR/ZEML):
+        #   LET KRYS=150+FN S(VAL "200"):
+        #   LET ZERNO=SBOR-KRYS:
+        #   LET TIME=SGN PI:
+        #   LET U=NOT PI:
+        #   LET BEV=5+FN S(VAL "5"):
+        #   LET AGENT=NOT PI:
+        #   LET NBOG=CENA*ZEML+ZERNO:
+        #   LET IST=NOT PI
+        urozh = sbor // zeml
+        krys = 150 + fn_s(200)
+        zerno = sbor - krys
+        time = 1
+        u = None
+        bezh = 5 + fn_s(5)
+        agent = 0
+        nbog = cena * zeml + zerno
+        ist = 0
+
+        # 120 REM \#017\#001**START PROGRAM**\#017\#000
+        # Start program
+
+        # 130 IF U<>NOT PI THEN GO TO VAL "50"
+        while u is None:
+            # 140 LET CENA=VAL "10"+FN S(VAL "40")
+            cena = 10 + fn_s(40)
+            # 145 REM RANDOMIZE USR VAL "42675": GO SUB CLS
+            cls()
+            # 150 GO SUB INFO
+            info()
+            # 160 LET KRYS=NOT PI: LET POGIB=NOT PI: LET UMER=NOT PI: LET ROD=NOT PI
+            krys = 0
+            pogib = 0
+            umer = 0
+            rod = 0
+            # 170 IF U=NOT PI THEN GO SUB TORG
+            torg()
+            # 180 IF U=NOT PI THEN GO SUB OHRANA
+            ohrana()
+            # 190 IF U=NOT PI THEN GO SUB KORM
+            u = korm()
+            if u is not None:
+                break
+            # 200 IF U=NOT PI THEN GO SUB POSEW
+            posev()
+            # 210 IF U=NOT PI THEN GO SUB HAMONY
+            hamony()
+            # 220 IF U=NOT PI THEN GO SUB UBORKA
+            uborka()
+            # 230 IF U=NOT PI THEN GO SUB NN
+            u = nn()
+            if u is not None:
+                break
+            # 240 IF U=NOT PI THEN GO SUB WAR
+            war()
+            # 290 LET TIME=TIME+SGN PI: GO TO VAL "120"
+            time += 1
+        oitog(u)
+        break
+
+
+if __name__ == "__main__":
+    main()
