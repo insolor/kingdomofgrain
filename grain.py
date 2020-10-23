@@ -45,11 +45,7 @@ def fn_s(k):
     return int(random() * k - 0.0000001) + 1
 
 
-#  30 DIM Q(VAL "22")
-q = [0 for x in range(22)]
-
-
-def ohrana(model: GameModel):
+def ohrana(screen: AbstractScreen, model: GameModel):
     # global ost, zerno, z
     # 610 REM \#017\#001OHRANA\#017\#000
     while True:
