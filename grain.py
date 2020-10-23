@@ -1,5 +1,8 @@
 from random import random
 
+from abstract_screen import AbstractScreen
+from game_model import GameModel
+
 # BAS file "" created by ZX-Modules
 
 #   3 BORDER NOT PI: POKE VAL "23624",VAL "71": POKE VAL "23693",VAL "71": CLS 
@@ -27,6 +30,8 @@ from random import random
 #       LET INPUT=VAL "4020"
 #  14 LET PUS=VAL "4030":
 #       LET S$="                                                                "
+from info import info
+from simple_screen import SimpleScreen
 
 s = " " * 64
 
@@ -43,72 +48,8 @@ def fn_s(k):
 q = [0 for x in range(22)]
 
 
-def cls():
-    # 4015 POKE VAL "23659",VAL "2": CLS : POKE VAL "23659",NOT PI: RETURN
-    # 4017 CLS : RETURN
-    pass
-
-
-def info():
-    # 300 REM \#017\#001INFO\#017\#000
-    # 310 GO SUB CLS
-    cls()
-    # 330 PRINT "\{i5}********************************"
-    print('********************************')
-    # 335 PRINT 
-    print()
-    # 340 INK VAL "6":
-    #   PRINT AT VAL "2",VAL "8";TIME;" gOD PRAWLENIQ:":
-    #   INK VAL "7"
-    print("%d Год правления:" % time)
-    # 350 IF BEV>BIN THEN PRINT ;"\{b0i7}w GOROD PRI[LO ";BEV;" BEVENCEW"
-    if bezh > 0:
-        print('В город пришло %d беженцев' % bezh)
-    # 360 PRINT "rODILOSX  ";ROD;" ^ELOWEK"
-    print('Родилось %d человек' % rod)
-    # 370 PRINT "\{b0}uMERLO   ";UMER;" ^ELOWEK"
-    print('Умерло   %d человек' % umer)
-    # 380 IF UMERGOL>BIN THEN PRINT "OT gOLODA - ";UMERGOL;" ^ELOWEK"
-    if umergol > 0:
-        print('От голода - %d человек' % umergol)
-    # 390 IF POGIB>BIN THEN PRINT "\{b0}w BOQH POLEGLO ";POGIB;" ^ELOWEK"
-    if pogib > 0:
-        print('В боях полегло %d человек' % pogib)
-    # 395 IF NAS<=BIN THEN LET NAS=SGN PI
-    global nas
-    if nas <= 0:
-        nas = 1
-    # 400 PRINT "nASELENIE - ";NAS;" ^ELOWEK"
-    print("Население - %d человек" % nas)
-    # 410 PRINT "\{b0}zEMLI - ";ZEML;" AKROW"
-    print("Земли - %d акров" % zeml)
-    # 420 PRINT "uROVAJ - ";UROV;" BU[/AKR"
-    print("Урожай - %d буш/акр" % urozh)
-    # 430 IF KRYS>BIN THEN PRINT "kRYSY SOVRALI ";KRYS;" BU[."
-    if krys > 0:
-        print("Крысы сожрали %d буш." % krys)
-    # 440 PRINT "\{b0}zAPASY ZERNA ";ZERNO;" BU[."
-    print("Запасы зерна %d буш." % zerno)
-    # 450 PRINT "cENA ZEMLI ";CENA;" BU[/AKR"
-    print("Цена земли %d буш/акр" % cena)
-    # 460 PRINT "\{b0}hLEBOROB ZASEWAET ";PROIZ;" AKROW"
-    print("Хлебороб засевает %d акров" % proiz)
-    # 470 LET I=25+FN S(10):
-    #   IF RASST<I THEN PRINT "nAPADA\@T  ";WRAGI;" WOINOW":
-    #       PRINT "ONI W ";RASST;" MILQH OT NAS!"
-    i = 25 + fn_s(10)
-    if rasst < i:
-        print("Нападают %d воинов" % vragi)
-        print("Они в %d милях от нас!" % rasst)
-    # 475 PRINT
-    # 480 PRINT "\{i5}********************************"
-    print()
-    print("********************************")
-    # 490 RETURN
-
-
-def torg():
-    global zerno, zeml
+def torg(model: GameModel):
+    # global zerno, zeml
     # 500 REM \#017\#001TORGOWLQ\#017\#000
     while True:
         # 510 LET ZEM=-1: PRINT AT VAL "20",VAL "5";"sKOLXKO KUPIM ZEMLI?"
@@ -121,18 +62,18 @@ def torg():
         #   GO SUB KEY:
         #   GO SUB PUS:
         #   GO TO VAL "510"
-        if cena * zem > zerno:
-            print("У нас только %d бушелей зерна!!!" % zerno)
+        if model.cena * zem > model.zerno:
+            print("У нас только %d бушелей зерна!!!" % model.zerno)
             key()
             pus()
             continue
         # 540 LET ZEML=ZEML+ZEM: LET ZERNO=ZERNO-CENA*ZEM
-        zeml += zem
-        zerno -= cena * zem
+        model.zeml += zem
+        model.zerno -= model.cena * zem
         # 550 PRINT AT VAL "20",SGN PI;"u NAS ";ZERNO;" BU[ELEJ ZERNA":
         #   GO SUB KEY:
         #   GO SUB PUS
-        print("У нас %d бушелей зерна" % zerno)
+        print("У нас %d бушелей зерна" % model.zerno)
         key()
         pus()
         break
@@ -144,21 +85,24 @@ def torg():
         print("Сколько земли продадим?")
         # 570 GO SUB INPUT: LET ZEM=VAL F$: IF ZEM<BIN THEN GO TO VAL "560"
         zem = int(sub_input())
-        # 580 IF ZEM>ZEML THEN PRINT AT VAL "20",BIN ;"u NAS TOLXKO ";ZEML;" AKROW ZEMLI!!!": GO SUB KEY: GO SUB PUS: GO TO VAL "560"
-        if zem > zeml:
+        # 580 IF ZEM>ZEML THEN PRINT AT VAL "20",BIN ;"u NAS TOLXKO ";ZEML;" AKROW ZEMLI!!!":
+        #   GO SUB KEY:
+        #   GO SUB PUS:
+        #   GO TO VAL "560"
+        if zem > model.zeml:
             print("У нас только %d акров земли!!!")
             key()
             pus()
             continue
         # 590 LET ZEML=ZEML-ZEM: LET ZERNO=ZERNO+ZEM*CENA
-        zeml -= zem
-        zerno += zem * cena
+        model.zeml -= zem
+        model.zerno += zem * model.cena
         # 600 RETURN 
         break
 
 
-def ohrana():
-    global ost, zerno, z
+def ohrana(model: GameModel):
+    # global ost, zerno, z
     # 610 REM \#017\#001OHRANA\#017\#000
     while True:
         # 620 LET UBITO=NOT PI: LET Z=-1
@@ -166,7 +110,7 @@ def ohrana():
         z = -1
         # 630 GO SUB PUS: PRINT AT VAL "20",VAL "5";"u NAS ";NAS;" ^ELOWEK"
         pus()
-        print("У нас %d человек" % nas)
+        print("У нас %d человек" % model.nas)
         # 640 PRINT AT VAL "21",INT PI;"sKOLXKO PO[LEM W WOJSKO?":
         #   GO SUB INPUT:
         #   LET Z=VAL F$:
@@ -181,7 +125,7 @@ def ohrana():
         #   GO SUB KEY:
         #   GO SUB PUS:
         #   GO TO VAL "620"
-        if z > nas:
+        if z > model.nas:
             print("У нас мало людей!!!")
             key()
             pus()
@@ -191,8 +135,8 @@ def ohrana():
         #   GO SUB KEY:
         #   GO SUB PUS:
         #   GO TO VAL "620"
-        if z > int(zerno / 5):
-            print("Зерна хватит на %d воинов" % (zerno / 5))
+        if z > model.zerno // 5:
+            print("Зерна хватит на %d воинов" % (model.zerno // 5))
             key()
             pus()
             continue
@@ -201,17 +145,17 @@ def ohrana():
         #   LET ZERNO=ZERNO-Z*5:
         #   RETURN
         if z > 0:
-            ost = nas - z
-            zerno -= z * 5
+            model.ost = model.nas - z
+            model.zerno -= z * 5
         else:
             # 690 LET OST=NAS:
             #   RETURN
-            ost = nas
+            model.ost = model.nas
         return
 
 
-def korm():
-    global zerno, umergol, umervsego, nas, k
+def korm(model: GameModel):
+    # global zerno, umergol, umervsego, nas, k
     # 700 REM \#017\#001KORMEVKA\#017\#000
     # 710 LET K=-1: IF OST<=NOT PI THEN RETURN 
     k = -1
@@ -308,7 +252,7 @@ def korm():
 
 
 def posev():
-    global zerno, ost, zas
+    # global zerno, ost, zas
     # 840 REM \#017\#001POSEW\#017\#000
     # 850 LET ZAS=-1: LET UROV=NOT PI: LET SBOR=NOT PI
     zas = -1
@@ -382,7 +326,7 @@ def posev():
 
 
 def pobeda():
-    global nas, zeml, zerno, pogib, zahv, ost
+    # global nas, zeml, zerno, pogib, zahv, ost
     # 1150 REM \#017\#001POBEDA\#017\#000
     # 1155 GO SUB CLS: RANDOMIZE USR VAL "54778"
     cls()
@@ -427,7 +371,7 @@ def pobeda():
 
 
 def porazh():
-    global nas, pogib, zahv, ost
+    # global nas, pogib, zahv, ost
     # 1240 REM \#017\#001PORAVENIE\#017\#000
     # 1245 GO SUB CLS: RANDOMIZE USR VAL "54778"
     cls()
@@ -487,7 +431,7 @@ def instr():
 
 
 def hamony():
-    global nas, ost, zerno, zahv, srok
+    # global nas, ost, zerno, zahv, srok
     # 960 REM \#017\#001hAMONIQ\#017\#000
     # 970 IF (OST<=BIN ) OR (ZERNO<=5) THEN
     #   LET POS=BIN :
@@ -568,7 +512,7 @@ def hamony():
 
 
 def uborka():
-    global proiz, zerno, urozh
+    # global proiz, zerno, urozh
     # 1300 REM \#017\#001UBORKA\#017\#000
     # 1305 GO SUB CLS
     cls()
@@ -704,13 +648,13 @@ def uborka():
     # 1500 RETURN
 
 
-def nn():
-    global nas, umer, agent, proiz, predel, ist, zerno
+def nn(model: GameModel):
+    # global nas, umer, agent, proiz, predel, ist, zerno
     # 1550 REM \#017\#001NN\#017\#000
     # 1555 GO SUB CLS
     cls()
     # 1560 LET BEV=INT (RND*INT (NAS/4))
-    bezh = int(random() * (nas // 4))
+    bezh = int(random() * (model.nas // 4))
     # 1570 IF (RASST<20) AND (RND>.5) THEN
     #   LET BEV=BEV+INT (RND*BEV):
     #   PRINT AT VAL "11",INT PI;"pRITOK BEVENCEW SPASA\@]IHSQ";AT VAL "12",VAL "7";"OT ZAHWAT^IKOW!!!":
@@ -722,7 +666,7 @@ def nn():
         key()
         cls()
     # 1580 LET NAS=NAS+BEV
-    nas += bezh
+    model.nas += bezh
     # 1590 IF (K<10) OR (UMERWSEGO>NAS*10) THEN
     #   RANDOMIZE USR VAL "55936": PRINT AT VAL "11",SGN PI;"nAROD WOSSTAL PROTIW TIRANA!!!":
     #   GO SUB KEY:
@@ -931,7 +875,7 @@ def nn():
             key()
             cls()
     # 1800 IF (TIME<=10) OR (ZAS<>ZEML) THEN GO TO VAL "1820"
-    if time > 10 and zas == zeml:
+    if model.time > 10 and zas == zeml:
         # 1810 IF IST<VAL "4" THEN
         #   LET IST=IST+SGN PI:
         #   RANDOMIZE USR VAL "62884":
@@ -976,7 +920,7 @@ def nn():
 
 
 def war():
-    global rasst
+    # global rasst
     # 1860 REM \#017\#001WTORVENIE\#017\#000
     # 1870 LET RASST=RASST-FN S(VAL "5")-VAL "10"
     rasst -= fn_s(5) + 10
@@ -997,7 +941,7 @@ def war():
 
 
 def ataka():
-    global nas, pogib, rasst, vragi
+    # global nas, pogib, rasst, vragi
     # 1910 REM \#017\#001ATAKA\#017\#000
     # 1920 RANDOMIZE USR VAL "54778":
     #   PRINT AT VAL "11",VAL "7";"\{i3}gorod atakowan!!!":
@@ -1161,129 +1105,99 @@ def pus():
     pass
 
 
-def main():
-    global time, nbog, cena, bezh, krys, rod
+def main_menu(screen: AbstractScreen):
     while True:
-        while True:
-            #  50 GO SUB CLS: RANDOMIZE USR VAL "51304"
-            cls()
-            #  53 PRINT AT VAL "9",VAL "7";"\{i6}korolewstwo zerna"
-            #  55 PRINT AT VAL "12",VAL "9";"\{i5}1 sTART IGRY"
-            #  56 PRINT AT VAL "14",VAL "9";"\{i5}2 iNSTRUKCII"
-            #  57 PRINT AT VAL "16",VAL "9";"\{i5}3 aWTORY"
-            #  59 PRINT AT VAL "21",VAL "9";"\{i4}1992  mOSKWA"
-            print("КОРОЛЕВСТВО ЗЕРНА")
-            print("1 Старт игры")
-            print("2 Инструкции")
-            print("3 Авторы")
-            print("1992 Москва")
+        #  50 GO SUB CLS: RANDOMIZE USR VAL "51304"
+        screen.cls()
+        #  53 PRINT AT VAL "9",VAL "7";"\{i6}korolewstwo zerna"
+        #  55 PRINT AT VAL "12",VAL "9";"\{i5}1 sTART IGRY"
+        #  56 PRINT AT VAL "14",VAL "9";"\{i5}2 iNSTRUKCII"
+        #  57 PRINT AT VAL "16",VAL "9";"\{i5}3 aWTORY"
+        #  59 PRINT AT VAL "21",VAL "9";"\{i4}1992  mOSKWA"
+        print("КОРОЛЕВСТВО ЗЕРНА")
+        print("1 Старт игры")
+        print("2 Инструкции")
+        print("3 Авторы")
+        print("1992 Москва")
 
-            #  60 GO SUB KEY: IF INKEY$="1" THEN GO TO VAL "80"
-            #  62 IF INKEY$="2" THEN GO SUB INSTR: GO SUB KEY: GO TO VAL "50"
-            #  64 IF INKEY$="3" THEN RANDOMIZE USR VAL "48541": GO SUB KEY: GO TO VAL "50"
-            #  66 GO TO VAL "60"
+        #  60 GO SUB KEY: IF INKEY$="1" THEN GO TO VAL "80"
+        #  62 IF INKEY$="2" THEN GO SUB INSTR: GO SUB KEY: GO TO VAL "50"
+        #  64 IF INKEY$="3" THEN RANDOMIZE USR VAL "48541": GO SUB KEY: GO TO VAL "50"
+        #  66 GO TO VAL "60"
 
-            inkey = key()
-            if inkey == '1':
-                break
-            elif inkey == '2':
-                instr()
-            elif inkey == '3':
-                pass  # Credits
-
+        inkey = key()
+        if inkey == '1':
             break
+        elif inkey == '2':
+            instr()
+        elif inkey == '3':
+            pass  # Credits
+
+
+def main():
+    screen = SimpleScreen()
+
+    while True:
+        main_menu(screen)
 
         #  80 REM \#017\#001\#019\#001na~alxnye ustanowki\#017\#000
         # Начальные установки
-
-        #  90 LET UMER=NOT PI:
-        #   LET ROD=NOT PI:
-        #   LET UMERGOL=NOT PI:
-        #   LET UMERWSEGO=NOT PI:
-        #   LET ZAHW=NOT PI:
-        #   LET POGIB=NOT PI:
-        #   LET PROIZ=VAL "10":
-        #   LET PREDEL=VAL "15"
-        umer = 0
-        rod = 0
-        umergol = 0
-        umervsego = 0
-        zahv = 0
-        pogib = 0
-        proiz = 10
-        predel = 15
-
-        # 100 LET WRAGI=FN S(VAL "10")+VAL "25":
-        #   LET RASST=FN S(VAL "10")+VAL "25":
-        #   LET CENA=FN S(VAL "10")+VAL "15":
-        #   LET SBOR=VAL "2100"+FN S(VAL "600"):
-        #   LET NAS=VAL "80"+FN S(VAL "20"):
-        #   LET ZEML=VAL "900"+FN S(VAL "200")
-        vragi = fn_s(10) + 25
-        rasst = fn_s(10) + 25
-        cena = fn_s(10) + 15
-        sbor = 2100 + fn_s(600)
-        nas = 80 + fn_s(20)
-        zeml = 900 + fn_s(200)
-
-        # 110 LET UROV=INT (SBOR/ZEML):
-        #   LET KRYS=150+FN S(VAL "200"):
-        #   LET ZERNO=SBOR-KRYS:
-        #   LET TIME=SGN PI:
-        #   LET U=NOT PI:
-        #   LET BEV=5+FN S(VAL "5"):
-        #   LET AGENT=NOT PI:
-        #   LET NBOG=CENA*ZEML+ZERNO:
-        #   LET IST=NOT PI
-        urozh = sbor // zeml
-        krys = 150 + fn_s(200)
-        zerno = sbor - krys
-        time = 1
-        u = None
-        bezh = 5 + fn_s(5)
-        agent = 0
-        nbog = cena * zeml + zerno
-        ist = 0
+        model = GameModel()
 
         # 120 REM \#017\#001**START PROGRAM**\#017\#000
         # Start program
 
         # 130 IF U<>NOT PI THEN GO TO VAL "50"
-        while u is None:
+        while model.u is None:
             # 140 LET CENA=VAL "10"+FN S(VAL "40")
-            cena = 10 + fn_s(40)
+            model.cena = 10 + fn_s(40)
             # 145 REM RANDOMIZE USR VAL "42675": GO SUB CLS
-            cls()
+            screen.cls()
             # 150 GO SUB INFO
-            info()
+            info(screen, model)
             # 160 LET KRYS=NOT PI: LET POGIB=NOT PI: LET UMER=NOT PI: LET ROD=NOT PI
-            krys = 0
-            pogib = 0
-            umer = 0
-            rod = 0
+            model.krys = 0
+            model.pogib = 0
+            model.umer = 0
+            model.rod = 0
+
             # 170 IF U=NOT PI THEN GO SUB TORG
-            torg()
+            if model.u is None:
+                torg(model)
+
             # 180 IF U=NOT PI THEN GO SUB OHRANA
-            ohrana()
+            if model.u is None:
+                ohrana(model)
+
             # 190 IF U=NOT PI THEN GO SUB KORM
-            u = korm()
-            if u is not None:
-                break
+            if model.u is None:
+                korm(model)
+
             # 200 IF U=NOT PI THEN GO SUB POSEW
-            posev()
+            if model.u is None:
+                posev()
+
             # 210 IF U=NOT PI THEN GO SUB HAMONY
-            hamony()
+            if model.u is None:
+                hamony()
+
             # 220 IF U=NOT PI THEN GO SUB UBORKA
-            uborka()
+            if model.u is None:
+                uborka()
+
             # 230 IF U=NOT PI THEN GO SUB NN
-            u = nn()
-            if u is not None:
-                break
+            if model.u is None:
+                nn(model)
+
             # 240 IF U=NOT PI THEN GO SUB WAR
-            war()
-            # 290 LET TIME=TIME+SGN PI: GO TO VAL "120"
-            time += 1
-        oitog(u)
+            if model.u is None:
+                war()
+
+            # 290 LET TIME=TIME+SGN PI:
+            #   GO TO VAL "120"
+            model.time += 1
+
+        oitog(model.u)
         break
 
 
