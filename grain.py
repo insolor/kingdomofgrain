@@ -31,6 +31,7 @@ from game_model import GameModel
 #       LET INPUT=VAL "4020"
 #  14 LET PUS=VAL "4030":
 #       LET S$="                                                                "
+from guard import guard
 from info import info
 from simple_screen import SimpleScreen
 
@@ -45,66 +46,14 @@ def fn_s(k):
     return int(random() * k - 0.0000001) + 1
 
 
-def ohrana(screen: AbstractScreen, model: GameModel):
-    # global ost, zerno, z
-    # 610 REM \#017\#001OHRANA\#017\#000
-    while True:
-        # 620 LET UBITO=NOT PI: LET Z=-1
-        ubito = 0
-        z = -1
-        # 630 GO SUB PUS: PRINT AT VAL "20",VAL "5";"u NAS ";NAS;" ^ELOWEK"
-        pus()
-        print("У нас %d человек" % model.nas)
-        # 640 PRINT AT VAL "21",INT PI;"sKOLXKO PO[LEM W WOJSKO?":
-        #   GO SUB INPUT:
-        #   LET Z=VAL F$:
-        #   GO SUB PUS
-        print("Сколько пошлём в войско?")
-        z = int(sub_input())
-        pus()
-        # 650 IF Z<NOT PI THEN GO TO VAL "620"
-        if z < 0:
-            continue
-        # 660 IF Z>NAS THEN PRINT AT VAL "20",VAL "6";"u NAS MALO L\@DEJ!!!":
-        #   GO SUB KEY:
-        #   GO SUB PUS:
-        #   GO TO VAL "620"
-        if z > model.nas:
-            print("У нас мало людей!!!")
-            key()
-            pus()
-            continue
-        # 670 IF Z>INT (ZERNO/VAL "5") THEN
-        #   PRINT AT VAL "20",SGN PI;"zERNA HWATIT NA ";INT (ZERNO/5);" WOINOW":
-        #   GO SUB KEY:
-        #   GO SUB PUS:
-        #   GO TO VAL "620"
-        if z > model.zerno // 5:
-            print("Зерна хватит на %d воинов" % (model.zerno // 5))
-            key()
-            pus()
-            continue
-        # 680 IF Z>NOT PI THEN
-        #   LET OST=NAS-Z:
-        #   LET ZERNO=ZERNO-Z*5:
-        #   RETURN
-        if z > 0:
-            model.ost = model.nas - z
-            model.zerno -= z * 5
-        else:
-            # 690 LET OST=NAS:
-            #   RETURN
-            model.ost = model.nas
-        return
-
-
-def korm(model: GameModel):
+def korm(screen: AbstractScreen, model: GameModel):
     # global zerno, umergol, umervsego, nas, k
     # 700 REM \#017\#001KORMEVKA\#017\#000
     # 710 LET K=-1: IF OST<=NOT PI THEN RETURN 
     k = -1
-    if ost <= 0:
+    if model.ost <= 0:
         return
+
     while True:
         # 720 PRINT AT VAL "20",SGN PI;"mOVNO DATX ";INT (ZERNO/OST);" BU[ NA ^ELOWEKA":
         #   PRINT AT VAL "21",VAL "6";"sKOLXKO DA[X?"
@@ -125,7 +74,7 @@ def korm(model: GameModel):
         #   GO TO VAL "720"
         if k * ost > zerno:
             print("У нас нет столько зерна!!!")
-            key()
+            screen.key()
             continue
         # 750 LET ZERNO=ZERNO-K*OST
         zerno -= k * ost
@@ -149,7 +98,7 @@ def korm(model: GameModel):
         if nas <= 0 or k == 0:
             cls()
             print("Ты уморил всех голодом!!!")
-            key()
+            screen.key()
             u = 1
             oitog(0)
             return
@@ -160,16 +109,16 @@ def korm(model: GameModel):
         #   GO TO VAL "800"
         if k <= 18:
             print("ДУШЕГУБ!!!")
-            key()
-            pus()
+            screen.key()
+            empty_lines()
         # 790 IF K<=VAL "21" THEN
         #   PRINT AT VAL "20",VAL "10";"\{i5}vadina!!!":
         #   GO SUB KEY:
         #   GO SUB PUS
         elif k <= 21:
             print("ЖАДИНА!!!")
-            key()
-            pus()
+            screen.key()
+            empty_lines()
         # 800 IF K>VAL "20" THEN
         #   LET UMERGOL=BIN
         if k > 20:
@@ -181,21 +130,21 @@ def korm(model: GameModel):
         #   GO TO VAL "830"
         if k > 70:
             print("В..вы...ВЫПЬ..ПЬЕМ!!!ЗА ТЕБЯ!!!")
-            key()
-            pus()
+            screen.key()
+            empty_lines()
         # 820 IF K>VAL "50" THEN
         #   PRINT AT VAL "20",VAL "5";"\{i4}bLAGODETELX ty NA[!!!":
         #   GO SUB KEY:
         #   GO SUB PUS
         elif k > 50:
             print("Благодетель ты НАШ!!!")
-            key()
-            pus()
+            screen.key()
+            empty_lines(screen)
         # 830 RETURN 
         return
 
 
-def posev():
+def posev(screen: AbstractScreen, model: GameModel):
     # global zerno, ost, zas
     # 840 REM \#017\#001POSEW\#017\#000
     # 850 LET ZAS=-1: LET UROV=NOT PI: LET SBOR=NOT PI
@@ -222,7 +171,7 @@ def posev():
         #   IF ZAS<BIN THEN
         #       GO TO VAL "890"
         zas = int(sub_input())
-        pus()
+        empty_lines()
         if zas < 0:
             continue
         # 910 IF ZAS>ZEML THEN
@@ -234,7 +183,7 @@ def posev():
         if zas > zeml:
             print("У нас мало земли!!!")
             key()
-            pus()
+            empty_lines()
             zas = -1
             continue
         # 920 IF ZAS/VAL "2">ZERNO THEN
@@ -246,7 +195,7 @@ def posev():
         if zas * 0.5 > zerno:
             print("У нас не хватит зерна!!!")
             key()
-            pus()
+            empty_lines()
             zas = -1
             continue
         # 930 IF INT (ZAS/PROIZ)>OST THEN
@@ -258,7 +207,7 @@ def posev():
         if zas // proiz > ost:
             print("У нас мало людей!")
             key()
-            pus()
+            empty_lines()
             zas = -1
             continue
         # 940 LET ZERNO=ZERNO-INT (ZAS/VAL "2"):
@@ -269,11 +218,10 @@ def posev():
         return
 
 
-def pobeda():
-    # global nas, zeml, zerno, pogib, zahv, ost
+def pobeda(screen: AbstractScreen, model: GameModel):
     # 1150 REM \#017\#001POBEDA\#017\#000
     # 1155 GO SUB CLS: RANDOMIZE USR VAL "54778"
-    cls()
+    screen.cls()
     # 1160 PRINT AT VAL "11",VAL "2";"\{i6}w hAMONII ODERVANA pobeda!!!"
     print("В хамонии одержана победа!!!")
     # 1170 LET T(INT PI)=INT (NAS*(RND/3+0.3)):
@@ -314,7 +262,7 @@ def pobeda():
     # 1230 RETURN
 
 
-def porazh():
+def porazh(screen: AbstractScreen, model: GameModel):
     # global nas, pogib, zahv, ost
     # 1240 REM \#017\#001PORAVENIE\#017\#000
     # 1245 GO SUB CLS: RANDOMIZE USR VAL "54778"
@@ -339,10 +287,10 @@ def porazh():
     # 1290 RETURN
 
 
-def instr():
+def instr(screen: AbstractScreen):
     # 1510 REM \#017\#001instrukciq\#017\#000
     # 1515 GO SUB CLS
-    cls()
+    screen.cls()
     # 1520 PRINT AT NOT PI,VAL "10";"instrukciq":
     #   PRINT "  wAM PREDLAGAETSQ POPROBOWATX":
     #   PRINT " SWOI SILY W UPRAWLENII STRANOJ":
@@ -374,7 +322,7 @@ def instr():
     # 1540 RETURN
 
 
-def hamony():
+def hamony(screen: AbstractScreen, model: GameModel):
     # global nas, ost, zerno, zahv, srok
     # 960 REM \#017\#001hAMONIQ\#017\#000
     # 970 IF (OST<=BIN ) OR (ZERNO<=5) THEN
@@ -397,7 +345,7 @@ def hamony():
             #   GO SUB PUS:
             #   IF POS<BIN THEN GO TO VAL "990"
             pos = int(sub_input())
-            pus()
+            empty_lines()
             if pos < 0:
                 continue
             # 1010 IF POS>OST THEN
@@ -408,7 +356,7 @@ def hamony():
             if pos > ost:
                 print("У нас мало людей!!!")
                 key()
-                pus()
+                empty_lines()
                 continue
             # 1020 IF POS>INT (ZERNO/5) THEN
             #   PRINT AT VAL "20",VAL "6";"u NAS MALO ZERNA!!!":
@@ -418,7 +366,7 @@ def hamony():
             if pos * 5 > zerno:
                 print("У нас мало зерна!!!")
                 key()
-                pus()
+                empty_lines()
                 continue
             break
     # 1030 IF POS<=NOT PI THEN GO TO VAL "1070"
@@ -455,7 +403,7 @@ def hamony():
     # 1140 RETURN
 
 
-def uborka():
+def uborka(screen: AbstractScreen, model: GameModel):
     # global proiz, zerno, urozh
     # 1300 REM \#017\#001UBORKA\#017\#000
     # 1305 GO SUB CLS
@@ -592,7 +540,7 @@ def uborka():
     # 1500 RETURN
 
 
-def nn(model: GameModel):
+def nn(screen: AbstractScreen, model: GameModel):
     # global nas, umer, agent, proiz, predel, ist, zerno
     # 1550 REM \#017\#001NN\#017\#000
     # 1555 GO SUB CLS
@@ -863,7 +811,7 @@ def nn(model: GameModel):
     # 1850 RETURN
 
 
-def war():
+def war(screen: AbstractScreen, model: GameModel):
     # global rasst
     # 1860 REM \#017\#001WTORVENIE\#017\#000
     # 1870 LET RASST=RASST-FN S(VAL "5")-VAL "10"
@@ -884,7 +832,7 @@ def war():
     # 1900 RETURN
 
 
-def ataka():
+def ataka(screen: AbstractScreen, model: GameModel):
     # global nas, pogib, rasst, vragi
     # 1910 REM \#017\#001ATAKA\#017\#000
     # 1920 RANDOMIZE USR VAL "54778":
@@ -934,7 +882,7 @@ def ataka():
         # 1970 RETURN
 
 
-def oitog(oi):
+def oitog(screen: AbstractScreen, model: GameModel, oi):
     # 1980 REM \#017\#001OITOG\#017\#000
     # 1985 GO SUB CLS
     cls()
@@ -984,37 +932,10 @@ def oitog(oi):
 
 
 def save_load():
-    # 4040 GO SUB CLS: RANDOMIZE USR VAL "42751": PRINT AT VAL "11",VAL "5";"1 zAGRUZKA STAROJ IGRY";AT VAL "13",VAL "5";"2 zAPISX NOWOJ IGRY";AT VAL "15",VAL "5";"3 wYHOD"
-    # 4050 FOR N=SGN PI TO INT PI: IF INKEY$=STR$ N THEN GO TO (VAL "4E3"+N*VAL "100")
-    # 4055 NEXT N: GO TO VAL "4050"
-    # 4100 GO SUB VAL "4110": GO TO VAL "4120"
-    # 4110 PRINT AT VAL "19",VAL "6";"nABERITE IMQ FAJLA.": GO SUB VAL "8": POKE VAL "23659",VAL "2": POKE VAL "23613",NOT PI: INPUT LINE F$: POKE VAL "23659",NOT PI: GO SUB VAL "6": IF LEN F$>VAL "8" OR F$="" THEN GO TO VAL "4110"
-    # 4112 RETURN
-    # 4120 RANDOMIZE USR VAL "15619": REM : LOAD F$ DATA Q()
-    # 4130 LET UMER=Q(SGN PI): LET ROD=Q(VAL "2"): LET UMERGOL=Q(INT PI): LET UMERWSEGO=Q(VAL "4"): LET POGIB=Q(VAL "5"): LET PROIZ=Q(VAL "6")
-    # 4140 LET PREDEL=Q(VAL "7"): LET WRAGI=Q(VAL "8"): LET RASST=Q(VAL "9"): LET CENA=Q(VAL "10"): LET SBOR=Q(VAL "11"): LET NAS=Q(VAL "12")
-    # 4150 LET ZEML=Q(VAL "13"): LET UROV=Q(VAL "14"): LET KRYS=Q(VAL "15"): LET ZERNO=Q(VAL "16"): LET TIME=Q(VAL "17"): LET U=Q(VAL "18")
-    # 4160 LET BEV=Q(VAL "19"): LET AGENT=Q(VAL "20"): LET NBOG=Q(VAL "21"): LET IST=Q(VAL "22")
-    # 4170 GO TO VAL "4040"
-    # 4200 GO SUB VAL "4110"
-    # 4210 LET Q(SGN PI)=UMER: LET Q(VAL "2")=ROD: LET Q(INT PI)=UMERGOL: LET Q(VAL "4")=UMERWSEGO: LET Q(VAL "5")=POGIB: LET Q(VAL "6")=PROIZ
-    # 4220 LET Q(VAL "7")=PREDEL: LET Q(VAL "8")=WRAGI: LET Q(VAL "9")=RASST: LET Q(VAL "10")=CENA: LET Q(VAL "11")=SBOR: LET Q(VAL "12")=NAS
-    # 4230 LET Q(VAL "13")=ZEML: LET Q(VAL "14")=UROV: LET Q(VAL "15")=KRYS: LET Q(VAL "16")=ZERNO: LET Q(VAL "17")=TIME: LET Q(VAL "18")=U
-    # 4240 LET Q(VAL "19")=BEV: LET Q(VAL "20")=AGENT: LET Q(VAL "21")=NBOG: LET Q(VAL "22")=IST
-    # 4250 RANDOMIZE USR VAL "15619": REM : SAVE F$ DATA Q()
-    # 4260 GO TO VAL "4040"
-    # 4300 RETURN
     pass
 
 
-def key():
-    # 4010 IF INKEY$<>"" THEN GO TO VAL "4012"
-    # 4011 GO TO VAL "4010"
-    # 4012 RETURN
-    return input()
-
-
-def sub_input():
+def sub_input(screen: AbstractScreen):
     # 4020 POKE VAL "23659",VAL "2":
     #   POKE VAL "23613",NOT PI:
     #   INPUT LINE F$:
@@ -1023,7 +944,7 @@ def sub_input():
     #       LET F$="0":
     #       GO TO VAL "4026"
     while True:
-        f = input()
+        f = screen.input()
         if f == '':
             f = '0'
         # 4021 IF F$="k" OR f$="K" THEN LET OI=SGN PI: GO SUB OITOG: GO TO VAL "50"
@@ -1044,7 +965,7 @@ def sub_input():
             return f
 
 
-def pus(screen: AbstractScreen):
+def empty_lines(screen: AbstractScreen):
     # 4030 PRINT AT VAL "20",BIN ;S$: RETURN
     screen.print(s)
     pass
@@ -1070,7 +991,7 @@ def main_menu(screen: AbstractScreen):
         #  64 IF INKEY$="3" THEN RANDOMIZE USR VAL "48541": GO SUB KEY: GO TO VAL "50"
         #  66 GO TO VAL "60"
 
-        inkey = key()
+        inkey = screen.key()
         if inkey == '1':
             break
         elif inkey == '2':
@@ -1112,15 +1033,15 @@ def main():
 
             # 180 IF U=NOT PI THEN GO SUB OHRANA
             if model.u is None:
-                ohrana(model)
+                guard(screen, model)
 
             # 190 IF U=NOT PI THEN GO SUB KORM
             if model.u is None:
-                korm(model)
+                korm(screen, model)
 
             # 200 IF U=NOT PI THEN GO SUB POSEW
             if model.u is None:
-                posev()
+                posev(screen, model)
 
             # 210 IF U=NOT PI THEN GO SUB HAMONY
             if model.u is None:
