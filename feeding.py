@@ -1,6 +1,7 @@
 from abstract_screen import AbstractScreen
 from game_model import GameModel
-from grain import sub_input, oitog, empty_lines
+from grain import sub_input, empty_lines
+from game_results import game_results
 
 
 def feeding(screen: AbstractScreen, model: GameModel):
@@ -62,7 +63,7 @@ def feeding(screen: AbstractScreen, model: GameModel):
             screen.at(11, 3).ink(2).print("Ты уморил всех голодом!!!")
             screen.key()
             model.u = 1
-            oitog(screen, model, 0)
+            game_results(screen, model, 0)
             return
 
         # 780 IF K<=VAL "10" THEN
