@@ -2,7 +2,7 @@ from random import random
 
 from io_devices import AbstractIO
 from game_model import GameModel
-from grain import fn_s
+from grain import randint
 
 
 def nn(device: AbstractIO, model: GameModel):
@@ -77,7 +77,7 @@ def nn(device: AbstractIO, model: GameModel):
     #   LET UMER=UMER+INT (NAS*CHUMA/100):
     #   GO SUB KEY:
     #   GO SUB CLS
-    if fn_s(12) == 1:
+    if randint(12) == 1:
         chuma = int(random() * 50 + 5)
         print("Чума унесла %d%% населения!" % chuma)
         umer += int(nas * chuma / 100)
@@ -90,7 +90,7 @@ def nn(device: AbstractIO, model: GameModel):
     #   LET ROD=ROD+DEM:
     #   GO SUB KEY:
     #   GO SUB CLS
-    if fn_s(100) < 5:
+    if randint(100) < 5:
         print("Демографический взрыв!!!")
         dem = int((random() / 2 + 0.5) * nas)
         rod += dem
@@ -104,7 +104,7 @@ def nn(device: AbstractIO, model: GameModel):
     #   GO SUB KEY:
     #   GO SUB CLS:
     #   GO TO VAL "1666"
-    if fn_s(20) == 5:
+    if randint(20) == 5:
         print("ПОЖА - А - А - АР!!!")
         sgor = int(nas * (random() / 3 + 0.3))
         sgorzer = int(zerno * (random() / 4 + 0.1))
@@ -130,7 +130,7 @@ def nn(device: AbstractIO, model: GameModel):
     #   PRINT AT VAL "11",SGN PI;"w GOROD PROBRALSQ DIWERSANT":
     #   GO SUB KEY:
     #   GO SUB CLS:
-    if fn_s(10) == 2:
+    if randint(10) == 2:
         agent += 1
         print("В город пробрался диверсант")
         key()
@@ -201,14 +201,14 @@ def nn(device: AbstractIO, model: GameModel):
     #   LET PREDEL=PREDEL+VAL "5":
     #   GO SUB KEY:
     #   GO SUB CLS
-    if fn_s(15) == 8:
+    if randint(15) == 8:
         print("Внедрение новых орудий труда подняло производительность!")
         proiz += 2
         predel += 5
         key()
         cls()
     # 1760 IF FN S(VAL "50")<>VAL "50" THEN GO TO VAL "1800"
-    if fn_s(50) == 50:
+    if randint(50) == 50:
         # 1770 PRINT AT VAL "11",VAL "5";"\{i6}dworcowyj pereworot!!!"
         print("ДВОРЦОВЫЙ ПЕРВОРОТ!!!")
         # 1780 IF (FN S(VAL "2")=SGN PI) OR (Z<NAS/VAL "10") THEN
@@ -219,7 +219,7 @@ def nn(device: AbstractIO, model: GameModel):
         #   GO SUB CLS:
         #   GO SUB OITOG:
         #   RETURN
-        if fn_s(2) == 1 or z < nas / 10:
+        if randint(2) == 1 or z < nas / 10:
             print("Вы свергнуты с престола!!!")
             key()
             cls()
@@ -265,7 +265,7 @@ def nn(device: AbstractIO, model: GameModel):
     #   LET ZERNO=ZERNO-PROPALO:
     #   GO SUB KEY:
     #   GO SUB CLS
-    if fn_s(15) == 1 and agent > 0:
+    if randint(15) == 1 and agent > 0:
         propalo = int((random() / 5 + 0.1) * zerno)
         print("Группой расхитителей под предводительством диверсанта похищено %d буш. зерна" % propalo)
         zerno -= propalo

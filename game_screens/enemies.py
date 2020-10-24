@@ -2,16 +2,16 @@ from random import random
 
 from io_devices import AbstractIO
 from game_model import GameModel
-from grain import fn_s
+from grain import randint
 
 
 def intervention(device: AbstractIO, model: GameModel):
     # global rasst
     # 1860 REM \#017\#001WTORVENIE\#017\#000
     # 1870 LET RASST=RASST-FN S(VAL "5")-VAL "10"
-    rasst -= fn_s(5) + 10
+    rasst -= randint(5) + 10
     # 1880 IF RASST<FN S(VAL "\{f0}5") THEN GO SUB ATAKA: GO TO VAL "1900"
-    if rasst < fn_s(5):
+    if rasst < randint(5):
         attack_by_enemies()
     # 1890 IF (RASST<VAL "15") AND (RND<0.1) THEN
     #   PRINT AT VAL "11",SGN PI;"wRAGI SOWER[ILI STREMITELXNYJ";AT VAL "12",VAL "9";"MAR[ - BROSOK!":
@@ -57,7 +57,7 @@ def attack_by_enemies(device: AbstractIO, model: GameModel):
         print("Но атака отбита! Ура-а-а!!!")
         # 1950 IF FN S(3)=SGN PI THEN
         #   PRINT AT VAL "15",INT PI;"pROIZO[LA RE[A\@]AQ BITWA!!!"
-        if fn_s(3) == 1:
+        if randint(3) == 1:
             print("Произошла решающая битва!!!")
         # 1960 LET POGIBZ=INT (WRAGI/3)+INT (RND*Z/6):
         #   LET POGIB=POGIB+POGIBZ:
@@ -67,7 +67,7 @@ def attack_by_enemies(device: AbstractIO, model: GameModel):
         pogibz = int(vragi / 3) + int(random() * z / 6)
         pogib += pogibz
         nas -= pogib
-        rasst = 25 + fn_s(20)
+        rasst = 25 + randint(20)
         vragi = int(nas / 4) + int(random() * nas / 5)
         # 1965 GO TO KEY:
         #   GO SUB CLS

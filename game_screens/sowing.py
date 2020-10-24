@@ -30,7 +30,8 @@ def sowing(device: AbstractIO, model: GameModel):
         #   IF ZAS<BIN THEN
         #       GO TO VAL "890"
         zas = int(sub_input())
-        empty_lines()
+        device.at(18, 0).print(64 * " ")
+        empty_lines(device)
         if zas < 0:
             continue
         # 910 IF ZAS>ZEML THEN
