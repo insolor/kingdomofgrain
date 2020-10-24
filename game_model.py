@@ -53,10 +53,10 @@ class GameModel:
         self.krys = 150 + fn_s(200)  # rats (grain eaten by rats)
         self.zerno = self.sbor - self.krys  # grain left
         self.time = 1  # number of a year
-        self.u = None
+        self.u = False
         self.bezh = 5 + fn_s(5)  # refugees income
         self.agent = 0  # enemy agent
-        self.nbog = self.cena * self.zeml + self.zerno  # total wealth
+        self.nbog = self.cena * self.zeml + self.zerno  # initial wealth
         self.ist = 0
 
         self.ost = None
