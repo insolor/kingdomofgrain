@@ -1,6 +1,6 @@
 from abstract_screen import AbstractScreen
 from game_model import GameModel
-from grain import sub_input, pus, key
+from grain import sub_input, empty_lines, key
 
 
 def purchase_land(screen: AbstractScreen, model: GameModel):
@@ -14,7 +14,7 @@ def purchase_land(screen: AbstractScreen, model: GameModel):
         #   GO SUB PUS:
         #   IF ZEM<BIN THEN GO TO VAL "510"
         zem = int(sub_input())
-        pus(screen)
+        empty_lines(screen)
         if zem < 0:
             continue
 
@@ -25,7 +25,7 @@ def purchase_land(screen: AbstractScreen, model: GameModel):
         if model.cena * zem > model.zerno:
             screen.print(f"У нас только {model.zerno} бушелей зерна!!!")
             key()
-            pus(screen)
+            empty_lines(screen)
             continue
 
         # 540 LET ZEML=ZEML+ZEM:
@@ -38,7 +38,7 @@ def purchase_land(screen: AbstractScreen, model: GameModel):
         #   GO SUB PUS
         screen.at(20, 1).print(f"У нас {model.zerno} бушелей зерна")
         key()
-        pus(screen)
+        empty_lines(screen)
         break
 
 
@@ -61,7 +61,7 @@ def sell_land(screen: AbstractScreen, model: GameModel):
         if zem > model.zeml:
             screen.at(20, 0).print(f"У нас только {model.zeml} акров земли!!!")
             key()
-            pus(screen)
+            empty_lines(screen)
             continue
 
         # 590 LET ZEML=ZEML-ZEM: LET ZERNO=ZERNO+ZEM*CENA
