@@ -59,7 +59,7 @@ def sub_input(device: AbstractIO, model: GameModel):
 
 def empty_lines(device: AbstractIO):
     # 4030 PRINT AT VAL "20",BIN ;S$: RETURN
-    device.print(two_empty_lines)
+    device.at(20, 0).print(two_empty_lines)
 
 
 def main(device: AbstractIO):
