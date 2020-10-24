@@ -1,9 +1,9 @@
 from random import randint
 
-from io_devices.abstract_io import AbstractIO
-from game_screens.barter import barter
+import game_screens
+
 from game_screens.enemies import intervention
-from game_screens.feeding import feeding
+from io_devices import AbstractIO, SimpleIO
 from game_model import GameModel
 
 # BAS file "" created by ZX-Modules
@@ -33,15 +33,7 @@ from game_model import GameModel
 #       LET INPUT=VAL "4020"
 #  14 LET PUS=VAL "4030":
 #       LET S$="                                                                "
-from game_screens.game_results import game_results
-from game_screens.guard import guard
-from game_screens.harvest import uborka
-from game_screens.info import info
-from game_screens.main_menu import main_menu
-from game_screens.nn import nn
-from io_devices.simple_io import SimpleIO
-from game_screens.sowing import sowing
-from game_screens.war import hamony
+
 
 two_empty_lines = " " * 64
 
@@ -70,7 +62,7 @@ def sub_input(device: AbstractIO):
         # 4021 IF F$="k" OR f$="K" THEN LET OI=SGN PI: GO SUB OITOG: GO TO VAL "50"
         if f == 'k' or f == 'K':
             oi = 1
-            game_results(oi)
+            game_screens.game_results(oi)
             raise
         # 4022 IF F$="d" OR f$="D" THEN GO SUB VAL "4040": GO SUB VAL "120"
         if f == 'd' or f == 'D':
@@ -92,7 +84,7 @@ def empty_lines(device: AbstractIO):
 
 def main(device: AbstractIO):
     while True:
-        main_menu(device)
+        game_screens.main_menu(device)
 
         #  80 REM \#017\#001\#019\#001na~alxnye ustanowki\#017\#000
         # Начальные установки
@@ -108,7 +100,7 @@ def main(device: AbstractIO):
             # 145 REM RANDOMIZE USR VAL "42675": GO SUB CLS
             device.cls()
             # 150 GO SUB INFO
-            info(device, model)
+            game_screens.info(device, model)
             # 160 LET KRYS=NOT PI: LET POGIB=NOT PI: LET UMER=NOT PI: LET ROD=NOT PI
             model.krys = 0
             model.pogib = 0
@@ -117,31 +109,31 @@ def main(device: AbstractIO):
 
             # 170 IF U=NOT PI THEN GO SUB TORG
             if model.u is None:
-                barter(device, model)
+                game_screens.barter(device, model)
 
             # 180 IF U=NOT PI THEN GO SUB OHRANA
             if model.u is None:
-                guard(device, model)
+                game_screens.guard(device, model)
 
             # 190 IF U=NOT PI THEN GO SUB KORM
             if model.u is None:
-                feeding(device, model)
+                game_screens.feeding(device, model)
 
             # 200 IF U=NOT PI THEN GO SUB POSEW
             if model.u is None:
-                sowing(device, model)
+                game_screens.sowing(device, model)
 
             # 210 IF U=NOT PI THEN GO SUB HAMONY
             if model.u is None:
-                hamony()
+                game_screens.war()
 
             # 220 IF U=NOT PI THEN GO SUB UBORKA
             if model.u is None:
-                uborka()
+                game_screens.harvest()
 
             # 230 IF U=NOT PI THEN GO SUB NN
             if model.u is None:
-                nn(model)
+                game_screens.nn(model)
 
             # 240 IF U=NOT PI THEN GO SUB WAR
             if model.u is None:
@@ -151,7 +143,7 @@ def main(device: AbstractIO):
             #   GO TO VAL "120"
             model.time += 1
 
-        game_results(device, model, model.u)
+        game_screens.game_results(device, model, model.u)
         break
 
 

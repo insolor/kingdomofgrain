@@ -1,13 +1,13 @@
 from random import random
 
-from io_devices.abstract_io import AbstractIO
+from io_devices import AbstractIO
 from game_model import GameModel
 from grain import sub_input, empty_lines, fn_s
 
 print = None
 
 
-def hamony(device: AbstractIO, model: GameModel):
+def war(device: AbstractIO, model: GameModel):
     # global nas, ost, zerno, zahv, srok
     # 960 REM \#017\#001hAMONIQ\#017\#000
     # 970 IF (OST<=BIN ) OR (ZERNO<=5) THEN

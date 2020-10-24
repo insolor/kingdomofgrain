@@ -1,4 +1,4 @@
-from io_devices.abstract_io import AbstractIO
+from io_devices import AbstractIO
 
 
 def instr(device: AbstractIO):
