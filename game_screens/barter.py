@@ -13,7 +13,7 @@ def purchase_land(device: AbstractIO, model: GameModel):
         #   LET ZEM=VAL F$:
         #   GO SUB PUS:
         #   IF ZEM<BIN THEN GO TO VAL "510"
-        zem = int(sub_input())
+        zem = int(sub_input(device, model))
         empty_lines(device)
         if zem < 0:
             continue
@@ -24,7 +24,7 @@ def purchase_land(device: AbstractIO, model: GameModel):
         #   GO TO VAL "510"
         if model.cena * zem > model.zerno:
             device.print(f"У нас только {model.zerno} бушелей зерна!!!")
-            key()
+            device.key()
             empty_lines(device)
             continue
 
@@ -50,7 +50,7 @@ def sell_land(device: AbstractIO, model: GameModel):
         device.at(20, 4).print("Сколько земли продадим?")
 
         # 570 GO SUB INPUT: LET ZEM=VAL F$: IF ZEM<BIN THEN GO TO VAL "560"
-        zem = int(sub_input())
+        zem = int(sub_input(device, model))
         if zem < 0:
             continue
 
