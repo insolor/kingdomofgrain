@@ -2,7 +2,7 @@ from random import random
 
 from io_devices import AbstractIO
 from game_model import GameModel
-from grain import sub_input, empty_lines, fn_s
+from grain import sub_input, empty_lines, randint
 
 print = None
 
@@ -30,7 +30,8 @@ def war(device: AbstractIO, model: GameModel):
             #   GO SUB PUS:
             #   IF POS<BIN THEN GO TO VAL "990"
             pos = int(sub_input())
-            empty_lines()
+            device.at(18, 0).print(64 * " ")
+            empty_lines(device)
             if pos < 0:
                 continue
             # 1010 IF POS>OST THEN
@@ -66,7 +67,7 @@ def war(device: AbstractIO, model: GameModel):
         else:
             # 1060 LET ZAHW=POS: LET SROK=TIME+FN S(4)
             zahv = pos
-            srok = time + fn_s(4)
+            srok = time + randint(4)
     # 1070 IF ZAHW<=NOT PI THEN GO TO VAL "1140"
     if zahv <= 0:
         pass
@@ -126,7 +127,7 @@ def victory(device: AbstractIO, model: GameModel):
     #   LET ZEML=ZEML+T(VAL "2"):
     #   LET ZERNO=ZERNO+T(SGN PI)
     captured_people = int(nas * (random() / 3 + 0.3))
-    taken_grain = int(zahv * fn_s(10) + 4)
+    taken_grain = int(zahv * randint(10) + 4)
     annexed_territory = int(zeml * (random() / 2 + 0.3))
     nas += captured_people
     zeml += annexed_territory

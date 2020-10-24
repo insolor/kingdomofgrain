@@ -1,4 +1,4 @@
-from random import randint
+import random
 
 import game_screens
 
@@ -12,12 +12,10 @@ from game_model import GameModel
 #   6 POKE VAL "23607",VAL "196": POKE VAL "23606",VAL "104": RETURN 
 #   8 POKE VAL "23607",VAL "60": POKE VAL "23606",NOT PI: RETURN
 
-two_empty_lines = " " * 64
-
 
 #  21 DEF FN S(K)=INT (RND*K-0.0000001)+SGN PI
-def fn_s(k):
-    return randint(1, k)
+def randint(k):
+    return random.randint(1, k)
 
 
 def save_load():
@@ -59,7 +57,7 @@ def sub_input(device: AbstractIO, model: GameModel):
 
 def empty_lines(device: AbstractIO):
     # 4030 PRINT AT VAL "20",BIN ;S$: RETURN
-    device.at(20, 0).print(two_empty_lines)
+    device.at(20, 0).print(" " * 64)
 
 
 def main(device: AbstractIO):
@@ -76,7 +74,7 @@ def main(device: AbstractIO):
         # 130 IF U<>NOT PI THEN GO TO VAL "50"
         while not model.u:
             # 140 LET CENA=VAL "10"+FN S(VAL "40")
-            model.cena = 10 + fn_s(40)
+            model.cena = 10 + randint(40)
 
             # 145 REM RANDOMIZE USR VAL "42675": GO SUB CLS
             device.cls()

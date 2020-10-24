@@ -2,7 +2,7 @@ from random import random
 
 from io_devices import AbstractIO
 from game_model import GameModel
-from grain import fn_s
+from grain import randint
 
 
 def harvest(device: AbstractIO, model: GameModel):
@@ -59,8 +59,8 @@ def harvest(device: AbstractIO, model: GameModel):
         cls()
     # 1370 LET UROV=SGN PI+FN S(VAL "6")-IST:
     #   LET J=FN S(VAL "21")
-    urozh = 1 + fn_s(6)
-    j = fn_s(21)
+    urozh = 1 + randint(6)
+    j = randint(21)
     # 1380 IF J>=VAL "18" THEN LET UROV=VAL "10"
     if j >= 18:
         urozh = 10
@@ -82,7 +82,7 @@ def harvest(device: AbstractIO, model: GameModel):
     # 1420 LET I=BIN : IF UROV<VAL "2" THEN LET I=FN S(INT PI)
     i = 0
     if urozh < 2:
-        i = fn_s(3)
+        i = randint(3)
     # 1430 IF I=SGN PI THEN
     #   RANDOMIZE USR VAL "62884":
     #   PRINT AT VAL "11",INT PI;"zASUHA POGUBILA UROVAJ!!!":
@@ -118,14 +118,14 @@ def harvest(device: AbstractIO, model: GameModel):
     #   GO SUB KEY:
     #   GO SUB CLS
     if random() > 0.7:
-        sar = 4 + fn_s(8)
+        sar = 4 + randint(8)
         sbor -= sbor // sar
         print("Саранча погубила 1/%d урожая!" % sar)
         key()
         cls()
     # 1480 LET ZERNO=ZERNO+SBOR: LET J=FN S(5)
     zerno += sbor
-    j = fn_s(5)
+    j = randint(5)
     # 1490 IF J=SGN PI THEN
     #   LET KRYS=INT (ZERNO/(FN S(10)+7)):
     #   RANDOMIZE USR VAL "57094":
@@ -134,7 +134,7 @@ def harvest(device: AbstractIO, model: GameModel):
     #   GO SUB KEY:
     #   GO SUB CLS
     if j == 1:
-        krys = zerno // (fn_s(10) + 7)
+        krys = zerno // (randint(10) + 7)
         print("На город напали крысы!!!")
         zerno -= krys
         key()

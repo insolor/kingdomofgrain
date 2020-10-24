@@ -1,6 +1,6 @@
 from io_devices import AbstractIO
 from game_model import GameModel
-from grain import fn_s
+from grain import randint
 
 
 def info(device: AbstractIO, model: GameModel):
@@ -50,7 +50,7 @@ def info(device: AbstractIO, model: GameModel):
     # 470 LET I=25+FN S(10):
     #   IF RASST<I THEN PRINT "nAPADA\@T  ";WRAGI;" WOINOW":
     #       PRINT "ONI W ";RASST;" MILQH OT NAS!"
-    i = 25 + fn_s(10)
+    i = 25 + randint(10)
     if model.rasst < i:
         device.print(f"Нападают {model.vragi} воинов")
         device.print(f"Они в {model.rasst} милях от нас!")
