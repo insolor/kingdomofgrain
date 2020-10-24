@@ -6,7 +6,6 @@ from .game_results import game_results
 
 
 def feeding(device: AbstractIO, model: GameModel):
-    """Feeding"""
     # 700 REM \#017\#001KORMEVKA\#017\#000
     # 710 LET K=-1: IF OST<=NOT PI THEN RETURN
     model.k = None

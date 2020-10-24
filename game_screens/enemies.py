@@ -30,7 +30,6 @@ def intervention(device: AbstractIO, model: GameModel):
 
 
 def attack_by_enemies(device: AbstractIO, model: GameModel):
-    """Attack"""
     # 1910 REM \#017\#001ATAKA\#017\#000
     # 1920 RANDOMIZE USR VAL "54778":
     #   PRINT AT VAL "11",VAL "7";"\{i3}gorod atakowan!!!":

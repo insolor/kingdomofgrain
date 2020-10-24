@@ -4,7 +4,6 @@ from grain import empty_lines, sub_input
 
 
 def guard(device: AbstractIO, model: GameModel):
-    """Guard"""
     # 610 REM \#017\#001OHRANA\#017\#000
     while True:
         # 620 LET UBITO=NOT PI: LET Z=-1

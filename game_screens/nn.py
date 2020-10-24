@@ -143,7 +143,7 @@ def nn(device: AbstractIO, model: GameModel):
         #   PRINT AT VAL "14",VAL "2";"sGORELO ";SGORZER;" BU[.ZERNA":
         #   GO SUB KEY:
         #   GO SUB CLS
-        print("Диверсия!!! Подожжены хлеьные склады.")
+        print("Диверсия!!! Подожжены хлебные склады.")
         sgorzer = int(zerno * (random() / 3 + 0.3))
         zerno -= sgorzer
         print("Сгорело %d буш. зерна" % sgorzer)
@@ -188,7 +188,7 @@ def nn(device: AbstractIO, model: GameModel):
     #   GO SUB KEY:
     #   GO SUB CLS
     if k >= 60 and nas - z - zas // proiz >= nas / 5:
-        print("Тунеядствующие элементя занялись самогоноварением из хлебных излишков")
+        print("Тунеядствующие элементы занялись самогоноварением из хлебных излишков")
         print("Понижается производительность!")
         proiz -= 2
         key()

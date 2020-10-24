@@ -4,7 +4,6 @@ from grain import randint
 
 
 def info(device: AbstractIO, model: GameModel):
-    """ИНФО"""
     # 300 REM \#017\#001INFO\#017\#000
     # 310 GO SUB CLS
     device.cls()
@@ -57,5 +56,5 @@ def info(device: AbstractIO, model: GameModel):
     # 475 PRINT
     # 480 PRINT "\{i5}********************************"
     device.print()
-    device.print("*" * 32)
+    device.ink(5).print("*" * 32)
     # 490 RETURN
