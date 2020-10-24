@@ -24,7 +24,7 @@ def feeding(device: AbstractIO, model: GameModel):
         #   GO SUB PUS:
         #   IF K<BIN THEN :
         #       GO TO VAL "720"
-        k = int(sub_input(device))
+        k = int(sub_input(device, model))
         if k < 0:
             continue
 
