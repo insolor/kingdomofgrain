@@ -63,8 +63,8 @@ def feeding(device: AbstractIO, model: GameModel):
             device.cls()
             device.at(11, 3).ink(2).print("Ты уморил всех голодом!!!")
             device.key()
-            model.u = 1
-            game_results(device, model, 0)
+            model.u = True
+            game_results(device, model, False)
             return
 
         # 780 IF K<=VAL "10" THEN

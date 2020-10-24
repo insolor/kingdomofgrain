@@ -1,3 +1,4 @@
+from . import enemies
 from .barter import barter
 from .feeding import feeding
 from .game_results import game_results
