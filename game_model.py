@@ -16,6 +16,7 @@ class GameModel:
         #   LET PROIZ=VAL "10":
         #   LET PREDEL=VAL "15"
 
+        self.z = None  # number of defenders
         self.umer = 0  # dead from natural causes
         self.rod = 0  # born
         self.umergol = 0  # dead from starvation
