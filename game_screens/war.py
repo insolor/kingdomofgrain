@@ -1,17 +1,19 @@
 from random import random
 
-from abstract_screen import AbstractScreen
+from io_devices.abstract_io import AbstractIO
 from game_model import GameModel
-from grain import sub_input, empty_lines, fn_s, t
+from grain import sub_input, empty_lines, fn_s
+
+print = None
 
 
-def hamony(screen: AbstractScreen, model: GameModel):
+def hamony(screen: AbstractIO, model: GameModel):
     # global nas, ost, zerno, zahv, srok
     # 960 REM \#017\#001hAMONIQ\#017\#000
     # 970 IF (OST<=BIN ) OR (ZERNO<=5) THEN
     #   LET POS=BIN :
     #   GO TO VAL "1030"
-    if ost <= 0 or zerno < 5:
+    if model.ost <= 0 or model.zerno < 5:
         pos = 0
     else:
         # 980 PRINT AT VAL "19",SGN PI;"u NAS ";OST;" NEZANQTYH L\@DEJ":
@@ -86,7 +88,7 @@ def hamony(screen: AbstractScreen, model: GameModel):
     # 1140 RETURN
 
 
-def defeat(screen: AbstractScreen, model: GameModel):
+def defeat(screen: AbstractIO, model: GameModel):
     # global nas, pogib, zahv, ost
     # 1240 REM \#017\#001PORAVENIE\#017\#000
     # 1245 GO SUB CLS: RANDOMIZE USR VAL "54778"
@@ -111,7 +113,7 @@ def defeat(screen: AbstractScreen, model: GameModel):
     # 1290 RETURN
 
 
-def victory(screen: AbstractScreen, model: GameModel):
+def victory(screen: AbstractIO, model: GameModel):
     # 1150 REM \#017\#001POBEDA\#017\#000
     # 1155 GO SUB CLS: RANDOMIZE USR VAL "54778"
     screen.cls()
@@ -123,12 +125,13 @@ def victory(screen: AbstractScreen, model: GameModel):
     #   LET NAS=NAS+T(INT PI):
     #   LET ZEML=ZEML+T(VAL "2"):
     #   LET ZERNO=ZERNO+T(SGN PI)
-    t[2] = int(nas * (random() / 3 + 0.3))
-    t[0] = int(zahv * fn_s(10) + 4)
-    t[1] = int(zeml * (random() / 2 + 0.3))
-    nas += t[2]
-    zeml += t[1]
-    zerno += t[0]
+    captured_people = int(nas * (random() / 3 + 0.3))
+    taken_grain = int(zahv * fn_s(10) + 4)
+    annexed_territory = int(zeml * (random() / 2 + 0.3))
+    nas += captured_people
+    zeml += annexed_territory
+    zerno += taken_grain
+
     # 1180 LET UBITO=INT (ZAHW*(RND/5+0.3)):
     #   LET POGIB=POGIB+UBITO:
     #   LET NAS=NAS+ZAHW-UBITO
@@ -139,9 +142,9 @@ def victory(screen: AbstractScreen, model: GameModel):
     print("У врага захвачено:")
     # 1200 PRINT AT VAL "14",SGN PI;"zERNA - ";T(1);" BU[ELEJ":
     #   PRINT " zEMLI - ";T(2);" AKROW": PRINT " pLENNYH - ";T(3);" ^ELOWEK"
-    print("Зерна - %d бушелей" % t[0])
-    print("Земли - %d акров" % t[1])
-    print("Пленных - %d человек" % t[2])
+    print("Зерна - %d бушелей" % taken_grain)
+    print("Земли - %d акров" % annexed_territory)
+    print("Пленных - %d человек" % captured_people)
     # 1210 PRINT AT VAL "18",VAL "6";"iZ ";ZAHW;" WOINOW ";UBITO;AT VAL "19",VAL "10";"PALO SMERTX\@ HRABRYH!"
     print("Из %d воинов %d пало сметрью храбрых!" % (zahv, ubito))
     # 1220 LET ZAHW=BIN :

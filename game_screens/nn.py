@@ -1,11 +1,11 @@
 from random import random
 
-from abstract_screen import AbstractScreen
+from io_devices.abstract_io import AbstractIO
 from game_model import GameModel
 from grain import fn_s
 
 
-def nn(screen: AbstractScreen, model: GameModel):
+def nn(screen: AbstractIO, model: GameModel):
     # global nas, umer, agent, proiz, predel, ist, zerno
     # 1550 REM \#017\#001NN\#017\#000
     # 1555 GO SUB CLS

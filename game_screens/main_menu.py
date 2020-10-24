@@ -1,8 +1,8 @@
-from abstract_screen import AbstractScreen
-from instructions import instr
+from io_devices.abstract_io import AbstractIO
+from game_screens.instructions import instr
 
 
-def main_menu(screen: AbstractScreen):
+def main_menu(screen: AbstractIO):
     while True:
         #  50 GO SUB CLS: RANDOMIZE USR VAL "51304"
         screen.cls()

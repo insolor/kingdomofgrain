@@ -1,9 +1,9 @@
-from abstract_screen import AbstractScreen
+from io_devices.abstract_io import AbstractIO
 from game_model import GameModel
-from grain import sub_input, empty_lines, key
+from grain import sub_input, empty_lines
 
 
-def purchase_land(screen: AbstractScreen, model: GameModel):
+def purchase_land(screen: AbstractIO, model: GameModel):
     while True:
         # 510 LET ZEM=-1: PRINT AT VAL "20",VAL "5";"sKOLXKO KUPIM ZEMLI?"
         zem = -1
@@ -42,7 +42,7 @@ def purchase_land(screen: AbstractScreen, model: GameModel):
         break
 
 
-def sell_land(screen: AbstractScreen, model: GameModel):
+def sell_land(screen: AbstractIO, model: GameModel):
     while True:
         # 560 LET ZEM=-1:
         #   PRINT AT VAL "20",VAL "4";"sKOLXKO ZEMLI PRODADIM?"
@@ -71,7 +71,7 @@ def sell_land(screen: AbstractScreen, model: GameModel):
         break
 
 
-def barter(screen: AbstractScreen, model: GameModel):
+def barter(screen: AbstractIO, model: GameModel):
     """Barter"""
     # 500 REM \#017\#001TORGOWLQ\#017\#000
     purchase_land(screen, model)

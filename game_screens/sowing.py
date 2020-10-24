@@ -1,9 +1,9 @@
-from abstract_screen import AbstractScreen
+from io_devices.abstract_io import AbstractIO
 from game_model import GameModel
 from grain import sub_input, empty_lines
 
 
-def posev(screen: AbstractScreen, model: GameModel):
+def posev(screen: AbstractIO, model: GameModel):
     # global zerno, ost, zas
     # 840 REM \#017\#001POSEW\#017\#000
     # 850 LET ZAS=-1: LET UROV=NOT PI: LET SBOR=NOT PI

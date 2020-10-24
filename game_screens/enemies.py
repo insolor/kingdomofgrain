@@ -1,11 +1,11 @@
 from random import random
 
-from abstract_screen import AbstractScreen
+from io_devices.abstract_io import AbstractIO
 from game_model import GameModel
 from grain import fn_s
 
 
-def intervention(screen: AbstractScreen, model: GameModel):
+def intervention(screen: AbstractIO, model: GameModel):
     # global rasst
     # 1860 REM \#017\#001WTORVENIE\#017\#000
     # 1870 LET RASST=RASST-FN S(VAL "5")-VAL "10"
@@ -26,7 +26,7 @@ def intervention(screen: AbstractScreen, model: GameModel):
     # 1900 RETURN
 
 
-def attack_by_enemies(screen: AbstractScreen, model: GameModel):
+def attack_by_enemies(screen: AbstractIO, model: GameModel):
     # global nas, pogib, rasst, vragi
     # 1910 REM \#017\#001ATAKA\#017\#000
     # 1920 RANDOMIZE USR VAL "54778":

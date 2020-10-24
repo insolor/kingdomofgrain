@@ -1,10 +1,10 @@
-from abstract_screen import AbstractScreen
+from io_devices.abstract_io import AbstractIO
 from game_model import GameModel
 from grain import sub_input, empty_lines
-from game_results import game_results
+from game_screens.game_results import game_results
 
 
-def feeding(screen: AbstractScreen, model: GameModel):
+def feeding(screen: AbstractIO, model: GameModel):
     """Feeding"""
     # 700 REM \#017\#001KORMEVKA\#017\#000
     # 710 LET K=-1: IF OST<=NOT PI THEN RETURN
