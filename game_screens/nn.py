@@ -1,6 +1,6 @@
 from random import random
 
-from io_devices.abstract_io import AbstractIO
+from io_devices import AbstractIO
 from game_model import GameModel
 from grain import fn_s
 

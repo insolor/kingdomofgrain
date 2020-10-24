@@ -1,5 +1,5 @@
-from io_devices.abstract_io import AbstractIO
-from game_screens.instructions import instr
+from io_devices import AbstractIO
+from .instructions import instr
 
 
 def main_menu(device: AbstractIO):
