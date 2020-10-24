@@ -16,14 +16,15 @@ class GameModel:
         #   LET PROIZ=VAL "10":
         #   LET PREDEL=VAL "15"
 
-        self.umer = 0
-        self.rod = 0
-        self.umergol = 0
-        self.umervsego = 0
-        self.zahv = 0
-        self.pogib = 0
-        self.proiz = 10
-        self.predel = 15
+        self.umer = 0  # dead from natural causes
+        self.rod = 0  # born
+        self.umergol = 0  # dead from starvation
+        self.umervsego = 0  # dead total
+        self.zahv = 0  # captured by enemies
+        self.pogib = 0  # dead in battle
+
+        self.proiz = 10  # basic productivity of a sower
+        self.predel = 15  # maximum productivity of a sower
 
         # 100 LET WRAGI=FN S(VAL "10")+VAL "25":
         #   LET RASST=FN S(VAL "10")+VAL "25":
@@ -31,12 +32,13 @@ class GameModel:
         #   LET SBOR=VAL "2100"+FN S(VAL "600"):
         #   LET NAS=VAL "80"+FN S(VAL "20"):
         #   LET ZEML=VAL "900"+FN S(VAL "200")
-        self.vragi = fn_s(10) + 25
-        self.rasst = fn_s(10) + 25
-        self.cena = fn_s(10) + 15
-        self.sbor = 2100 + fn_s(600)
-        self.nas = 80 + fn_s(20)
-        self.zeml = 900 + fn_s(200)
+        self.vragi = fn_s(10) + 25  # enemies
+        self.rasst = fn_s(10) + 25  # distance to the enemies
+
+        self.cena = fn_s(10) + 15  # price of an acre of land
+        self.sbor = 2100 + fn_s(600)  # harvested grain
+        self.nas = 80 + fn_s(20)  # population
+        self.zeml = 900 + fn_s(200)  # land area
 
         # 110 LET UROV=INT (SBOR/ZEML):
         #   LET KRYS=150+FN S(VAL "200"):
@@ -47,12 +49,14 @@ class GameModel:
         #   LET AGENT=NOT PI:
         #   LET NBOG=CENA*ZEML+ZERNO:
         #   LET IST=NOT PI
-        self.urozh = self.sbor // self.zeml
-        self.krys = 150 + fn_s(200)
-        self.zerno = self.sbor - self.krys
-        self.time = 1
+        self.urozh = self.sbor // self.zeml  # yield of grain per acre of land
+        self.krys = 150 + fn_s(200)  # rats (grain eaten by rats)
+        self.zerno = self.sbor - self.krys  # grain left
+        self.time = 1  # number of a year
         self.u = None
-        self.bezh = 5 + fn_s(5)
-        self.agent = 0
-        self.nbog = self.cena * self.zeml + self.zerno
+        self.bezh = 5 + fn_s(5)  # refugees income
+        self.agent = 0  # enemy agent
+        self.nbog = self.cena * self.zeml + self.zerno  # total wealth
         self.ist = 0
+
+        self.ost = None
