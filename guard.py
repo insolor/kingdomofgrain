@@ -32,7 +32,7 @@ def guard(screen: AbstractScreen, model: GameModel):
         #   GO TO VAL "620"
         if z > model.nas:
             screen.at(20, 6).print("У нас мало людей!!!")
-            key()
+            screen.key()
             empty_lines(screen)
             continue
 
@@ -43,7 +43,7 @@ def guard(screen: AbstractScreen, model: GameModel):
         #   GO TO VAL "620"
         if z > model.zerno // 5:
             screen.at(20, 1).print(f"Зерна хватит на {model.zerno // 5} воинов")
-            key()
+            screen.key()
             empty_lines(screen)
             continue
 
