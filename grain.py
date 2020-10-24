@@ -2,6 +2,7 @@ from random import random
 
 from abstract_screen import AbstractScreen
 from barter import barter
+from feeding import feeding
 from game_model import GameModel
 
 # BAS file "" created by ZX-Modules
@@ -44,104 +45,6 @@ t = [0, 0, 0]
 #  21 DEF FN S(K)=INT (RND*K-0.0000001)+SGN PI
 def fn_s(k):
     return int(random() * k - 0.0000001) + 1
-
-
-def korm(screen: AbstractScreen, model: GameModel):
-    # global zerno, umergol, umervsego, nas, k
-    # 700 REM \#017\#001KORMEVKA\#017\#000
-    # 710 LET K=-1: IF OST<=NOT PI THEN RETURN 
-    k = -1
-    if model.ost <= 0:
-        return
-
-    while True:
-        # 720 PRINT AT VAL "20",SGN PI;"mOVNO DATX ";INT (ZERNO/OST);" BU[ NA ^ELOWEKA":
-        #   PRINT AT VAL "21",VAL "6";"sKOLXKO DA[X?"
-        print("Можно дать %d буш на человека" % (zerno // ost))
-        print("Сколько дать?")
-        # 730 GO SUB INPUT:
-        #   LET K=VAL F$:
-        #   GO SUB PUS:
-        #   IF K<BIN THEN :
-        #       GO TO VAL "720"
-        k = int(sub_input())
-        if k < 0:
-            continue
-        # 740 IF K*OST>ZERNO THEN
-        #   PRINT AT VAL "20",INT PI;"u NAS NET STOLXKO ZERNA!!!":
-        #   GO SUB KEY:
-        #   GO SUB PUS:
-        #   GO TO VAL "720"
-        if k * ost > zerno:
-            print("У нас нет столько зерна!!!")
-            screen.key()
-            continue
-        # 750 LET ZERNO=ZERNO-K*OST
-        zerno -= k * ost
-        # 760 IF K<VAL "20" THEN
-        #   LET UMERGOL=OST*INT (SGN PI-K/VAL "20"):
-        #   LET UMERWSEGO=UMERWSEGO+UMERGOL:
-        #   LET NAS=NAS-UMERGOL
-        if k < 20:
-            umergol = ost * int(1 - k / 20)
-            umervsego += umergol
-            nas -= umergol
-        # 770 IF NAS<=NOT PI OR K=NOT PI THEN
-        #   GO SUB CLS:
-        #   RANDOMIZE USR VAL "53620":
-        #   PRINT AT VAL "11",INT PI;"\{i2}ty UMORIL WSEH GOLODOM!!!":
-        #   GO SUB KEY:
-        #   LET OI=BIN :
-        #   LET U=SGN PI:
-        #   GO SUB OITOG:
-        #   RETURN
-        if nas <= 0 or k == 0:
-            cls()
-            print("Ты уморил всех голодом!!!")
-            screen.key()
-            u = 1
-            oitog(0)
-            return
-        # 780 IF K<=VAL "10" THEN
-        #   PRINT AT VAL "20",VAL "10";"\{i3}du{egub!!!":
-        #   GO SUB KEY:
-        #   GO SUB PUS:
-        #   GO TO VAL "800"
-        if k <= 18:
-            print("ДУШЕГУБ!!!")
-            screen.key()
-            empty_lines()
-        # 790 IF K<=VAL "21" THEN
-        #   PRINT AT VAL "20",VAL "10";"\{i5}vadina!!!":
-        #   GO SUB KEY:
-        #   GO SUB PUS
-        elif k <= 21:
-            print("ЖАДИНА!!!")
-            screen.key()
-            empty_lines()
-        # 800 IF K>VAL "20" THEN
-        #   LET UMERGOL=BIN
-        if k > 20:
-            umergol = 0
-        # 810 IF K>VAL "70" THEN
-        #   PRINT AT VAL "20",BIN ;"\{i6}w..WY...wypx..pxem!!!za tebq!!!":
-        #   GO SUB KEY:
-        #   GO SUB PUS:
-        #   GO TO VAL "830"
-        if k > 70:
-            print("В..вы...ВЫПЬ..ПЬЕМ!!!ЗА ТЕБЯ!!!")
-            screen.key()
-            empty_lines()
-        # 820 IF K>VAL "50" THEN
-        #   PRINT AT VAL "20",VAL "5";"\{i4}bLAGODETELX ty NA[!!!":
-        #   GO SUB KEY:
-        #   GO SUB PUS
-        elif k > 50:
-            print("Благодетель ты НАШ!!!")
-            screen.key()
-            empty_lines(screen)
-        # 830 RETURN 
-        return
 
 
 def posev(screen: AbstractScreen, model: GameModel):
@@ -1037,7 +940,7 @@ def main():
 
             # 190 IF U=NOT PI THEN GO SUB KORM
             if model.u is None:
-                korm(screen, model)
+                feeding(screen, model)
 
             # 200 IF U=NOT PI THEN GO SUB POSEW
             if model.u is None:
