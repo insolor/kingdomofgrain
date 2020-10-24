@@ -1,11 +1,11 @@
 from random import random
 
-from abstract_screen import AbstractScreen
+from io_devices.abstract_io import AbstractIO
 from game_model import GameModel
 from grain import fn_s
 
 
-def uborka(screen: AbstractScreen, model: GameModel):
+def uborka(screen: AbstractIO, model: GameModel):
     # global proiz, zerno, urozh
     # 1300 REM \#017\#001UBORKA\#017\#000
     # 1305 GO SUB CLS

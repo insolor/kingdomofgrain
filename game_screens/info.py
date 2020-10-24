@@ -1,9 +1,9 @@
-from abstract_screen import AbstractScreen
+from io_devices.abstract_io import AbstractIO
 from game_model import GameModel
 from grain import fn_s
 
 
-def info(screen: AbstractScreen, model: GameModel):
+def info(screen: AbstractIO, model: GameModel):
     """ИНФО"""
     # 300 REM \#017\#001INFO\#017\#000
     # 310 GO SUB CLS

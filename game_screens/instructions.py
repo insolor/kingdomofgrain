@@ -1,7 +1,7 @@
-from abstract_screen import AbstractScreen
+from io_devices.abstract_io import AbstractIO
 
 
-def instr(screen: AbstractScreen):
+def instr(screen: AbstractIO):
     # 1510 REM \#017\#001instrukciq\#017\#000
     # 1515 GO SUB CLS
     screen.cls()

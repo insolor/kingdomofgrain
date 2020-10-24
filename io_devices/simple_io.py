@@ -1,7 +1,7 @@
-from abstract_screen import AbstractScreen
+from io_devices.abstract_io import AbstractIO
 
 
-class SimpleScreen(AbstractScreen):
+class SimpleIO(AbstractIO):
     def print(self, text: str = ""):
         print(text)
 

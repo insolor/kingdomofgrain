@@ -1,9 +1,9 @@
-from abstract_screen import AbstractScreen
+from io_devices.abstract_io import AbstractIO
 from game_model import GameModel
 from grain import empty_lines, sub_input
 
 
-def guard(screen: AbstractScreen, model: GameModel):
+def guard(screen: AbstractIO, model: GameModel):
     """Guard"""
     # 610 REM \#017\#001OHRANA\#017\#000
     while True:

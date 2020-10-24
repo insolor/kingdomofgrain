@@ -1,9 +1,9 @@
-from random import random
+from random import randint
 
-from abstract_screen import AbstractScreen
-from barter import barter
-from enemies import intervention
-from feeding import feeding
+from io_devices.abstract_io import AbstractIO
+from game_screens.barter import barter
+from game_screens.enemies import intervention
+from game_screens.feeding import feeding
 from game_model import GameModel
 
 # BAS file "" created by ZX-Modules
@@ -33,32 +33,29 @@ from game_model import GameModel
 #       LET INPUT=VAL "4020"
 #  14 LET PUS=VAL "4030":
 #       LET S$="                                                                "
-from game_results import game_results
-from guard import guard
-from harvest import uborka
-from info import info
-from main_menu import main_menu
-from nn import nn
-from simple_screen import SimpleScreen
-from sowing import posev
-from war import hamony
+from game_screens.game_results import game_results
+from game_screens.guard import guard
+from game_screens.harvest import uborka
+from game_screens.info import info
+from game_screens.main_menu import main_menu
+from game_screens.nn import nn
+from io_devices.simple_io import SimpleIO
+from game_screens.sowing import posev
+from game_screens.war import hamony
 
-s = " " * 64
-
-#  20 DIM T(VAL "3")
-t = [0, 0, 0]
+two_empty_lines = " " * 64
 
 
 #  21 DEF FN S(K)=INT (RND*K-0.0000001)+SGN PI
 def fn_s(k):
-    return int(random() * k - 0.0000001) + 1
+    return randint(1, k)
 
 
 def save_load():
     pass
 
 
-def sub_input(screen: AbstractScreen):
+def sub_input(screen: AbstractIO):
     # 4020 POKE VAL "23659",VAL "2":
     #   POKE VAL "23613",NOT PI:
     #   INPUT LINE F$:
@@ -88,13 +85,13 @@ def sub_input(screen: AbstractScreen):
             return f
 
 
-def empty_lines(screen: AbstractScreen):
+def empty_lines(screen: AbstractIO):
     # 4030 PRINT AT VAL "20",BIN ;S$: RETURN
-    screen.print(s)
+    screen.print(two_empty_lines)
     pass
 
 
-def main(screen: AbstractScreen):
+def main(screen: AbstractIO):
     while True:
         main_menu(screen)
 
@@ -160,4 +157,4 @@ def main(screen: AbstractScreen):
 
 
 if __name__ == "__main__":
-    main(SimpleScreen())
+    main(SimpleIO())
