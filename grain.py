@@ -36,7 +36,10 @@ def sub_input(device: AbstractIO, model: GameModel):
         f = device.input()
         if f == '':
             f = '0'
-        # 4021 IF F$="k" OR f$="K" THEN LET OI=SGN PI: GO SUB OITOG: GO TO VAL "50"
+        # 4021 IF F$="k" OR f$="K" THEN
+        #   LET OI=SGN PI:
+        #   GO SUB OITOG:
+        #   GO TO VAL "50"  # to main menu
         if f == 'k' or f == 'K':
             game_screens.game_results(device, model, True)
             raise
@@ -46,10 +49,11 @@ def sub_input(device: AbstractIO, model: GameModel):
             # start_program()
             raise
 
-        # 4024 FOR N=SGN PI TO LEN F$: IF CODE F$(N)<VAL "48" OR CODE F$(N)>VAL "57" THEN GO TO VAL "4020"
+        # 4024 FOR N=SGN PI TO LEN F$:
+        #   IF CODE F$(N)<VAL "48" OR CODE F$(N)>VAL "57" THEN GO TO VAL "4020"
         # 4025 NEXT N
         # 4026 RETURN
-        if all('0' <= x <= '9' for x in f):
+        if f.isdecimal():
             return f
 
 
@@ -60,7 +64,7 @@ def empty_lines(device: AbstractIO):
 
 def main(device: AbstractIO):
     while True:
-        game_screens.main_menu(device)
+        game_screens.main_menu(device)  # 50
 
         #  80 REM \#017\#001\#019\#001na~alxnye ustanowki\#017\#000
         # Начальные установки
@@ -73,11 +77,17 @@ def main(device: AbstractIO):
         while not model.u:
             # 140 LET CENA=VAL "10"+FN S(VAL "40")
             model.cena = 10 + fn_s(40)
+
             # 145 REM RANDOMIZE USR VAL "42675": GO SUB CLS
             device.cls()
+
             # 150 GO SUB INFO
             game_screens.info(device, model)
-            # 160 LET KRYS=NOT PI: LET POGIB=NOT PI: LET UMER=NOT PI: LET ROD=NOT PI
+
+            # 160 LET KRYS=NOT PI:
+            #   LET POGIB=NOT PI:
+            #   LET UMER=NOT PI:
+            #   LET ROD=NOT PI
             model.krys = 0
             model.pogib = 0
             model.umer = 0
