@@ -10,27 +10,32 @@ def instr(device: AbstractIO):
     #   PRINT " SWOI SILY W UPRAWLENII STRANOJ":
     #   PRINT "  wA[A CELX - KAK MOVNO DOLX[E":
     #   PRINT AT VAL "4",VAL "5";"PRODERVATXSQ U WLASTI."
-    print("ИНСТРУКЦИЯ")
-    print("  Вам предлагается попробовать\n свои силы в управлении страной")
-    print("  Ваша цель - как можно дольше\n продержаться у власти.")
+    device.at(0, 10).print("ИНСТРУКЦИЯ")
+    device.print("  Вам предлагается попробовать")
+    device.print(" свои силы в управлении страной")
+    device.print("  Ваша цель - как можно дольше")
+    device.at(4, 5).print("продержаться у власти.")
+
     # 1522 PRINT AT VAL "5",VAL "8";"\{i6} u^TITE ~to:":
     #   PRINT "  oDNOMU ^ELOWEKU NUVNO W GOD":
     #   PRINT "   NE MENEE 22 BU[ELEJ ZERNA":
     #   PRINT "   ^TOBY ZASEQTX 1 AKR NUVNO":
     #   PRINT "   - 0.5 BU[ELEJ ZERNA":
     #   PRINT "   oDIN SOLDAT S'EDAET W GOD       - 5 BU[ELEJ ZERNA"
-    print(" Учтите, что:")
-    print("   Одному человеку нужно в год")
-    print("   не менее 22 бушелей зерна")
-    print("   Чтобы засеять 1 акр нужно")
-    print("   - 0.5 бушелей зерна")
-    print("  Один солдат съедает в год")
-    print("   - 5 бушелей зерна")
+    device.at(5, 8).ink(6).print(" Учтите, что:")
+    device.print("   Одному человеку нужно в год")
+    device.print("   не менее 22 бушелей зерна")
+    device.print("   Чтобы засеять 1 акр нужно")
+    device.print("   - 0.5 бушелей зерна")
+    device.print("  Один солдат съедает в год")
+    device.print("   - 5 бушелей зерна")
+
     # 1530 PRINT :
     #   PRINT "        vELAEM uspeha!!!"
-    print("        Желаем УСПЕХА!!!")
+    device.print()
+    device.print("        Желаем УСПЕХА!!!")
     # 1534 PRINT AT VAL "15",SGN PI;"\{i3} d-W REVIME \i\n\p PLAY SPECTRUM  WHOD W MEN\@           DOZAGRUZOK"
-    print(" d - в режиме play spectrum - вход в меню дозагрузок")
+    device.at(15, 1).ink(3).print(" d - в режиме play spectrum - вход в меню дозагрузок")
     # 1536 PRINT AT VAL "18",VAL "9";"\{i3}k-KONEC IGRY"
-    print(" k - конец игры")
+    device.at(18, 9).ink(3).print(" k - конец игры")
     # 1540 RETURN
