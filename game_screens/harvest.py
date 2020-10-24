@@ -6,7 +6,6 @@ from grain import randint
 
 
 def harvest(device: AbstractIO, model: GameModel):
-    """Harvest"""
     # 1300 REM \#017\#001UBORKA\#017\#000
     # 1305 GO SUB CLS
     device.cls()

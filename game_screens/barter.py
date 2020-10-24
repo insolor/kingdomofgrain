@@ -72,7 +72,6 @@ def sell_land(device: AbstractIO, model: GameModel):
 
 
 def barter(device: AbstractIO, model: GameModel):
-    """Barter"""
     # 500 REM \#017\#001TORGOWLQ\#017\#000
     purchase_land(device, model)
     sell_land(device, model)
