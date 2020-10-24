@@ -3,7 +3,7 @@ from game_model import GameModel
 from grain import empty_lines, sub_input
 
 
-def guard(screen: AbstractIO, model: GameModel):
+def guard(device: AbstractIO, model: GameModel):
     """Guard"""
     # 610 REM \#017\#001OHRANA\#017\#000
     while True:
@@ -11,16 +11,16 @@ def guard(screen: AbstractIO, model: GameModel):
         ubito = 0  # FIXME: Add to model?
         z = -1
         # 630 GO SUB PUS: PRINT AT VAL "20",VAL "5";"u NAS ";NAS;" ^ELOWEK"
-        empty_lines(screen)
-        screen.at(20, 5).print(f"У нас {model.nas} человек")
+        empty_lines(device)
+        device.at(20, 5).print(f"У нас {model.nas} человек")
 
         # 640 PRINT AT VAL "21",INT PI;"sKOLXKO PO[LEM W WOJSKO?":
         #   GO SUB INPUT:
         #   LET Z=VAL F$:
         #   GO SUB PUS
-        screen.at(21, 3).print("Сколько пошлём в войско?")
-        z = int(sub_input(screen))
-        empty_lines(screen)
+        device.at(21, 3).print("Сколько пошлём в войско?")
+        z = int(sub_input(device))
+        empty_lines(device)
 
         # 650 IF Z<NOT PI THEN GO TO VAL "620"
         if z < 0:
@@ -31,9 +31,9 @@ def guard(screen: AbstractIO, model: GameModel):
         #   GO SUB PUS:
         #   GO TO VAL "620"
         if z > model.nas:
-            screen.at(20, 6).print("У нас мало людей!!!")
-            screen.key()
-            empty_lines(screen)
+            device.at(20, 6).print("У нас мало людей!!!")
+            device.key()
+            empty_lines(device)
             continue
 
         # 670 IF Z>INT (ZERNO/VAL "5") THEN
@@ -42,9 +42,9 @@ def guard(screen: AbstractIO, model: GameModel):
         #   GO SUB PUS:
         #   GO TO VAL "620"
         if z > model.zerno // 5:
-            screen.at(20, 1).print(f"Зерна хватит на {model.zerno // 5} воинов")
-            screen.key()
-            empty_lines(screen)
+            device.at(20, 1).print(f"Зерна хватит на {model.zerno // 5} воинов")
+            device.key()
+            empty_lines(device)
             continue
 
         # 680 IF Z>NOT PI THEN

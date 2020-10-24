@@ -2,7 +2,7 @@ from io_devices.abstract_io import AbstractIO
 from game_model import GameModel
 
 
-def game_results(screen: AbstractIO, model: GameModel, oi):
+def game_results(device: AbstractIO, model: GameModel, oi):
     # 1980 REM \#017\#001OITOG\#017\#000
     # 1985 GO SUB CLS
     cls()

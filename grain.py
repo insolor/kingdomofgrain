@@ -40,7 +40,7 @@ from game_screens.info import info
 from game_screens.main_menu import main_menu
 from game_screens.nn import nn
 from io_devices.simple_io import SimpleIO
-from game_screens.sowing import posev
+from game_screens.sowing import sowing
 from game_screens.war import hamony
 
 two_empty_lines = " " * 64
@@ -55,7 +55,7 @@ def save_load():
     pass
 
 
-def sub_input(screen: AbstractIO):
+def sub_input(device: AbstractIO):
     # 4020 POKE VAL "23659",VAL "2":
     #   POKE VAL "23613",NOT PI:
     #   INPUT LINE F$:
@@ -64,7 +64,7 @@ def sub_input(screen: AbstractIO):
     #       LET F$="0":
     #       GO TO VAL "4026"
     while True:
-        f = screen.input()
+        f = device.input()
         if f == '':
             f = '0'
         # 4021 IF F$="k" OR f$="K" THEN LET OI=SGN PI: GO SUB OITOG: GO TO VAL "50"
@@ -85,15 +85,14 @@ def sub_input(screen: AbstractIO):
             return f
 
 
-def empty_lines(screen: AbstractIO):
+def empty_lines(device: AbstractIO):
     # 4030 PRINT AT VAL "20",BIN ;S$: RETURN
-    screen.print(two_empty_lines)
-    pass
+    device.print(two_empty_lines)
 
 
-def main(screen: AbstractIO):
+def main(device: AbstractIO):
     while True:
-        main_menu(screen)
+        main_menu(device)
 
         #  80 REM \#017\#001\#019\#001na~alxnye ustanowki\#017\#000
         # Начальные установки
@@ -107,9 +106,9 @@ def main(screen: AbstractIO):
             # 140 LET CENA=VAL "10"+FN S(VAL "40")
             model.cena = 10 + fn_s(40)
             # 145 REM RANDOMIZE USR VAL "42675": GO SUB CLS
-            screen.cls()
+            device.cls()
             # 150 GO SUB INFO
-            info(screen, model)
+            info(device, model)
             # 160 LET KRYS=NOT PI: LET POGIB=NOT PI: LET UMER=NOT PI: LET ROD=NOT PI
             model.krys = 0
             model.pogib = 0
@@ -118,19 +117,19 @@ def main(screen: AbstractIO):
 
             # 170 IF U=NOT PI THEN GO SUB TORG
             if model.u is None:
-                barter(screen, model)
+                barter(device, model)
 
             # 180 IF U=NOT PI THEN GO SUB OHRANA
             if model.u is None:
-                guard(screen, model)
+                guard(device, model)
 
             # 190 IF U=NOT PI THEN GO SUB KORM
             if model.u is None:
-                feeding(screen, model)
+                feeding(device, model)
 
             # 200 IF U=NOT PI THEN GO SUB POSEW
             if model.u is None:
-                posev(screen, model)
+                sowing(device, model)
 
             # 210 IF U=NOT PI THEN GO SUB HAMONY
             if model.u is None:
@@ -152,7 +151,7 @@ def main(screen: AbstractIO):
             #   GO TO VAL "120"
             model.time += 1
 
-        game_results(screen, model, model.u)
+        game_results(device, model, model.u)
         break
 
 

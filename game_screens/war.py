@@ -7,7 +7,7 @@ from grain import sub_input, empty_lines, fn_s
 print = None
 
 
-def hamony(screen: AbstractIO, model: GameModel):
+def hamony(device: AbstractIO, model: GameModel):
     # global nas, ost, zerno, zahv, srok
     # 960 REM \#017\#001hAMONIQ\#017\#000
     # 970 IF (OST<=BIN ) OR (ZERNO<=5) THEN
@@ -88,7 +88,7 @@ def hamony(screen: AbstractIO, model: GameModel):
     # 1140 RETURN
 
 
-def defeat(screen: AbstractIO, model: GameModel):
+def defeat(device: AbstractIO, model: GameModel):
     # global nas, pogib, zahv, ost
     # 1240 REM \#017\#001PORAVENIE\#017\#000
     # 1245 GO SUB CLS: RANDOMIZE USR VAL "54778"
@@ -113,10 +113,10 @@ def defeat(screen: AbstractIO, model: GameModel):
     # 1290 RETURN
 
 
-def victory(screen: AbstractIO, model: GameModel):
+def victory(device: AbstractIO, model: GameModel):
     # 1150 REM \#017\#001POBEDA\#017\#000
     # 1155 GO SUB CLS: RANDOMIZE USR VAL "54778"
-    screen.cls()
+    device.cls()
     # 1160 PRINT AT VAL "11",VAL "2";"\{i6}w hAMONII ODERVANA pobeda!!!"
     print("В хамонии одержана победа!!!")
     # 1170 LET T(INT PI)=INT (NAS*(RND/3+0.3)):

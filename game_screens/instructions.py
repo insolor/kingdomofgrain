@@ -1,10 +1,10 @@
 from io_devices.abstract_io import AbstractIO
 
 
-def instr(screen: AbstractIO):
+def instr(device: AbstractIO):
     # 1510 REM \#017\#001instrukciq\#017\#000
     # 1515 GO SUB CLS
-    screen.cls()
+    device.cls()
     # 1520 PRINT AT NOT PI,VAL "10";"instrukciq":
     #   PRINT "  wAM PREDLAGAETSQ POPROBOWATX":
     #   PRINT " SWOI SILY W UPRAWLENII STRANOJ":
