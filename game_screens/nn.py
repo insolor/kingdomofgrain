@@ -6,7 +6,6 @@ from grain import randint
 
 
 def nn(device: AbstractIO, model: GameModel):
-    # global nas, umer, agent, proiz, predel, ist, zerno
     # 1550 REM \#017\#001NN\#017\#000
     # 1555 GO SUB CLS
     cls()
