@@ -8,7 +8,6 @@ print = None
 
 
 def war(device: AbstractIO, model: GameModel):
-    # global nas, ost, zerno, zahv, srok
     # 960 REM \#017\#001hAMONIQ\#017\#000
     # 970 IF (OST<=BIN ) OR (ZERNO<=5) THEN
     #   LET POS=BIN :
@@ -90,7 +89,6 @@ def war(device: AbstractIO, model: GameModel):
 
 
 def defeat(device: AbstractIO, model: GameModel):
-    # global nas, pogib, zahv, ost
     # 1240 REM \#017\#001PORAVENIE\#017\#000
     # 1245 GO SUB CLS: RANDOMIZE USR VAL "54778"
     cls()

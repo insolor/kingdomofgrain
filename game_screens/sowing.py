@@ -26,7 +26,7 @@ def sowing(device: AbstractIO, model: GameModel):
     device.at(20, 2).print(f"Зерна хватит на {int(model.zerno / 0.5)} акров")
 
     while True:
-        zas = -1
+        model.zas = None
 
         # 890 PRINT AT VAL "21",VAL "7";"sKOLXKO ZASEEM?"
         device.at(21, 7).print("Сколько засеем?")
@@ -36,10 +36,10 @@ def sowing(device: AbstractIO, model: GameModel):
         #   GO SUB PUS:
         #   IF ZAS<BIN THEN
         #       GO TO VAL "890"
-        zas = int(sub_input(device, model))
+        model.zas = int(sub_input(device, model))
         device.at(18, 0).print(64 * " ")
         empty_lines(device)
-        if zas < 0:
+        if model.zas < 0:
             continue
 
         # 910 IF ZAS>ZEML THEN
@@ -48,7 +48,7 @@ def sowing(device: AbstractIO, model: GameModel):
         #   GO SUB PUS:
         #   LET ZAS=-1:
         #   GO TO VAL "890"
-        if zas > model.zeml:
+        if model.zas > model.zeml:
             device.at(20, 5).print("У нас мало земли!!!")
             device.key()
             empty_lines(device)
@@ -60,7 +60,7 @@ def sowing(device: AbstractIO, model: GameModel):
         #   GO SUB PUS:
         #   LET ZAS=-1:
         #   GO TO VAL "890"
-        if zas * 0.5 > model.zerno:
+        if model.zas * 0.5 > model.zerno:
             device.at(20, 4).print("У нас не хватит зерна!!!")
             device.key()
             empty_lines(device)
@@ -72,7 +72,7 @@ def sowing(device: AbstractIO, model: GameModel):
         #   GO SUB PUS:
         #   LET ZAS=-1:
         #   GO TO VAL "890"
-        if zas // model.proiz > model.ost:
+        if model.zas // model.proiz > model.ost:
             device.at(20, 5).print("У нас мало людей!")
             device.key()
             empty_lines(device)
@@ -80,8 +80,8 @@ def sowing(device: AbstractIO, model: GameModel):
 
         # 940 LET ZERNO=ZERNO-INT (ZAS/VAL "2"):
         #   LET OST=OST-INT (ZAS/PROIZ)
-        model.zerno -= int(zas * 0.5)
-        model.ost -= zas // model.proiz
+        model.zerno -= int(model.zas * 0.5)
+        model.ost -= model.zas // model.proiz
 
         # 950 RETURN
         return

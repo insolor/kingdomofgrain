@@ -6,7 +6,7 @@ from grain import randint
 
 
 def intervention(device: AbstractIO, model: GameModel):
-    # global rasst
+    """Intervention of enemies"""
     # 1860 REM \#017\#001WTORVENIE\#017\#000
     # 1870 LET RASST=RASST-FN S(VAL "5")-VAL "10"
     model.rasst -= randint(5) + 10
@@ -30,6 +30,7 @@ def intervention(device: AbstractIO, model: GameModel):
 
 
 def attack_by_enemies(device: AbstractIO, model: GameModel):
+    """Attack"""
     # 1910 REM \#017\#001ATAKA\#017\#000
     # 1920 RANDOMIZE USR VAL "54778":
     #   PRINT AT VAL "11",VAL "7";"\{i3}gorod atakowan!!!":

@@ -9,7 +9,7 @@ def feeding(device: AbstractIO, model: GameModel):
     """Feeding"""
     # 700 REM \#017\#001KORMEVKA\#017\#000
     # 710 LET K=-1: IF OST<=NOT PI THEN RETURN
-    k = -1
+    model.k = None
     if model.ost <= 0:
         return
 
