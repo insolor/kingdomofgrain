@@ -2,10 +2,10 @@ from io_devices.abstract_io import AbstractIO
 from game_screens.instructions import instr
 
 
-def main_menu(screen: AbstractIO):
+def main_menu(device: AbstractIO):
     while True:
         #  50 GO SUB CLS: RANDOMIZE USR VAL "51304"
-        screen.cls()
+        device.cls()
         #  53 PRINT AT VAL "9",VAL "7";"\{i6}korolewstwo zerna"
         #  55 PRINT AT VAL "12",VAL "9";"\{i5}1 sTART IGRY"
         #  56 PRINT AT VAL "14",VAL "9";"\{i5}2 iNSTRUKCII"
@@ -22,7 +22,7 @@ def main_menu(screen: AbstractIO):
         #  64 IF INKEY$="3" THEN RANDOMIZE USR VAL "48541": GO SUB KEY: GO TO VAL "50"
         #  66 GO TO VAL "60"
 
-        inkey = screen.key()
+        inkey = device.key()
         if inkey == '1':
             break
         elif inkey == '2':

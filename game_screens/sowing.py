@@ -3,7 +3,7 @@ from game_model import GameModel
 from grain import sub_input, empty_lines
 
 
-def posev(screen: AbstractIO, model: GameModel):
+def sowing(device: AbstractIO, model: GameModel):
     # global zerno, ost, zas
     # 840 REM \#017\#001POSEW\#017\#000
     # 850 LET ZAS=-1: LET UROV=NOT PI: LET SBOR=NOT PI

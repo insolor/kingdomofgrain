@@ -5,7 +5,7 @@ from game_model import GameModel
 from grain import fn_s
 
 
-def nn(screen: AbstractIO, model: GameModel):
+def nn(device: AbstractIO, model: GameModel):
     # global nas, umer, agent, proiz, predel, ist, zerno
     # 1550 REM \#017\#001NN\#017\#000
     # 1555 GO SUB CLS

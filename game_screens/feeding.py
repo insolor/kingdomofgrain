@@ -4,7 +4,7 @@ from grain import sub_input, empty_lines
 from game_screens.game_results import game_results
 
 
-def feeding(screen: AbstractIO, model: GameModel):
+def feeding(device: AbstractIO, model: GameModel):
     """Feeding"""
     # 700 REM \#017\#001KORMEVKA\#017\#000
     # 710 LET K=-1: IF OST<=NOT PI THEN RETURN
@@ -15,15 +15,15 @@ def feeding(screen: AbstractIO, model: GameModel):
     while True:
         # 720 PRINT AT VAL "20",SGN PI;"mOVNO DATX ";INT (ZERNO/OST);" BU[ NA ^ELOWEKA":
         #   PRINT AT VAL "21",VAL "6";"sKOLXKO DA[X?"
-        screen.at(20, 1).print(f"Можно дать {model.zerno // model.ost} буш на человека")
-        screen.at(21, 6).print("Сколько дать?")
+        device.at(20, 1).print(f"Можно дать {model.zerno // model.ost} буш на человека")
+        device.at(21, 6).print("Сколько дать?")
 
         # 730 GO SUB INPUT:
         #   LET K=VAL F$:
         #   GO SUB PUS:
         #   IF K<BIN THEN :
         #       GO TO VAL "720"
-        k = int(sub_input(screen))
+        k = int(sub_input(device))
         if k < 0:
             continue
 
@@ -33,8 +33,8 @@ def feeding(screen: AbstractIO, model: GameModel):
         #   GO SUB PUS:
         #   GO TO VAL "720"
         if k * model.ost > model.zerno:
-            screen.print("У нас нет столько зерна!!!")
-            screen.key()
+            device.print("У нас нет столько зерна!!!")
+            device.key()
             continue
 
         # 750 LET ZERNO=ZERNO-K*OST
@@ -59,11 +59,11 @@ def feeding(screen: AbstractIO, model: GameModel):
         #   GO SUB OITOG:
         #   RETURN
         if model.nas <= 0 or k == 0:
-            screen.cls()
-            screen.at(11, 3).ink(2).print("Ты уморил всех голодом!!!")
-            screen.key()
+            device.cls()
+            device.at(11, 3).ink(2).print("Ты уморил всех голодом!!!")
+            device.key()
             model.u = 1
-            game_results(screen, model, 0)
+            game_results(device, model, 0)
             return
 
         # 780 IF K<=VAL "10" THEN
@@ -72,18 +72,18 @@ def feeding(screen: AbstractIO, model: GameModel):
         #   GO SUB PUS:
         #   GO TO VAL "800"
         if k <= 10:
-            screen.at(10, 20).ink(3).print("ДУШЕГУБ!!!")
-            screen.key()
-            empty_lines(screen)
+            device.at(10, 20).ink(3).print("ДУШЕГУБ!!!")
+            device.key()
+            empty_lines(device)
 
         # 790 IF K<=VAL "21" THEN
         #   PRINT AT VAL "20",VAL "10";"\{i5}vadina!!!":
         #   GO SUB KEY:
         #   GO SUB PUS
         elif k <= 21:
-            screen.at(20, 10).ink(5).print("ЖАДИНА!!!")
-            screen.key()
-            empty_lines(screen)
+            device.at(20, 10).ink(5).print("ЖАДИНА!!!")
+            device.key()
+            empty_lines(device)
 
         # 800 IF K>VAL "20" THEN
         #   LET UMERGOL=BIN
@@ -96,17 +96,17 @@ def feeding(screen: AbstractIO, model: GameModel):
         #   GO SUB PUS:
         #   GO TO VAL "830"
         elif k > 70:
-            screen.at(20, 0).ink(6).print("В..вы...ВЫПЬ..ПЬЕМ!!!ЗА ТЕБЯ!!!")
-            screen.key()
-            empty_lines(screen)
+            device.at(20, 0).ink(6).print("В..вы...ВЫПЬ..ПЬЕМ!!!ЗА ТЕБЯ!!!")
+            device.key()
+            empty_lines(device)
 
         # 820 IF K>VAL "50" THEN
         #   PRINT AT VAL "20",VAL "5";"\{i4}bLAGODETELX ty NA[!!!":
         #   GO SUB KEY:
         #   GO SUB PUS
         elif k > 50:
-            screen.at(20, 5).ink(4).print("Благодетель ты НАШ!!!")
-            screen.key()
-            empty_lines(screen)
+            device.at(20, 5).ink(4).print("Благодетель ты НАШ!!!")
+            device.key()
+            empty_lines(device)
         # 830 RETURN
         return
