@@ -11,29 +11,7 @@ from game_model import GameModel
 #   3 BORDER NOT PI: POKE VAL "23624",VAL "71": POKE VAL "23693",VAL "71": CLS 
 #   4 GO SUB VAL "6": GO TO VAL "10"
 #   6 POKE VAL "23607",VAL "196": POKE VAL "23606",VAL "104": RETURN 
-#   8 POKE VAL "23607",VAL "60": POKE VAL "23606",NOT PI: RETURN 
-
-# Список номеров строк процедур
-#  10 LET INSTR=VAL "1510":
-#       LET INFO=VAL "300":
-#       LET TORG=VAL "500":
-#       LET OHRANA=VAL "610":
-#       LET KORM=VAL "700":
-#       LET POSEW=VAL "840":
-#       LET HAMONY=VAL "960":
-#       LET UBORKA=VAL "1300":
-#       LET NN=VAL "1550":
-#       LET WAR=VAL "1860":
-#       LET OITOG=VAL "1980":
-#       LET POBEDA=VAL "1150":
-#       LET PORAV=VAL "1240":
-#       LET ATAKA=VAL "1910"
-#  12 LET KEY=VAL "4010":
-#       LET CLS=VAL "4015":
-#       LET INPUT=VAL "4020"
-#  14 LET PUS=VAL "4030":
-#       LET S$="                                                                "
-
+#   8 POKE VAL "23607",VAL "60": POKE VAL "23606",NOT PI: RETURN
 
 two_empty_lines = " " * 64
 
@@ -47,7 +25,7 @@ def save_load():
     pass
 
 
-def sub_input(device: AbstractIO):
+def sub_input(device: AbstractIO, model: GameModel):
     # 4020 POKE VAL "23659",VAL "2":
     #   POKE VAL "23613",NOT PI:
     #   INPUT LINE F$:
@@ -62,7 +40,7 @@ def sub_input(device: AbstractIO):
         # 4021 IF F$="k" OR f$="K" THEN LET OI=SGN PI: GO SUB OITOG: GO TO VAL "50"
         if f == 'k' or f == 'K':
             oi = 1
-            game_screens.game_results(oi)
+            game_screens.game_results(device, model, oi)
             raise
         # 4022 IF F$="d" OR f$="D" THEN GO SUB VAL "4040": GO SUB VAL "120"
         if f == 'd' or f == 'D':
@@ -125,19 +103,19 @@ def main(device: AbstractIO):
 
             # 210 IF U=NOT PI THEN GO SUB HAMONY
             if model.u is None:
-                game_screens.war()
+                game_screens.war(device, model)
 
             # 220 IF U=NOT PI THEN GO SUB UBORKA
             if model.u is None:
-                game_screens.harvest()
+                game_screens.harvest(device, model)
 
             # 230 IF U=NOT PI THEN GO SUB NN
             if model.u is None:
-                game_screens.nn(model)
+                game_screens.nn(device, model)
 
             # 240 IF U=NOT PI THEN GO SUB WAR
             if model.u is None:
-                intervention()
+                intervention(device, model)
 
             # 290 LET TIME=TIME+SGN PI:
             #   GO TO VAL "120"
