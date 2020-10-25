@@ -63,3 +63,4 @@ class GameModel:
         self.k = None  #
         self.ost = None  # unoccupied population
         self.zas = None  # sowed area
+        self.oi = None

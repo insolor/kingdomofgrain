@@ -39,7 +39,7 @@ def sub_input(device: AbstractIO, model: GameModel):
         #   GO SUB OITOG:
         #   GO TO VAL "50"  # to main menu
         if f == 'k' or f == 'K':
-            game_screens.game_results(device, model, True)
+            model.oi = True
             raise
         # 4022 IF F$="d" OR f$="D" THEN GO SUB VAL "4040": GO SUB VAL "120"
         if f == 'd' or f == 'D':
@@ -127,7 +127,7 @@ def main(device: AbstractIO):
             #   GO TO VAL "120"
             model.time += 1
 
-        game_screens.game_results(device, model, model.u)
+        game_screens.game_results(device, model)
         break
 
 
