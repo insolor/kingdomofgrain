@@ -2,8 +2,6 @@ from io_devices import AbstractIO
 from game_model import GameModel
 from grain import sub_input, empty_lines
 
-from .game_results import game_results
-
 
 def feeding(device: AbstractIO, model: GameModel):
     # 700 REM \#017\#001KORMEVKA\#017\#000
@@ -63,7 +61,6 @@ def feeding(device: AbstractIO, model: GameModel):
             device.at(11, 3).ink(2).print("Ты уморил всех голодом!!!")
             device.key()
             model.u = True
-            game_results(device, model, False)
             return
 
         # 780 IF K<=VAL "10" THEN

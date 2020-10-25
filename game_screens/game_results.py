@@ -2,7 +2,7 @@ from io_devices import AbstractIO
 from game_model import GameModel
 
 
-def game_results(device: AbstractIO, model: GameModel, oi: bool):
+def game_results(device: AbstractIO, model: GameModel):
     # 1980 REM \#017\#001OITOG\#017\#000
     # 1985 GO SUB CLS
     device.cls()
@@ -14,7 +14,7 @@ def game_results(device: AbstractIO, model: GameModel, oi: bool):
     #       AT VAL "10",VAL "2";"wY UPRAWLQLI STRANOJ ";TIME;" LET":
     #   PRINT " zA \\TO WREMQ UMERLO OT GOLODA";
     #       AT VAL "12",VAL "8";UMERWSEGO;" ^ELOWEK"
-    if oi:
+    if model.oi:
         device.at(8, 3).ink(5).print("Ваше правление окончено!!!").ink(7)
         device.at(10, 2).print(f"Вы управляли страной {model.time} лет")
         device.print(" За это время умерло от голода ")
@@ -26,7 +26,7 @@ def game_results(device: AbstractIO, model: GameModel, oi: bool):
     # 2010 IF (BOG>NBOG) AND (OI=1) THEN
     #   PRINT AT VAL "14",BIN ;"wY UWELI^ILI BOGATSTWO W ";INT (BOG/NBOG);" RAZ!":
     #       GO TO VAL "2030"
-    if oi:
+    if model.oi:
         if bog > model.nbog:
             device.at(14, 0).print(f"Вы увеличили богатство в {bog // model.nbog} раз!")
         # 2020 IF OI=SGN PI THEN
@@ -37,7 +37,7 @@ def game_results(device: AbstractIO, model: GameModel, oi: bool):
     # 2030 IF OI=SGN PI THEN
     #   PRINT AT VAL "17",VAL "7";"\{i4}do swidaniq!!!":
     #   GO TO VAL "2045"
-    if oi:
+    if model.oi:
         device.at(17, 7).ink(4).print("До свидания!!!")
 
     # 2040 IF OI=BIN THEN
