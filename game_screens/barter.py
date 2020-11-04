@@ -6,14 +6,17 @@ from grain import sub_input, empty_lines
 def purchase_land(device: AbstractIO, model: GameModel):
     while True:
         # 510 LET ZEM=-1: PRINT AT VAL "20",VAL "5";"sKOLXKO KUPIM ZEMLI?"
-        zem = -1
         device.at(20, 5).print("Сколько купим земли?")
 
         # 520 GO SUB INPUT:
         #   LET ZEM=VAL F$:
         #   GO SUB PUS:
         #   IF ZEM<BIN THEN GO TO VAL "510"
-        zem = int(sub_input(device, model))
+        try:
+            zem = int(sub_input(device, model))
+        except ValueError:
+            zem = -1
+
         empty_lines(device)
         if zem < 0:
             continue
@@ -46,12 +49,12 @@ def sell_land(device: AbstractIO, model: GameModel):
     while True:
         # 560 LET ZEM=-1:
         #   PRINT AT VAL "20",VAL "4";"sKOLXKO ZEMLI PRODADIM?"
-        zem = -1
         device.at(20, 4).print("Сколько земли продадим?")
 
         # 570 GO SUB INPUT: LET ZEM=VAL F$: IF ZEM<BIN THEN GO TO VAL "560"
-        zem = int(sub_input(device, model))
-        if zem < 0:
+        try:
+            zem = int(sub_input(device, model))
+        except ValueError:
             continue
 
         # 580 IF ZEM>ZEML THEN PRINT AT VAL "20",BIN ;"u NAS TOLXKO ";ZEML;" AKROW ZEMLI!!!":
