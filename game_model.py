@@ -21,7 +21,7 @@ class GameModel:
         self.rod = 0  # born
         self.umergol = 0  # dead from starvation
         self.umervsego = 0  # dead total
-        self.zahv = 0  # captured by enemies
+        self.zahv = 0  # number of our warriors
         self.pogib = 0  # dead in battle
 
         self.proiz = 10  # basic productivity of a sower

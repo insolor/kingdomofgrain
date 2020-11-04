@@ -8,7 +8,7 @@ def guard(device: AbstractIO, model: GameModel):
     while True:
         # 620 LET UBITO=NOT PI: LET Z=-1
         ubito = 0  # FIXME: Add to model?
-        model.z = -1
+
         # 630 GO SUB PUS: PRINT AT VAL "20",VAL "5";"u NAS ";NAS;" ^ELOWEK"
         empty_lines(device)
         device.at(20, 5).print(f"У нас {model.nas} человек")
@@ -18,7 +18,11 @@ def guard(device: AbstractIO, model: GameModel):
         #   LET Z=VAL F$:
         #   GO SUB PUS
         device.at(21, 3).print("Сколько пошлём в войско?")
-        model.z = int(sub_input(device, model))
+        try:
+            model.z = int(sub_input(device, model))
+        except ValueError:
+            model.z = -1
+
         empty_lines(device)
 
         # 650 IF Z<NOT PI THEN GO TO VAL "620"
