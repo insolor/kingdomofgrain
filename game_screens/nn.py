@@ -4,34 +4,41 @@ from io_devices import AbstractIO
 from game_model import GameModel
 from grain import randint
 
+print = None
+
 
 def nn(device: AbstractIO, model: GameModel):
     # 1550 REM \#017\#001NN\#017\#000
     # 1555 GO SUB CLS
-    cls()
+    device.cls()
+
     # 1560 LET BEV=INT (RND*INT (NAS/4))
     bezh = int(random() * (model.nas // 4))
+
     # 1570 IF (RASST<20) AND (RND>.5) THEN
     #   LET BEV=BEV+INT (RND*BEV):
     #   PRINT AT VAL "11",INT PI;"pRITOK BEVENCEW SPASA\@]IHSQ";AT VAL "12",VAL "7";"OT ZAHWAT^IKOW!!!":
     #   GO SUB KEY:
     #   GO SUB CLS
-    if rasst < 20 and random() > 0.5:
+    if model.rasst < 20 and random() > 0.5:
         bezh += int(random() * bezh)
-        print("Приток беженцев, спасающихся\nот захватчиков!!!")
-        key()
-        cls()
+        device.at(11, 3).print("Приток беженцев, спасающихся\nот захватчиков!!!")
+        device.key()
+        device.cls()
+
     # 1580 LET NAS=NAS+BEV
     model.nas += bezh
+
     # 1590 IF (K<10) OR (UMERWSEGO>NAS*10) THEN
     #   RANDOMIZE USR VAL "55936": PRINT AT VAL "11",SGN PI;"nAROD WOSSTAL PROTIW TIRANA!!!":
     #   GO SUB KEY:
     #   GO SUB CLS:
     #   GO TO VAL "1610"
-    if k < 10 or umervsego > nas * 10:
-        print("Народ восстал против тирана!!!")
-        key()
-        cls()
+    if model.k < 10 or model.umervsego > model.nas * 10:
+        device.at(11, 1).print("Народ восстал против тирана!!!")
+        device.key()
+        device.cls()
+
         # 1610 IF (Z>(NAS-Z)/3) AND (Z<UMERGOL) THEN
         #   RANDOMIZE USR "54778":
         #   PRINT AT VAL "11",SGN PI;"nO WOJSKA PODAWILI WOSSTANIE!":
@@ -42,14 +49,15 @@ def nn(device: AbstractIO, model: GameModel):
         #   GO SUB KEY:
         #   GO SUB CLS:
         #   GO TO VAL "1630"
-        if z > (nas - z) / 3 and z < umergol:
-            print("Но войска подавили восстание!")
-            vosst = (nas - z) * int(random() / 5 + 0.1)
-            pogib += vosst
-            nas -= vosst
-            print("В уличных боях полегло %d жителей" % vosst)
-            key()
-            cls()
+        if (model.nas - model.z) / 3 < model.z < model.umergol:
+            device.at(11, 1).print("Но войска подавили восстание!")
+            vosst = (model.nas - model.z) * int(random() / 5 + 0.1)
+            model.pogib += vosst
+            model.nas -= vosst
+
+            device.at(12, 5).print(f"В уличных боях полегло {vosst} жителей")
+            device.key()
+            device.cls()
         else:
             # 1620 PRINT AT VAL "11",VAL "4";"wOJSKA PERE[LI NA STORONU";AT VAL "12",VAL "6";"WOSSTAW[EGO NARODA":
             #   PRINT AT VAL "14",VAL "5";"\{i4}monarhiq swergnuta!!!":
@@ -59,11 +67,12 @@ def nn(device: AbstractIO, model: GameModel):
             #   LET OI=BIN :
             #   GO SUB OITOG:
             #   RETURN
-            print("Войска перешли на сторону\nвосставшего народа")
-            print("МОНАРХИЯ СВЕРГНУТА!!!")
-            key()
-            cls()
+            device.at(11, 4).print("Войска перешли на сторону").at(12, 6).print("восставшего народа")
+            device.at(14, 5).ink(4).print("МОНАРХИЯ СВЕРГНУТА!!!")
+            device.key()
+            device.cls()
             return 0
+
     # 1600 GO TO VAL "1630"
     # 1630 LET UMER=UMER+INT (RND*2.5/100*NAS):
     #   LET ROD=INT (RND*(4+K/20)/100*NAS)
