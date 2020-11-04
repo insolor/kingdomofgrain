@@ -60,7 +60,7 @@ class GameModel:
         self.nbog = self.cena * self.zeml + self.zerno  # initial wealth
         self.ist = 0
 
-        self.k = None  #
+        self.k = None  # Quantity of grain per worker to feed one
         self.ost = None  # unoccupied population
         self.zas = None  # sowed area
         self.oi = None
