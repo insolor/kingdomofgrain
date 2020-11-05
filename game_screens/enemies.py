@@ -1,5 +1,6 @@
 from random import random
 
+from end_game_exception import EndGameException
 from io_devices import AbstractIO
 from game_model import GameModel
 from grain import randint
@@ -56,13 +57,10 @@ def attack_by_enemies(device: AbstractIO, model: GameModel):
         device.at(14, 13).print("солдат")
         device.key()
         device.cls()
-
-        model.u = True
-        model.oi = False
-        return
+        raise EndGameException(True)
+    else:
         # 1940 IF Z*J>WRAGI THEN
         #   PRINT AT VAL "13",INT PI;"NO ATAKA OTBITA! uRA-A-A!!!"
-    else:
         device.at(13, 1).print("Но атака отбита! Ура-а-а!!!")
 
         # 1950 IF FN S(3)=SGN PI THEN

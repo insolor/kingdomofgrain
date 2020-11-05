@@ -1,5 +1,6 @@
 from random import random
 
+from end_game_exception import EndGameException
 from io_devices import AbstractIO
 from game_model import GameModel
 from grain import randint
@@ -69,9 +70,8 @@ def events(device: AbstractIO, model: GameModel):
             device.at(14, 5).ink(4).print("МОНАРХИЯ СВЕРГНУТА!!!")
             device.key()
             device.cls()
-            model.u = True
-            model.oi = False
-            return
+            raise EndGameException(False)
+
 
     # 1600 GO TO VAL "1630"
     # 1630 LET UMER=UMER+INT (RND*2.5/100*NAS):
@@ -245,9 +245,7 @@ def events(device: AbstractIO, model: GameModel):
             device.at(13, 2).print("Вы свергнуты с престола!!!")
             device.key()
             device.cls()
-            model.u = True
-            model.oi = True
-            return
+            raise EndGameException(True)
         else:
             # 1790 PRINT AT VAL "13",VAL "2";"NO WERNYE wAM WOJSKA RAZBILI";AT VAL "14",VAL "11";"MQTEVNIKOW":
             #   GO SUB KEY:

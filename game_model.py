@@ -56,7 +56,7 @@ class GameModel:
         self.rats = 150 + fn_s(200)  # rats (grain eaten by rats)
         self.grain = self.harvest - self.rats  # grain left
         self.time = 1  # number of a year
-        self.u: bool = False
+
         self.refugees = 5 + fn_s(5)  # refugees income
         self.agent = 0  # enemy agent
         self.initial_wealth = self.wealth()  # initial wealth
@@ -65,7 +65,6 @@ class GameModel:
         self.feeding_per_worker = None  # Quantity of grain per worker to feed one
         self.ost = None  # unoccupied population
         self.zas = None  # sowed area
-        self.oi: Optional[bool] = None
 
     def wealth(self):
         return self.land_price * self.land + self.grain
