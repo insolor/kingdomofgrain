@@ -9,21 +9,21 @@ def sowing(device: AbstractIO, model: GameModel):
     #   LET UROV=NOT PI:
     #   LET SBOR=NOT PI
 
-    model.urozh = 0
-    model.sbor = 0
+    model.grain_yield = 0
+    model.harvest = 0
 
     # 860 IF (OST>NOT PI) AND (ZERNO>NOT PI) THEN
     #   GO TO VAL "880"
     # 870 RETURN
-    if not (model.ost > 0 and model.zerno > 0):
+    if not (model.ost > 0 and model.grain > 0):
         return
 
     # 880 PRINT AT VAL "18",SGN PI;"u NAS ";ZEML;" AKROW ZEMLI":
     #   PRINT AT VAL "19",BIN ;"l\@DI MOGUT ZASEQTX ";PROIZ*OST;" AKROW":
     #   PRINT AT VAL "20",VAL "2";"zERNA HWATIT NA ";ZERNO*2;" AKROW"
-    device.at(18, 1).print(f"У нас {model.zeml} акров земли")
-    device.at(19, 0).print(f"Люди могут засеять {model.proiz * model.ost} акров")
-    device.at(20, 2).print(f"Зерна хватит на {int(model.zerno / 0.5)} акров")
+    device.at(18, 1).print(f"У нас {model.land} акров земли")
+    device.at(19, 0).print(f"Люди могут засеять {model.sower_productivity * model.ost} акров")
+    device.at(20, 2).print(f"Зерна хватит на {int(model.grain / 0.5)} акров")
 
     while True:
         model.zas = None
@@ -48,7 +48,7 @@ def sowing(device: AbstractIO, model: GameModel):
         #   GO SUB PUS:
         #   LET ZAS=-1:
         #   GO TO VAL "890"
-        if model.zas > model.zeml:
+        if model.zas > model.land:
             device.at(20, 5).print("У нас мало земли!!!")
             device.key()
             empty_lines(device)
@@ -60,7 +60,7 @@ def sowing(device: AbstractIO, model: GameModel):
         #   GO SUB PUS:
         #   LET ZAS=-1:
         #   GO TO VAL "890"
-        if model.zas * 0.5 > model.zerno:
+        if model.zas * 0.5 > model.grain:
             device.at(20, 4).print("У нас не хватит зерна!!!")
             device.key()
             empty_lines(device)
@@ -72,7 +72,7 @@ def sowing(device: AbstractIO, model: GameModel):
         #   GO SUB PUS:
         #   LET ZAS=-1:
         #   GO TO VAL "890"
-        if model.zas // model.proiz > model.ost:
+        if model.zas // model.sower_productivity > model.ost:
             device.at(20, 5).print("У нас мало людей!")
             device.key()
             empty_lines(device)
@@ -80,8 +80,8 @@ def sowing(device: AbstractIO, model: GameModel):
 
         # 940 LET ZERNO=ZERNO-INT (ZAS/VAL "2"):
         #   LET OST=OST-INT (ZAS/PROIZ)
-        model.zerno -= int(model.zas * 0.5)
-        model.ost -= model.zas // model.proiz
+        model.grain -= int(model.zas * 0.5)
+        model.ost -= model.zas // model.sower_productivity
 
         # 950 RETURN
         return

@@ -11,28 +11,28 @@ def events(device: AbstractIO, model: GameModel):
     device.cls()
 
     # 1560 LET BEV=INT (RND*INT (NAS/4))
-    bezh = int(random() * (model.nas // 4))
+    model.refugees = int(random() * (model.population // 4))
 
     # 1570 IF (RASST<20) AND (RND>.5) THEN
     #   LET BEV=BEV+INT (RND*BEV):
     #   PRINT AT VAL "11",INT PI;"pRITOK BEVENCEW SPASA\@]IHSQ";AT VAL "12",VAL "7";"OT ZAHWAT^IKOW!!!":
     #   GO SUB KEY:
     #   GO SUB CLS
-    if model.rasst < 20 and random() > 0.5:
-        bezh += int(random() * bezh)
-        device.at(11, 3).print("Приток беженцев, спасающихся\nот захватчиков!!!")
+    if model.distance_to_enemies < 20 and random() > 0.5:
+        model.refugees += int(random() * model.refugees)
+        device.at(11, 3).print("Приток беженцев, спасающихся").at(12, 7).print("от захватчиков!!!")
         device.key()
         device.cls()
 
     # 1580 LET NAS=NAS+BEV
-    model.nas += bezh
+    model.population += model.refugees
 
     # 1590 IF (K<10) OR (UMERWSEGO>NAS*10) THEN
     #   RANDOMIZE USR VAL "55936": PRINT AT VAL "11",SGN PI;"nAROD WOSSTAL PROTIW TIRANA!!!":
     #   GO SUB KEY:
     #   GO SUB CLS:
     #   GO TO VAL "1610"
-    if model.k < 10 or model.umervsego > model.nas * 10:
+    if model.feeding_per_worker < 10 or model.dead_total > model.population * 10:
         device.at(11, 1).print("Народ восстал против тирана!!!")
         device.key()
         device.cls()
@@ -47,13 +47,13 @@ def events(device: AbstractIO, model: GameModel):
         #   GO SUB KEY:
         #   GO SUB CLS:
         #   GO TO VAL "1630"
-        if (model.nas - model.z) / 3 < model.z < model.umergol:
+        if (model.population - model.defenders) / 3 < model.defenders < model.dead_starvation:
             device.at(11, 1).print("Но войска подавили восстание!")
-            vosst = (model.nas - model.z) * int(random() / 5 + 0.1)
-            model.pogib += vosst
-            model.nas -= vosst
+            rebels = (model.population - model.defenders) * int(random() / 5 + 0.1)
+            model.dead_in_battles += rebels
+            model.population -= rebels
 
-            device.at(12, 5).print(f"В уличных боях полегло {vosst} жителей")
+            device.at(12, 5).print(f"В уличных боях полегло {rebels} жителей")
             device.key()
             device.cls()
         else:
@@ -76,8 +76,8 @@ def events(device: AbstractIO, model: GameModel):
     # 1600 GO TO VAL "1630"
     # 1630 LET UMER=UMER+INT (RND*2.5/100*NAS):
     #   LET ROD=INT (RND*(4+K/20)/100*NAS)
-    model.umer += int(random() * 2.5 / 100 * model.nas)
-    model.rod = int(random() * (4 + model.k / 20) / 100 * model.nas)
+    model.dead_natural_cases += int(random() * 2.5 / 100 * model.population)
+    model.born = int(random() * (4 + model.feeding_per_worker / 20) / 100 * model.population)
 
     # 1640 IF FN S(VAL "12")=SGN PI THEN
     #   LET CHUMA=INT (RND*50+VAL "5"):
@@ -87,9 +87,9 @@ def events(device: AbstractIO, model: GameModel):
     #   GO SUB KEY:
     #   GO SUB CLS
     if randint(12) == 1:
-        chuma = int(random() * 50 + 5)
-        device.at(11, 3).print(f"Чума унесла {chuma}%% населения!")
-        model.umer += model.nas * chuma // 100
+        plague = int(random() * 50 + 5)
+        device.at(11, 3).print(f"Чума унесла {plague}%% населения!")
+        model.dead_natural_cases += model.population * plague // 100
         device.key()
         device.cls()
 
@@ -102,8 +102,8 @@ def events(device: AbstractIO, model: GameModel):
     #   GO SUB CLS
     if randint(100) < 5:
         device.at(11, 4).print("Демографический взрыв!!!")
-        dem = int((random() / 2 + 0.5) * model.nas)
-        model.rod += dem
+        dem = int((random() / 2 + 0.5) * model.population)
+        model.born += dem
         device.key()
         device.cls()
 
@@ -117,8 +117,8 @@ def events(device: AbstractIO, model: GameModel):
     #   GO TO VAL "1666"
     if randint(20) == 5:
         device.at(11, 6).ink(2).print("ПОЖА - А - А - АР!!!")
-        sgor = int(model.nas * (random() / 3 + 0.3))
-        sgorzer = int(model.zerno * (random() / 4 + 0.1))
+        dead_in_fire = int(model.population * (random() / 3 + 0.3))
+        burnt_down_grain = int(model.grain * (random() / 4 + 0.1))
         device.key()
         device.cls()
 
@@ -129,10 +129,10 @@ def events(device: AbstractIO, model: GameModel):
         #   PRINT AT VAL "13",BIN ;"sGORELO NA SKLADAH ";SGORZER;AT VAL "14",VAL "11";"BU[.ZERNA":
         #   GO SUB KEY:
         #   GO SUB CLS
-        model.umer += sgor
-        model.zerno -= sgorzer
-        device.at(11, 0).print(f"В огне погибло {sgor} человек")
-        device.at(13, 0).print(f"Сгорело на складах {sgorzer}").at(14, 11).print("буш. зерна")
+        model.dead_natural_cases += dead_in_fire
+        model.grain -= burnt_down_grain
+        device.at(11, 0).print(f"В огне погибло {dead_in_fire} человек")
+        device.at(13, 0).print(f"Сгорело на складах {burnt_down_grain}").at(14, 11).print("буш. зерна")
         device.key()
         device.cls()
 
@@ -150,7 +150,7 @@ def events(device: AbstractIO, model: GameModel):
         device.cls()
 
     # 1680 IF (AGENT<=BIN ) OR (Z>=NAS/VAL "10") THEN GO TO VAL "1720"
-    if model.agent > 0 and model.z < model.nas / 10:
+    if model.agent > 0 and model.defenders < model.population / 10:
         # 1690 RANDOMIZE USR VAL "52462":
         #   PRINT AT VAL "11",VAL "2";"dIWERSIQ!!!pODOVVENY HLEBNYE";AT VAL "12",VAL "13";"SKLADY.":
         #   LET SGORZER=INT (ZERNO*(RND/3+0.3)):
@@ -159,9 +159,9 @@ def events(device: AbstractIO, model: GameModel):
         #   GO SUB KEY:
         #   GO SUB CLS
         device.at(11, 2).print("Диверсия!!! Подожжены хлебные").at(12, 13).print("склады.")
-        sgorzer = int(model.zerno * (random() / 3 + 0.3))
-        model.zerno -= sgorzer
-        device.at(14, 2).print(f"Сгорело {sgorzer} буш. зерна")
+        burnt_down_grain = int(model.grain * (random() / 3 + 0.3))
+        model.grain -= burnt_down_grain
+        device.at(14, 2).print(f"Сгорело {burnt_down_grain} буш. зерна")
         device.key()
         device.cls()
 
@@ -171,7 +171,7 @@ def events(device: AbstractIO, model: GameModel):
         #   GO SUB KEY:
         #   GO SUB CLS:
         #   GO TO VAL "1720"
-        if model.z > model.nas / 20:
+        if model.defenders > model.population / 20:
             device.at(11, 6).print("Диверсант схвачен!!!")
             model.agent -= 1
             device.key()
@@ -186,7 +186,7 @@ def events(device: AbstractIO, model: GameModel):
             device.cls()
 
     # 1720 IF (AGENT<=BIN ) OR (Z<=NAS/VAL "2") THEN GO TO VAL "1740"
-    if model.agent > 0 and model.z > model.nas / 2:
+    if model.agent > 0 and model.defenders > model.population / 2:
         # 1730 IF RND<0.5 THEN
         #   PRINT AT VAL "11",VAL "4";"pOJMAN WRAVESKIJ AGENT!!!":
         #   LET AGENT=AGENT-SGN PI:
@@ -205,11 +205,12 @@ def events(device: AbstractIO, model: GameModel):
     #   LET PROIZ=PROIZ-VAL "2":
     #   GO SUB KEY:
     #   GO SUB CLS
-    if model.k >= 60 and model.nas - model.z - model.zas // model.proiz >= model.nas / 5:
+    if (model.feeding_per_worker >= 60 and
+            model.population - model.defenders - model.zas // model.sower_productivity >= model.population / 5):
         device.at(11, 0).print("Тунеядствующие элементы занялись самогоноварением из хлебных")
         device.at(13, 12).print("излишков")
         device.at(14, 1).print("Понижается производительность!")
-        model.proiz -= 2
+        model.sower_productivity -= 2
         device.key()
         device.cls()
 
@@ -222,8 +223,8 @@ def events(device: AbstractIO, model: GameModel):
     #   GO SUB CLS
     if randint(15) == 8:
         device.at(11, 2).print("Внедрение новых орудий труда    подняло производительность!")
-        model.proiz += 2
-        model.predel += 5
+        model.sower_productivity += 2
+        model.max_sower_productivity += 5
         device.key()
         device.cls()
 
@@ -240,7 +241,7 @@ def events(device: AbstractIO, model: GameModel):
         #   GO SUB CLS:
         #   GO SUB OITOG:
         #   RETURN
-        if randint(2) == 1 or model.z < model.nas / 10:
+        if randint(2) == 1 or model.defenders < model.population / 10:
             device.at(13, 2).print("Вы свергнуты с престола!!!")
             device.key()
             device.cls()
@@ -256,7 +257,7 @@ def events(device: AbstractIO, model: GameModel):
             device.cls()
 
     # 1800 IF (TIME<=10) OR (ZAS<>ZEML) THEN GO TO VAL "1820"
-    if model.time > 10 and model.zas == model.zeml:
+    if model.time > 10 and model.zas == model.land:
         # 1810 IF IST<VAL "4" THEN
         #   LET IST=IST+SGN PI:
         #   RANDOMIZE USR VAL "62884":
@@ -276,7 +277,7 @@ def events(device: AbstractIO, model: GameModel):
         #   PRINT AT VAL "11",INT PI;"oTWEDENIE BOLX[IH PLO]ADEJ";AT VAL "12",VAL "4";"POD PARY POWY[AET UROVAJ":
         #   GO SUB KEY:
         #   GO SUB CLS
-        if model.zas < model.zeml / 2 and model.ist > -2:
+        if model.zas < model.land / 2 and model.ist > -2:
             model.ist -= 1
             device.at(11, 3).print("Отведение больших площадей").at(12, 4).print("под пары повышает урожай")
             device.key()
@@ -291,13 +292,13 @@ def events(device: AbstractIO, model: GameModel):
     #   GO SUB KEY:
     #   GO SUB CLS
     if randint(15) == 1 and model.agent > 0:
-        propalo = int((random() / 5 + 0.1) * model.zerno)
+        stolen = int((random() / 5 + 0.1) * model.grain)
         device.at(11, 3).print("Группой расхитителей под")
-        device.at(12, 2).print(f"предводительством диверсанта похищено {propalo} буш. зерна")
-        model.zerno -= propalo
+        device.at(12, 2).print(f"предводительством диверсанта похищено {stolen} буш. зерна")
+        model.grain -= stolen
         device.key()
         device.cls()
 
     # 1840 LET NAS=NAS-UMER+ROD
-    model.nas += model.rod - model.umer
+    model.population += model.born - model.dead_natural_cases
     # 1850 RETURN

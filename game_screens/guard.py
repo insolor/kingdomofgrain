@@ -11,7 +11,7 @@ def guard(device: AbstractIO, model: GameModel):
 
         # 630 GO SUB PUS: PRINT AT VAL "20",VAL "5";"u NAS ";NAS;" ^ELOWEK"
         empty_lines(device)
-        device.at(20, 5).print(f"У нас {model.nas} человек")
+        device.at(20, 5).print(f"У нас {model.population} человек")
 
         # 640 PRINT AT VAL "21",INT PI;"sKOLXKO PO[LEM W WOJSKO?":
         #   GO SUB INPUT:
@@ -19,21 +19,21 @@ def guard(device: AbstractIO, model: GameModel):
         #   GO SUB PUS
         device.at(21, 3).print("Сколько пошлём в войско?")
         try:
-            model.z = int(sub_input(device, model))
+            model.defenders = int(sub_input(device, model))
         except ValueError:
-            model.z = -1
+            model.defenders = -1
 
         empty_lines(device)
 
         # 650 IF Z<NOT PI THEN GO TO VAL "620"
-        if model.z < 0:
+        if model.defenders < 0:
             continue
 
         # 660 IF Z>NAS THEN PRINT AT VAL "20",VAL "6";"u NAS MALO L\@DEJ!!!":
         #   GO SUB KEY:
         #   GO SUB PUS:
         #   GO TO VAL "620"
-        if model.z > model.nas:
+        if model.defenders > model.population:
             device.at(20, 6).print("У нас мало людей!!!")
             device.key()
             empty_lines(device)
@@ -44,8 +44,8 @@ def guard(device: AbstractIO, model: GameModel):
         #   GO SUB KEY:
         #   GO SUB PUS:
         #   GO TO VAL "620"
-        if model.z > model.zerno // 5:
-            device.at(20, 1).print(f"Зерна хватит на {model.zerno // 5} воинов")
+        if model.defenders > model.grain // 5:
+            device.at(20, 1).print(f"Зерна хватит на {model.grain // 5} воинов")
             device.key()
             empty_lines(device)
             continue
@@ -54,12 +54,12 @@ def guard(device: AbstractIO, model: GameModel):
         #   LET OST=NAS-Z:
         #   LET ZERNO=ZERNO-Z*5:
         #   RETURN
-        if model.z > 0:
-            model.ost = model.nas - model.z
-            model.zerno -= model.z * 5
+        if model.defenders > 0:
+            model.ost = model.population - model.defenders
+            model.grain -= model.defenders * 5
         else:
             # 690 LET OST=NAS:
             #   RETURN
-            model.ost = model.nas
+            model.ost = model.population
 
         return

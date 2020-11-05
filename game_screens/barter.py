@@ -25,21 +25,21 @@ def purchase_land(device: AbstractIO, model: GameModel):
         #   GO SUB KEY:
         #   GO SUB PUS:
         #   GO TO VAL "510"
-        if model.cena * zem > model.zerno:
-            device.print(f"У нас только {model.zerno} бушелей зерна!!!")
+        if model.land_price * zem > model.grain:
+            device.print(f"У нас только {model.grain} бушелей зерна!!!")
             device.key()
             empty_lines(device)
             continue
 
         # 540 LET ZEML=ZEML+ZEM:
         #   LET ZERNO=ZERNO-CENA*ZEM
-        model.zeml += zem
-        model.zerno -= model.cena * zem
+        model.land += zem
+        model.grain -= model.land_price * zem
 
         # 550 PRINT AT VAL "20",SGN PI;"u NAS ";ZERNO;" BU[ELEJ ZERNA":
         #   GO SUB KEY:
         #   GO SUB PUS
-        device.at(20, 1).print(f"У нас {model.zerno} бушелей зерна")
+        device.at(20, 1).print(f"У нас {model.grain} бушелей зерна")
         device.key()
         empty_lines(device)
         break
@@ -61,15 +61,15 @@ def sell_land(device: AbstractIO, model: GameModel):
         #   GO SUB KEY:
         #   GO SUB PUS:
         #   GO TO VAL "560"
-        if zem > model.zeml:
-            device.at(20, 0).print(f"У нас только {model.zeml} акров земли!!!")
+        if zem > model.land:
+            device.at(20, 0).print(f"У нас только {model.land} акров земли!!!")
             device.key()
             empty_lines(device)
             continue
 
         # 590 LET ZEML=ZEML-ZEM: LET ZERNO=ZERNO+ZEM*CENA
-        model.zeml -= zem
-        model.zerno += zem * model.cena
+        model.land -= zem
+        model.grain += zem * model.land_price
         # 600 RETURN
         break
 

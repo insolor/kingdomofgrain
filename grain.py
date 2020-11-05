@@ -74,7 +74,7 @@ def main(device: AbstractIO):
         # 130 IF U<>NOT PI THEN GO TO VAL "50"
         while not model.u:
             # 140 LET CENA=VAL "10"+FN S(VAL "40")
-            model.cena = 10 + randint(40)
+            model.land_price = 10 + randint(40)
 
             # 145 REM RANDOMIZE USR VAL "42675": GO SUB CLS
             device.cls()
@@ -86,10 +86,10 @@ def main(device: AbstractIO):
             #   LET POGIB=NOT PI:
             #   LET UMER=NOT PI:
             #   LET ROD=NOT PI
-            model.krys = 0
-            model.pogib = 0
-            model.umer = 0
-            model.rod = 0
+            model.rats = 0
+            model.dead_in_battles = 0
+            model.dead_natural_cases = 0
+            model.born = 0
 
             # 170 IF U=NOT PI THEN GO SUB TORG
             if not model.u:
