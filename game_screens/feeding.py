@@ -60,6 +60,7 @@ def feeding(device: AbstractIO, model: GameModel):
         device.cls()
         device.at(11, 3).ink(2).print("Ты уморил всех голодом!!!")
         device.key()
+        model.oi = False
         model.u = True
         return
 
