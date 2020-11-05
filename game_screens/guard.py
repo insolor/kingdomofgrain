@@ -35,7 +35,7 @@ def guard(device: AbstractIO, model: GameModel):
         #   GO TO VAL "620"
         if model.defenders > model.population:
             device.at(20, 6).print("У нас мало людей!!!")
-            device.key()
+            device.wait_key()
             empty_lines(device)
             continue
 
@@ -46,7 +46,7 @@ def guard(device: AbstractIO, model: GameModel):
         #   GO TO VAL "620"
         if model.defenders > model.grain // 5:
             device.at(20, 1).print(f"Зерна хватит на {model.grain // 5} воинов")
-            device.key()
+            device.wait_key()
             empty_lines(device)
             continue
 

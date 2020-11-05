@@ -24,7 +24,7 @@ def intervention(device: AbstractIO, model: GameModel):
     elif model.distance_to_enemies < 15 and random() < 0.1:
         device.at(11, 1).print("Враги совершили стремительный")
         device.at(12, 9).print("марш - бросок!")
-        device.key()
+        device.wait_key()
         device.cls()
         attack_by_enemies(device, model)
     # 1900 RETURN
@@ -38,7 +38,7 @@ def attack_by_enemies(device: AbstractIO, model: GameModel):
     #   LET I=INT (INT (10*RND)*0.1)+0.5:
     #   LET J=I+INT (INT (10*RND)*0.15)+0.5
     device.at(11, 7).ink(3).print("ГОРОД АТАКОВАН!!!")
-    device.key()
+    device.wait_key()
 
     i = int(int(10 * random()) * 0.1) + 0.5
     j = i + int(int(10 * random()) * 0.15) + 0.5
@@ -55,7 +55,7 @@ def attack_by_enemies(device: AbstractIO, model: GameModel):
     if model.enemies > model.defenders * j:
         device.at(13, 0).print("Город пал, ведь его защищало мало")
         device.at(14, 13).print("солдат")
-        device.key()
+        device.wait_key()
         device.cls()
         raise EndGameException(True)
     else:
@@ -81,7 +81,7 @@ def attack_by_enemies(device: AbstractIO, model: GameModel):
 
         # 1965 GO TO KEY:
         #   GO SUB CLS
-        device.key()
+        device.wait_key()
         device.cls()
 
         # 1970 RETURN

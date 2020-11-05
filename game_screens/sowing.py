@@ -50,7 +50,7 @@ def sowing(device: AbstractIO, model: GameModel):
         #   GO TO VAL "890"
         if model.zas > model.land:
             device.at(20, 5).print("У нас мало земли!!!")
-            device.key()
+            device.wait_key()
             empty_lines(device)
             continue
 
@@ -62,7 +62,7 @@ def sowing(device: AbstractIO, model: GameModel):
         #   GO TO VAL "890"
         if model.zas * 0.5 > model.grain:
             device.at(20, 4).print("У нас не хватит зерна!!!")
-            device.key()
+            device.wait_key()
             empty_lines(device)
             continue
 
@@ -74,7 +74,7 @@ def sowing(device: AbstractIO, model: GameModel):
         #   GO TO VAL "890"
         if model.zas // model.sower_productivity > model.ost:
             device.at(20, 5).print("У нас мало людей!")
-            device.key()
+            device.wait_key()
             empty_lines(device)
             continue
 

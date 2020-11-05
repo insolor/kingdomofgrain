@@ -23,7 +23,7 @@ def main_menu(device: AbstractIO):
         #  64 IF INKEY$="3" THEN RANDOMIZE USR VAL "48541": GO SUB KEY: GO TO VAL "50"
         #  66 GO TO VAL "60"
 
-        inkey = device.key()
+        inkey = device.wait_key()
         if inkey == '1':
             break
         elif inkey == '2':

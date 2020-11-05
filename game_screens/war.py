@@ -44,7 +44,7 @@ def war(device: AbstractIO, model: GameModel):
             #   GO TO VAL "990"
             if pos > model.ost:
                 device.at(20, 5).print("У нас мало людей!!!")
-                device.key()
+                device.wait_key()
                 empty_lines(device)
                 continue
 
@@ -55,7 +55,7 @@ def war(device: AbstractIO, model: GameModel):
             #   GO TO VAL "990"
             if pos * 5 > model.grain:
                 device.at(20, 6).print("У нас мало зерна!!!")
-                device.key()
+                device.wait_key()
                 empty_lines(device)
                 continue
 
@@ -119,7 +119,7 @@ def defeat(device: AbstractIO, model: GameModel):
     model.ost = model.population - model.defenders - model.zas // model.sower_productivity
 
     # 1285 GO SUB KEY: GO SUB CLS
-    device.key()
+    device.wait_key()
     device.cls()
 
     # 1290 RETURN
@@ -174,7 +174,7 @@ def victory(device: AbstractIO, model: GameModel):
 
     # 1225 GO SUB KEY:
     #   GO SUB CLS
-    device.key()
+    device.wait_key()
     device.cls()
 
     # 1230 RETURN

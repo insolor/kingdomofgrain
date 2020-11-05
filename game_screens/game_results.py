@@ -55,5 +55,5 @@ def game_results(device: AbstractIO, model: GameModel, result):
         device.at(16, 5).ink(2).print("Куда это годится?!")
 
     # 2045 GO SUB KEY
-    device.key()
+    device.wait_key()
     # 2050 RETURN
