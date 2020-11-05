@@ -6,6 +6,6 @@ from .guard import guard
 from .harvest import harvest
 from .info import info
 from .main_menu import main_menu
-from .nn import nn
+from .events import events
 from .sowing import sowing
 from .war import war
