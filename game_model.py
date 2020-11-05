@@ -17,16 +17,17 @@ class GameModel:
         #   LET PROIZ=VAL "10":
         #   LET PREDEL=VAL "15"
 
-        self.z = None  # number of defenders
-        self.umer = 0  # dead from natural causes
-        self.rod = 0  # born
-        self.umergol = 0  # dead from starvation
-        self.umervsego = 0  # dead total
-        self.zahv = 0  # number of our warriors
-        self.pogib = 0  # dead in battle
+        self.defenders = 0
+        self.dead_natural_cases = 0
+        self.born = 0
+        self.dead_starvation = 0  # dead from starvation
+        self.dead_total = 0  # dead total
 
-        self.proiz = 10  # basic productivity of a sower
-        self.predel = 15  # maximum productivity of a sower
+        self.warriors = 0  # number of our warriors
+        self.dead_in_battles = 0  # dead in battle
+
+        self.sower_productivity = 10  # productivity of a sower (acres)
+        self.max_sower_productivity = 15  # maximum productivity of a sower
 
         # 100 LET WRAGI=FN S(VAL "10")+VAL "25":
         #   LET RASST=FN S(VAL "10")+VAL "25":
@@ -34,13 +35,13 @@ class GameModel:
         #   LET SBOR=VAL "2100"+FN S(VAL "600"):
         #   LET NAS=VAL "80"+FN S(VAL "20"):
         #   LET ZEML=VAL "900"+FN S(VAL "200")
-        self.vragi = fn_s(10) + 25  # enemies
-        self.rasst = fn_s(10) + 25  # distance to the enemies
+        self.enemies = fn_s(10) + 25  # enemies
+        self.distance_to_enemies = fn_s(10) + 25  # distance to the enemies
 
-        self.cena = fn_s(10) + 15  # price of an acre of land
-        self.sbor = 2100 + fn_s(600)  # harvested grain
-        self.nas = 80 + fn_s(20)  # population
-        self.zeml = 900 + fn_s(200)  # land area
+        self.land_price = fn_s(10) + 15  # price of an acre of land
+        self.harvest = 2100 + fn_s(600)  # harvested grain
+        self.population = 80 + fn_s(20)  # population
+        self.land = 900 + fn_s(200)  # land area
 
         # 110 LET UROV=INT (SBOR/ZEML):
         #   LET KRYS=150+FN S(VAL "200"):
@@ -51,17 +52,20 @@ class GameModel:
         #   LET AGENT=NOT PI:
         #   LET NBOG=CENA*ZEML+ZERNO:
         #   LET IST=NOT PI
-        self.urozh = self.sbor // self.zeml  # yield of grain per acre of land
-        self.krys = 150 + fn_s(200)  # rats (grain eaten by rats)
-        self.zerno = self.sbor - self.krys  # grain left
+        self.grain_yield = self.harvest // self.land  # yield of grain per acre of land
+        self.rats = 150 + fn_s(200)  # rats (grain eaten by rats)
+        self.grain = self.harvest - self.rats  # grain left
         self.time = 1  # number of a year
         self.u: bool = False
-        self.bezh = 5 + fn_s(5)  # refugees income
+        self.refugees = 5 + fn_s(5)  # refugees income
         self.agent = 0  # enemy agent
-        self.nbog = self.cena * self.zeml + self.zerno  # initial wealth
+        self.initial_wealth = self.wealth()  # initial wealth
         self.ist = 0
 
-        self.k = None  # Quantity of grain per worker to feed one
+        self.feeding_per_worker = None  # Quantity of grain per worker to feed one
         self.ost = None  # unoccupied population
         self.zas = None  # sowed area
         self.oi: Optional[bool] = None
+
+    def wealth(self):
+        return self.land_price * self.land + self.grain

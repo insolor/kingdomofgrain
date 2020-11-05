@@ -17,10 +17,10 @@ def harvest(device: AbstractIO, model: GameModel):
     #   LET PROIZ=PROIZ-SGN PI:
     #   GO SUB KEY:
     #   GO SUB CLS
-    if model.ost > model.zas // model.proiz:
+    if model.ost > model.zas // model.sower_productivity:
         device.at(11, 5).print("Большое число тунеядцев")
         device.at(12, 6).print("развращает хлеборобов")
-        model.proiz -= 1
+        model.sower_productivity -= 1
         device.key()
         device.cls()
 
@@ -30,9 +30,9 @@ def harvest(device: AbstractIO, model: GameModel):
     #   LET PROIZ=PROIZ+SGN PI:
     #   GO SUB KEY:
     #   GO SUB CLS
-    if model.ost * 15 < model.nas and model.proiz < model.predel:
+    if model.ost * 15 < model.population and model.sower_productivity < model.max_sower_productivity:
         device.at(11, 1).print("Постоянный труд вырабатывает сноровку")
-        model.proiz += 1
+        model.sower_productivity += 1
         device.key()
         device.cls()
 
@@ -42,16 +42,16 @@ def harvest(device: AbstractIO, model: GameModel):
     #   LET PROIZ=PROIZ-INT (30/K):
     #   GO SUB KEY:
     #   GO SUB CLS
-    if model.k < 20:
+    if model.feeding_per_worker < 20:
         device.at(11, 4).print("Плохое питание снижает")
         device.at(12, 5).print(" производительность!")
-        model.proiz -= 30 // model.k
+        model.sower_productivity -= 30 // model.feeding_per_worker
         device.key()
         device.cls()
 
     # 1350 IF PROIZ<=BIN THEN LET PROIZ=INT PI
-    if model.proiz <= 0:
-        model.proiz = 1
+    if model.sower_productivity <= 0:
+        model.sower_productivity = 1
 
     # 1360 IF (K>VAL "30") AND (PROIZ<PREDEL) THEN
     #   PRINT AT VAL "11",SGN PI;"nA HORO[IH HAR^AH I RABOTAETSQ";
@@ -59,36 +59,36 @@ def harvest(device: AbstractIO, model: GameModel):
     #   LET PROIZ=PROIZ+SGN PI:
     #   GO SUB KEY:
     #   GO SUB CLS
-    if model.k > 30 and model.proiz < model.predel:
+    if model.feeding_per_worker > 30 and model.sower_productivity < model.max_sower_productivity:
         device.at(11, 1).print("На хороших харчах и работается")
         device.at(12, 13).print("лучше")
-        model.proiz += 1
+        model.sower_productivity += 1
         device.key()
         device.cls()
 
     # 1370 LET UROV=SGN PI+FN S(VAL "6")-IST:
     #   LET J=FN S(VAL "21")
-    model.urozh = 1 + randint(6)
+    model.grain_yield = 1 + randint(6)
     j = randint(21)
 
     # 1380 IF J>=VAL "18" THEN LET UROV=VAL "10"
     if j >= 18:
-        model.urozh = 10
+        model.grain_yield = 10
 
     # 1390 IF J<=INT PI THEN LET UROV=SGN PI
     if j <= 3:
-        model.urozh = 1
+        model.grain_yield = 1
 
     # 1400 IF UROV<SGN PI THEN LET UROV=SGN PI
-    if model.urozh < 1:
-        model.urozh = 1
+    if model.grain_yield < 1:
+        model.grain_yield = 1
 
     # 1410 IF UROV>VAL "5" THEN
     #   RANDOMIZE USR VAL "58252":
     #   PRINT AT VAL "11",VAL "7";"oTLI^NYJ UROVAJ!!!":
     #   GO SUB KEY:
     #   GO SUB CLS
-    if model.urozh > 5:
+    if model.grain_yield > 5:
         device.at(11, 7).print("Отличный урожай!!!")
         device.key()
         device.cls()
@@ -97,7 +97,7 @@ def harvest(device: AbstractIO, model: GameModel):
     #   IF UROV<VAL "2" THEN
     #       LET I=FN S(INT PI)
     i = 0
-    if model.urozh < 2:
+    if model.grain_yield < 2:
         i = randint(3)
 
     # 1430 IF I=SGN PI THEN
@@ -130,7 +130,7 @@ def harvest(device: AbstractIO, model: GameModel):
         device.cls()
 
     # 1460 LET SBOR=ZAS*UROV
-    model.sbor = model.zas * model.urozh
+    model.harvest = model.zas * model.grain_yield
 
     # 1470 IF RND>0.7 THEN
     #   LET SAR=4+FN S(8):
@@ -141,14 +141,14 @@ def harvest(device: AbstractIO, model: GameModel):
     #   GO SUB CLS
     if random() > 0.7:
         sar = 4 + randint(8)
-        model.sbor -= model.sbor // sar
+        model.harvest -= model.harvest // sar
         device.at(11, 1).print(f"Саранча погубила 1/{sar} урожая!")
         device.key()
         device.cls()
 
     # 1480 LET ZERNO=ZERNO+SBOR:
     #   LET J=FN S(5)
-    model.zerno += model.sbor
+    model.grain += model.harvest
     j = randint(5)
 
     # 1490 IF J=SGN PI THEN
@@ -159,9 +159,9 @@ def harvest(device: AbstractIO, model: GameModel):
     #   GO SUB KEY:
     #   GO SUB CLS
     if j == 1:
-        model.krys = model.zerno // (randint(10) + 7)
+        model.rats = model.grain // (randint(10) + 7)
         device.at(11, 4).print("На город напали крысы!!!")
-        model.zerno -= model.krys
+        model.grain -= model.rats
         device.key()
         device.cls()
 

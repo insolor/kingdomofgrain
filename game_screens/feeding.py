@@ -12,7 +12,7 @@ def feeding(device: AbstractIO, model: GameModel):
     while True:
         # 720 PRINT AT VAL "20",SGN PI;"mOVNO DATX ";INT (ZERNO/OST);" BU[ NA ^ELOWEKA":
         #   PRINT AT VAL "21",VAL "6";"sKOLXKO DA[X?"
-        device.at(20, 1).print(f"Можно дать {model.zerno // model.ost} буш на человека")
+        device.at(20, 1).print(f"Можно дать {model.grain // model.ost} буш на человека")
         device.at(21, 6).print("Сколько дать?")
 
         # 730 GO SUB INPUT:
@@ -21,7 +21,7 @@ def feeding(device: AbstractIO, model: GameModel):
         #   IF K<BIN THEN :
         #       GO TO VAL "720"
         try:
-            model.k = int(sub_input(device, model))
+            model.feeding_per_worker = int(sub_input(device, model))
         except ValueError:
             continue
 
@@ -30,22 +30,22 @@ def feeding(device: AbstractIO, model: GameModel):
         #   GO SUB KEY:
         #   GO SUB PUS:
         #   GO TO VAL "720"
-        if model.k * model.ost > model.zerno:
+        if model.feeding_per_worker * model.ost > model.grain:
             device.print("У нас нет столько зерна!!!")
             device.key()
             continue
 
     # 750 LET ZERNO=ZERNO-K*OST
-    model.zerno -= model.k * model.ost
+    model.grain -= model.feeding_per_worker * model.ost
 
     # 760 IF K<VAL "20" THEN
     #   LET UMERGOL=OST*INT (SGN PI-K/VAL "20"):
     #   LET UMERWSEGO=UMERWSEGO+UMERGOL:
     #   LET NAS=NAS-UMERGOL
-    if model.k < 20:
-        model.umergol = model.ost * (1 - model.k // 20)
-        model.umervsego += model.umergol
-        model.nas -= model.umergol
+    if model.feeding_per_worker < 20:
+        model.dead_starvation = model.ost * (1 - model.feeding_per_worker // 20)
+        model.dead_total += model.dead_starvation
+        model.population -= model.dead_starvation
 
     # 770 IF NAS<=NOT PI OR K=NOT PI THEN
     #   GO SUB CLS:
@@ -56,7 +56,7 @@ def feeding(device: AbstractIO, model: GameModel):
     #   LET U=SGN PI:
     #   GO SUB OITOG:
     #   RETURN
-    if model.nas <= 0 or model.k == 0:
+    if model.population <= 0 or model.feeding_per_worker == 0:
         device.cls()
         device.at(11, 3).ink(2).print("Ты уморил всех голодом!!!")
         device.key()
@@ -69,7 +69,7 @@ def feeding(device: AbstractIO, model: GameModel):
     #   GO SUB KEY:
     #   GO SUB PUS:
     #   GO TO VAL "800"
-    if model.k <= 10:
+    if model.feeding_per_worker <= 10:
         device.at(10, 20).ink(3).print("ДУШЕГУБ!!!")
         device.key()
         empty_lines(device)
@@ -78,22 +78,22 @@ def feeding(device: AbstractIO, model: GameModel):
     #   PRINT AT VAL "20",VAL "10";"\{i5}vadina!!!":
     #   GO SUB KEY:
     #   GO SUB PUS
-    elif model.k <= 21:
+    elif model.feeding_per_worker <= 21:
         device.at(20, 10).ink(5).print("ЖАДИНА!!!")
         device.key()
         empty_lines(device)
 
     # 800 IF K>VAL "20" THEN
     #   LET UMERGOL=BIN
-    elif model.k > 20:
-        model.umergol = 0
+    elif model.feeding_per_worker > 20:
+        model.dead_starvation = 0
 
     # 810 IF K>VAL "70" THEN
     #   PRINT AT VAL "20",BIN ;"\{i6}w..WY...wypx..pxem!!!za tebq!!!":
     #   GO SUB KEY:
     #   GO SUB PUS:
     #   GO TO VAL "830"
-    elif model.k > 70:
+    elif model.feeding_per_worker > 70:
         device.at(20, 0).ink(6).print("В..вы...ВЫПЬ..ПЬЕМ!!!ЗА ТЕБЯ!!!")
         device.key()
         empty_lines(device)
@@ -102,7 +102,7 @@ def feeding(device: AbstractIO, model: GameModel):
     #   PRINT AT VAL "20",VAL "5";"\{i4}bLAGODETELX ty NA[!!!":
     #   GO SUB KEY:
     #   GO SUB PUS
-    elif model.k > 50:
+    elif model.feeding_per_worker > 50:
         device.at(20, 5).ink(4).print("Благодетель ты НАШ!!!")
         device.key()
         empty_lines(device)

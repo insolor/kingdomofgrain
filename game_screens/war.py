@@ -10,13 +10,13 @@ def war(device: AbstractIO, model: GameModel):
     # 970 IF (OST<=BIN ) OR (ZERNO<=5) THEN
     #   LET POS=BIN :
     #   GO TO VAL "1030"
-    if model.ost <= 0 or model.zerno < 5:
+    if model.ost <= 0 or model.grain < 5:
         pos = 0
     else:
         # 980 PRINT AT VAL "19",SGN PI;"u NAS ";OST;" NEZANQTYH L\@DEJ":
         #   PRINT AT VAL "20",BIN ;"zERNA HWATIT NA ";INT (ZERNO/5);" WOINOW"
         device.at(12, 1).print(f"У нас {model.ost} незанятых людей")
-        device.at(20, 0).print(f"Зерна хватит на {model.zerno // 5} воинов")
+        device.at(20, 0).print(f"Зерна хватит на {model.grain // 5} воинов")
         while True:
             # 990 LET POS=-1: PRINT AT VAL "21",INT PI;"sKOLXKO PO[LEM W hAMONI\@?"
             device.at(21, 1).print("Сколько пошлём в Хамонию?")
@@ -53,7 +53,7 @@ def war(device: AbstractIO, model: GameModel):
             #   GO SUB KEY:
             #   GO SUB PUS:
             #   GO TO VAL "990"
-            if pos * 5 > model.zerno:
+            if pos * 5 > model.grain:
                 device.at(20, 6).print("У нас мало зерна!!!")
                 device.key()
                 empty_lines(device)
@@ -64,26 +64,26 @@ def war(device: AbstractIO, model: GameModel):
     # 1030 IF POS<=NOT PI THEN GO TO VAL "1070"
     if pos > 0:
         # 1040 LET NAS=NAS-POS: LET OST=OST-POS: LET ZERNO=ZERNO-POS*5
-        model.nas -= pos
+        model.population -= pos
         model.ost -= pos
-        model.zerno -= pos * 5
+        model.grain -= pos * 5
 
         # 1050 IF ZAHW>BIN THEN LET ZAHW=ZAHW+POS: GO TO VAL "1070"
-        if model.zahv > 0:
-            model.zahv += pos
+        if model.warriors > 0:
+            model.warriors += pos
         else:
             # 1060 LET ZAHW=POS: LET SROK=TIME+FN S(4)
-            model.zahv = pos
+            model.warriors = pos
             model.srok = model.time + randint(4)
 
     # 1070 IF ZAHW<=NOT PI THEN GO TO VAL "1140"
     # 1080 IF SROK<>TIME THEN GO TO VAL "1140"
-    if model.zahv > 0 and model.srok == model.time:
+    if model.warriors > 0 and model.srok == model.time:
         # 1090 IF ZAHW>NAS*VAL "2" THEN GO SUB POBEDA: GO TO VAL "1140"
-        if model.zahv > model.nas * 2:
+        if model.warriors > model.population * 2:
             victory(device, model)
         # 1100 IF ZAHW<INT (NAS/VAL "2") THEN GO SUB PORAV: GO TO VAL "1140"
-        elif model.zahv < model.nas // 2:
+        elif model.warriors < model.population // 2:
             defeat(device, model)
         # 1110 IF RND>0.5 THEN GO SUB POBEDA: GO TO VAL "1140"
         elif random() > 0.5:
@@ -106,17 +106,17 @@ def defeat(device: AbstractIO, model: GameModel):
     # 1260 LET UBITO=INT (ZAHW*(0.8+RND/5)):
     #   LET NAS=NAS+ZAHW-UBITO:
     #   LET POGIB=POGIB+UBITO
-    ubito = int(model.zahv * (0.8 + random() / 5))
-    model.nas += model.zahv - ubito
-    model.pogib += ubito
+    ubito = int(model.warriors * (0.8 + random() / 5))
+    model.population += model.warriors - ubito
+    model.dead_in_battles += ubito
 
     # 1270 PRINT AT VAL "13",SGN PI;"pOGIBLO - ";UBITO;" WOINOW"
     device.at(13, 1).print(f"Погибло - {ubito} воинов")
 
     # 1280 LET ZAHW=BIN :
     #   LET OST=NAS-Z-INT (ZAS/PROIZ)
-    model.zahv = 0
-    model.ost = model.nas - model.z - model.zas // model.proiz
+    model.warriors = 0
+    model.ost = model.population - model.defenders - model.zas // model.sower_productivity
 
     # 1285 GO SUB KEY: GO SUB CLS
     device.key()
@@ -140,20 +140,20 @@ def victory(device: AbstractIO, model: GameModel):
     #   LET ZEML=ZEML+T(VAL "2"):
     #   LET ZERNO=ZERNO+T(SGN PI)
 
-    captured_people = int(model.nas * (random() / 3 + 0.3))
-    taken_grain = int(model.zahv * randint(10) + 4)
-    annexed_territory = int(model.zeml * (random() / 2 + 0.3))
+    captured_people = int(model.population * (random() / 3 + 0.3))
+    taken_grain = int(model.warriors * randint(10) + 4)
+    annexed_territory = int(model.land * (random() / 2 + 0.3))
 
-    model.nas += captured_people
-    model.zeml += annexed_territory
-    model.zerno += taken_grain
+    model.population += captured_people
+    model.land += annexed_territory
+    model.grain += taken_grain
 
     # 1180 LET UBITO=INT (ZAHW*(RND/5+0.3)):
     #   LET POGIB=POGIB+UBITO:
     #   LET NAS=NAS+ZAHW-UBITO
-    ubito = int(model.zahv * (random() / 5 + 0.3))
-    model.pogib += ubito
-    model.nas += model.zahv - ubito
+    ubito = int(model.warriors * (random() / 5 + 0.3))
+    model.dead_in_battles += ubito
+    model.population += model.warriors - ubito
 
     # 1190 PRINT AT VAL "13",BIN ;"u WRAGA ZAHWA^ENO:"
     device.at(13, 0).print("У врага захвачено:")
@@ -165,12 +165,12 @@ def victory(device: AbstractIO, model: GameModel):
     device.print(f"Пленных - {captured_people} человек")
 
     # 1210 PRINT AT VAL "18",VAL "6";"iZ ";ZAHW;" WOINOW ";UBITO;AT VAL "19",VAL "10";"PALO SMERTX\@ HRABRYH!"
-    device.at(18, 6).print(f"Из {model.zahv} воинов {ubito} пало сметрью храбрых!")
+    device.at(18, 6).print(f"Из {model.warriors} воинов {ubito} пало сметрью храбрых!")
 
     # 1220 LET ZAHW=BIN :
     #   LET OST=NAS-Z-INT (ZAS/PROIZ)
-    model.zahv = 0
-    model.ost = model.nas - model.z - int(model.zas / model.proiz)
+    model.warriors = 0
+    model.ost = model.population - model.defenders - int(model.zas / model.sower_productivity)
 
     # 1225 GO SUB KEY:
     #   GO SUB CLS

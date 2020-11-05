@@ -9,10 +9,10 @@ def intervention(device: AbstractIO, model: GameModel):
     """Intervention of enemies"""
     # 1860 REM \#017\#001WTORVENIE\#017\#000
     # 1870 LET RASST=RASST-FN S(VAL "5")-VAL "10"
-    model.rasst -= randint(5) + 10
+    model.distance_to_enemies -= randint(5) + 10
 
     # 1880 IF RASST<FN S(VAL "\{f0}5") THEN GO SUB ATAKA: GO TO VAL "1900"
-    if model.rasst < randint(5):
+    if model.distance_to_enemies < randint(5):
         attack_by_enemies(device, model)
 
     # 1890 IF (RASST<VAL "15") AND (RND<0.1) THEN
@@ -20,7 +20,7 @@ def intervention(device: AbstractIO, model: GameModel):
     #   GO SUB KEY:
     #   GO SUB CLS:
     #   GO SUB ATAKA
-    elif model.rasst < 15 and random() < 0.1:
+    elif model.distance_to_enemies < 15 and random() < 0.1:
         device.at(11, 1).print("Враги совершили стремительный")
         device.at(12, 9).print("марш - бросок!")
         device.key()
@@ -51,7 +51,7 @@ def attack_by_enemies(device: AbstractIO, model: GameModel):
     #   LET OI=BIN :
     #   GO SUB OITOG:
     #   RETURN
-    if model.vragi > model.z * j:
+    if model.enemies > model.defenders * j:
         device.at(13, 0).print("Город пал, ведь его защищало мало")
         device.at(14, 13).print("солдат")
         device.key()
@@ -75,11 +75,11 @@ def attack_by_enemies(device: AbstractIO, model: GameModel):
         #   LET NAS=NAS-POGIB:
         #   LET RASST=25+FN S(20):
         #   LET WRAGI=INT (NAS/4)+INT (RND*NAS/5)
-        pogibz = model.vragi // 3 + int(random() * model.z / 6)
-        model.pogib += pogibz
-        model.nas -= model.pogib
-        model.rasst = 25 + randint(20)
-        model.vragi = int(model.nas / 4) + int(random() * model.nas / 5)
+        pogibz = model.enemies // 3 + int(random() * model.defenders / 6)
+        model.dead_in_battles += pogibz
+        model.population -= model.dead_in_battles
+        model.distance_to_enemies = 25 + randint(20)
+        model.enemies = int(model.population / 4) + int(random() * model.population / 5)
 
         # 1965 GO TO KEY:
         #   GO SUB CLS

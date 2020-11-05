@@ -16,43 +16,43 @@ def info(device: AbstractIO, model: GameModel):
     #   INK VAL "7"
     device.ink(6).at(2, 8).print(f"{model.time} Год правления:").ink(7)
     # 350 IF BEV>BIN THEN PRINT ;"\{b0i7}w GOROD PRI[LO ";BEV;" BEVENCEW"
-    if model.bezh > 0:
-        device.bright(0).ink(7).print(f'В город пришло {model.bezh} беженцев')
+    if model.refugees > 0:
+        device.bright(0).ink(7).print(f'В город пришло {model.refugees} беженцев')
     # 360 PRINT "rODILOSX  ";ROD;" ^ELOWEK"
-    device.print(f'Родилось {model.rod} человек')
+    device.print(f'Родилось {model.born} человек')
     # 370 PRINT "\{b0}uMERLO   ";UMER;" ^ELOWEK"
-    device.bright(0).print(f'Умерло   {model.umer} человек')
+    device.bright(0).print(f'Умерло   {model.dead_natural_cases} человек')
     # 380 IF UMERGOL>BIN THEN PRINT "OT gOLODA - ";UMERGOL;" ^ELOWEK"
-    if model.umergol > 0:
-        device.print(f'От голода - {model.umergol} человек')
+    if model.dead_starvation > 0:
+        device.print(f'От голода - {model.dead_starvation} человек')
     # 390 IF POGIB>BIN THEN PRINT "\{b0}w BOQH POLEGLO ";POGIB;" ^ELOWEK"
-    if model.pogib > 0:
-        device.bright(0).print(f'В боях полегло {model.pogib} человек')
+    if model.dead_in_battles > 0:
+        device.bright(0).print(f'В боях полегло {model.dead_in_battles} человек')
     # 395 IF NAS<=BIN THEN LET NAS=SGN PI
-    if model.nas <= 0:
-        model.nas = 1
+    if model.population <= 0:
+        model.population = 1
     # 400 PRINT "nASELENIE - ";NAS;" ^ELOWEK"
-    device.print(f"Население - {model.nas} человек")
+    device.print(f"Население - {model.population} человек")
     # 410 PRINT "\{b0}zEMLI - ";ZEML;" AKROW"
-    device.bright(0).print(f"Земли - {model.zeml} акров")
+    device.bright(0).print(f"Земли - {model.land} акров")
     # 420 PRINT "uROVAJ - ";UROV;" BU[/AKR"
-    device.print(f"Урожай - {model.urozh} буш/акр")
+    device.print(f"Урожай - {model.grain_yield} буш/акр")
     # 430 IF KRYS>BIN THEN PRINT "kRYSY SOVRALI ";KRYS;" BU[."
-    if model.krys > 0:
-        device.print(f"Крысы сожрали {model.krys} буш.")
+    if model.rats > 0:
+        device.print(f"Крысы сожрали {model.rats} буш.")
     # 440 PRINT "\{b0}zAPASY ZERNA ";ZERNO;" BU[."
-    device.bright(0).print(f"Запасы зерна {model.zerno} буш.")
+    device.bright(0).print(f"Запасы зерна {model.grain} буш.")
     # 450 PRINT "cENA ZEMLI ";CENA;" BU[/AKR"
-    device.print(f"Цена земли {model.cena} буш/акр")
+    device.print(f"Цена земли {model.land_price} буш/акр")
     # 460 PRINT "\{b0}hLEBOROB ZASEWAET ";PROIZ;" AKROW"
-    device.bright(0).print(f"Хлебороб засевает {model.proiz} акров")
+    device.bright(0).print(f"Хлебороб засевает {model.sower_productivity} акров")
     # 470 LET I=25+FN S(10):
     #   IF RASST<I THEN PRINT "nAPADA\@T  ";WRAGI;" WOINOW":
     #       PRINT "ONI W ";RASST;" MILQH OT NAS!"
     i = 25 + randint(10)
-    if model.rasst < i:
-        device.print(f"Нападают {model.vragi} воинов")
-        device.print(f"Они в {model.rasst} милях от нас!")
+    if model.distance_to_enemies < i:
+        device.print(f"Нападают {model.enemies} воинов")
+        device.print(f"Они в {model.distance_to_enemies} милях от нас!")
     # 475 PRINT
     # 480 PRINT "\{i5}********************************"
     device.print()
