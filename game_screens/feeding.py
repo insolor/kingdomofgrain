@@ -1,3 +1,4 @@
+from end_game_exception import EndGameException
 from io_devices import AbstractIO
 from game_model import GameModel
 from grain import sub_input, empty_lines
@@ -60,9 +61,7 @@ def feeding(device: AbstractIO, model: GameModel):
         device.cls()
         device.at(11, 3).ink(2).print("Ты уморил всех голодом!!!")
         device.key()
-        model.oi = False
-        model.u = True
-        return
+        raise EndGameException(False)
 
     # 780 IF K<=VAL "10" THEN
     #   PRINT AT VAL "20",VAL "10";"\{i3}du{egub!!!":
