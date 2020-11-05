@@ -27,7 +27,7 @@ def purchase_land(device: AbstractIO, model: GameModel):
         #   GO TO VAL "510"
         if model.land_price * zem > model.grain:
             device.print(f"У нас только {model.grain} бушелей зерна!!!")
-            device.key()
+            device.wait_key()
             empty_lines(device)
             continue
 
@@ -40,7 +40,7 @@ def purchase_land(device: AbstractIO, model: GameModel):
         #   GO SUB KEY:
         #   GO SUB PUS
         device.at(20, 1).print(f"У нас {model.grain} бушелей зерна")
-        device.key()
+        device.wait_key()
         empty_lines(device)
         break
 
@@ -63,7 +63,7 @@ def sell_land(device: AbstractIO, model: GameModel):
         #   GO TO VAL "560"
         if zem > model.land:
             device.at(20, 0).print(f"У нас только {model.land} акров земли!!!")
-            device.key()
+            device.wait_key()
             empty_lines(device)
             continue
 

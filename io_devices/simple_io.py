@@ -8,5 +8,5 @@ class SimpleIO(AbstractIO):
     def input(self) -> str:
         return input()
 
-    def key(self) -> str:
+    def wait_key(self) -> str:
         return input()

@@ -33,7 +33,7 @@ def feeding(device: AbstractIO, model: GameModel):
         #   GO TO VAL "720"
         if model.feeding_per_worker * model.ost > model.grain:
             device.print("У нас нет столько зерна!!!")
-            device.key()
+            device.wait_key()
             continue
 
     # 750 LET ZERNO=ZERNO-K*OST
@@ -60,7 +60,7 @@ def feeding(device: AbstractIO, model: GameModel):
     if model.population <= 0 or model.feeding_per_worker == 0:
         device.cls()
         device.at(11, 3).ink(2).print("Ты уморил всех голодом!!!")
-        device.key()
+        device.wait_key()
         raise EndGameException(False)
 
     # 780 IF K<=VAL "10" THEN
@@ -70,7 +70,7 @@ def feeding(device: AbstractIO, model: GameModel):
     #   GO TO VAL "800"
     if model.feeding_per_worker <= 10:
         device.at(10, 20).ink(3).print("ДУШЕГУБ!!!")
-        device.key()
+        device.wait_key()
         empty_lines(device)
 
     # 790 IF K<=VAL "21" THEN
@@ -79,7 +79,7 @@ def feeding(device: AbstractIO, model: GameModel):
     #   GO SUB PUS
     elif model.feeding_per_worker <= 21:
         device.at(20, 10).ink(5).print("ЖАДИНА!!!")
-        device.key()
+        device.wait_key()
         empty_lines(device)
 
     # 800 IF K>VAL "20" THEN
@@ -94,7 +94,7 @@ def feeding(device: AbstractIO, model: GameModel):
     #   GO TO VAL "830"
     elif model.feeding_per_worker > 70:
         device.at(20, 0).ink(6).print("В..вы...ВЫПЬ..ПЬЕМ!!!ЗА ТЕБЯ!!!")
-        device.key()
+        device.wait_key()
         empty_lines(device)
 
     # 820 IF K>VAL "50" THEN
@@ -103,6 +103,6 @@ def feeding(device: AbstractIO, model: GameModel):
     #   GO SUB PUS
     elif model.feeding_per_worker > 50:
         device.at(20, 5).ink(4).print("Благодетель ты НАШ!!!")
-        device.key()
+        device.wait_key()
         empty_lines(device)
     # 830 RETURN
