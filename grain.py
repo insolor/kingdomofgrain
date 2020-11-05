@@ -117,7 +117,7 @@ def main(device: AbstractIO):
 
             # 230 IF U=NOT PI THEN GO SUB NN
             if not model.u:
-                game_screens.nn(device, model)
+                game_screens.events(device, model)
 
             # 240 IF U=NOT PI THEN GO SUB WAR
             if not model.u:

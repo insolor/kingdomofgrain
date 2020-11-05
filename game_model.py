@@ -1,4 +1,5 @@
 from random import random
+from typing import Optional
 
 
 def fn_s(k):
@@ -54,7 +55,7 @@ class GameModel:
         self.krys = 150 + fn_s(200)  # rats (grain eaten by rats)
         self.zerno = self.sbor - self.krys  # grain left
         self.time = 1  # number of a year
-        self.u = False
+        self.u: bool = False
         self.bezh = 5 + fn_s(5)  # refugees income
         self.agent = 0  # enemy agent
         self.nbog = self.cena * self.zeml + self.zerno  # initial wealth
@@ -63,4 +64,4 @@ class GameModel:
         self.k = None  # Quantity of grain per worker to feed one
         self.ost = None  # unoccupied population
         self.zas = None  # sowed area
-        self.oi = None
+        self.oi: Optional[bool] = None
