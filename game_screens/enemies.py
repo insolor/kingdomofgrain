@@ -56,8 +56,10 @@ def attack_by_enemies(device: AbstractIO, model: GameModel):
         device.at(14, 13).print("солдат")
         device.key()
         device.cls()
-        # game_results() # FIXME
-        return 0
+
+        model.u = True
+        model.oi = False
+        return
         # 1940 IF Z*J>WRAGI THEN
         #   PRINT AT VAL "13",INT PI;"NO ATAKA OTBITA! uRA-A-A!!!"
     else:
