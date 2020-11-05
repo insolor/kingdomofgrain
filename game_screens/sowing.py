@@ -26,8 +26,6 @@ def sowing(device: AbstractIO, model: GameModel):
     device.at(20, 2).print(f"Зерна хватит на {int(model.grain / 0.5)} акров")
 
     while True:
-        model.zas = None
-
         # 890 PRINT AT VAL "21",VAL "7";"sKOLXKO ZASEEM?"
         device.at(21, 7).print("Сколько засеем?")
 
@@ -36,7 +34,11 @@ def sowing(device: AbstractIO, model: GameModel):
         #   GO SUB PUS:
         #   IF ZAS<BIN THEN
         #       GO TO VAL "890"
-        model.zas = int(sub_input(device, model))
+        try:
+            model.zas = int(sub_input(device, model))
+        except ValueError:
+            model.zas = -1
+
         device.at(18, 0).print(64 * " ")
         empty_lines(device)
         if model.zas < 0:
@@ -72,7 +74,7 @@ def sowing(device: AbstractIO, model: GameModel):
         #   GO SUB PUS:
         #   LET ZAS=-1:
         #   GO TO VAL "890"
-        if model.zas // model.sower_productivity > model.ost:
+        if model.zas / model.sower_productivity > model.ost:
             device.at(20, 5).print("У нас мало людей!")
             device.wait_key()
             empty_lines(device)

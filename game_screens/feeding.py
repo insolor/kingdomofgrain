@@ -36,6 +36,8 @@ def feeding(device: AbstractIO, model: GameModel):
             device.wait_key()
             continue
 
+        break
+
     # 750 LET ZERNO=ZERNO-K*OST
     model.grain -= model.feeding_per_worker * model.ost
 
