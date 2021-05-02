@@ -1,5 +1,5 @@
-from io_devices import AbstractIO
 from game_model import GameModel
+from io_devices import AbstractIO
 
 
 def game_results(device: AbstractIO, model: GameModel, result):
@@ -8,6 +8,7 @@ def game_results(device: AbstractIO, model: GameModel, result):
     device.cls()
 
     # 1987 RANDOMIZE USR VAL "64042"
+    device.show_image("game_end")
 
     # 1990 IF OI=SGN PI THEN
     #   PRINT AT VAL "8",INT PI;"\{i5}wA[E PRAWLENIE OKON^ENO!!!\{i7}";

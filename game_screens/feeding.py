@@ -1,7 +1,7 @@
 from end_game_exception import EndGameException
-from io_devices import AbstractIO
 from game_model import GameModel
 from grain import sub_input, empty_lines
+from io_devices import AbstractIO
 
 
 def feeding(device: AbstractIO, model: GameModel):
@@ -61,6 +61,7 @@ def feeding(device: AbstractIO, model: GameModel):
     #   RETURN
     if model.population <= 0 or model.feeding_per_worker == 0:
         device.cls()
+        device.show_image("graveyard")
         device.at(11, 3).ink(2).print("Ты уморил всех голодом!!!")
         device.wait_key()
         raise EndGameException(False)

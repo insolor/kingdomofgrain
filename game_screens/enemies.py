@@ -1,9 +1,9 @@
 from random import random
 
 from end_game_exception import EndGameException
-from io_devices import AbstractIO
 from game_model import GameModel
 from grain import randint
+from io_devices import AbstractIO
 
 
 def intervention(device: AbstractIO, model: GameModel):
@@ -37,6 +37,7 @@ def attack_by_enemies(device: AbstractIO, model: GameModel):
     #   GO SUB KEY:
     #   LET I=INT (INT (10*RND)*0.1)+0.5:
     #   LET J=I+INT (INT (10*RND)*0.15)+0.5
+    device.show_image("enemies")
     device.at(11, 7).ink(3).print("ГОРОД АТАКОВАН!!!")
     device.wait_key()
 

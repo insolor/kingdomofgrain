@@ -1,8 +1,8 @@
 from random import random
 
-from io_devices import AbstractIO
 from game_model import GameModel
 from grain import sub_input, empty_lines, randint
+from io_devices import AbstractIO
 
 
 def war(device: AbstractIO, model: GameModel):
@@ -99,6 +99,7 @@ def defeat(device: AbstractIO, model: GameModel):
     # 1240 REM \#017\#001PORAVENIE\#017\#000
     # 1245 GO SUB CLS: RANDOMIZE USR VAL "54778"
     device.cls()
+    device.show_image("enemies")
 
     # 1250 PRINT AT VAL "11",VAL "5";"\{i3}poravenie w hAMONII!!!"
     device.at(11, 5).ink(3).print("ПОРАЖЕНИЕ В Хамонии!!!")
@@ -129,9 +130,10 @@ def victory(device: AbstractIO, model: GameModel):
     # 1150 REM \#017\#001POBEDA\#017\#000
     # 1155 GO SUB CLS: RANDOMIZE USR VAL "54778"
     device.cls()
+    device.show_image("enemies")
 
     # 1160 PRINT AT VAL "11",VAL "2";"\{i6}w hAMONII ODERVANA pobeda!!!"
-    device.at(11, 2).ink(6).print("В хамонии одержана победа!!!")
+    device.at(11, 2).ink(6).print("В Хамонии одержана победа!!!")
 
     # 1170 LET T(INT PI)=INT (NAS*(RND/3+0.3)):
     #   LET T(SGN PI)=INT (ZAHW*(FN S(VAL "10")+VAL "4")):
