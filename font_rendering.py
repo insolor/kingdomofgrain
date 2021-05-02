@@ -11,9 +11,10 @@ def split_font_image(font_image, char_height) -> Iterable:
         yield font_image.crop(box)
 
 
+# KOI-7 N1 characters from ' ' to 'Ъ'
 chars = ''.join(map(chr, range(32, 64))) + \
-    "юабцдефгхийклмнопярстужвьызшэщчь" \
-    "ЮАБЦДЕФГХИЙКЛМНОПЯРСТУЖВЬЫЗШЭЩЧЬ"
+    "юабцдефгхийклмнопярстужвьызшэщчъ" \
+    "ЮАБЦДЕФГХИЙКЛМНОПЯРСТУЖВЬЫЗШЭЩЧЪ"
 
 
 def map_chars_to_images(font_image) -> Mapping[str, Image.Image]:
