@@ -6,6 +6,7 @@ def main_menu(device: AbstractIO):
     while True:
         #  50 GO SUB CLS: RANDOMIZE USR VAL "51304"
         device.cls()
+        device.show_image("castle")
 
         #  53 PRINT AT VAL "9",VAL "7";"\{i6}korolewstwo zerna"
         #  55 PRINT AT VAL "12",VAL "9";"\{i5}1 sTART IGRY"
@@ -29,4 +30,4 @@ def main_menu(device: AbstractIO):
         elif inkey == '2':
             instr(device)
         elif inkey == '3':
-            pass  # Credits
+            device.show_image("credits")

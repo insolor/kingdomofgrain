@@ -1,8 +1,8 @@
 from random import random
 
-from io_devices import AbstractIO
 from game_model import GameModel
 from grain import randint
+from io_devices import AbstractIO
 
 
 def harvest(device: AbstractIO, model: GameModel):
@@ -18,6 +18,7 @@ def harvest(device: AbstractIO, model: GameModel):
     #   GO SUB KEY:
     #   GO SUB CLS
     if model.ost > model.zas // model.sower_productivity:
+        device.show_image("parasites")
         device.at(11, 5).print("Большое число тунеядцев")
         device.at(12, 6).print("развращает хлеборобов")
         model.sower_productivity -= 1
@@ -31,6 +32,7 @@ def harvest(device: AbstractIO, model: GameModel):
     #   GO SUB KEY:
     #   GO SUB CLS
     if model.ost * 15 < model.population and model.sower_productivity < model.max_sower_productivity:
+        device.show_image("tools")
         device.at(11, 1).print("Постоянный труд вырабатывает сноровку")
         model.sower_productivity += 1
         device.wait_key()
@@ -89,6 +91,7 @@ def harvest(device: AbstractIO, model: GameModel):
     #   GO SUB KEY:
     #   GO SUB CLS
     if model.grain_yield > 5:
+        device.show_image("excellent_harvest")
         device.at(11, 7).print("Отличный урожай!!!")
         device.wait_key()
         device.cls()
@@ -106,6 +109,7 @@ def harvest(device: AbstractIO, model: GameModel):
     #   GO SUB KEY:
     #   GO SUB CLS
     if i == 1:
+        device.show_image("bad_harvest")
         device.at(11, 3).print("Засуха погубила урожай!!!")
         device.wait_key()
         device.cls()
@@ -116,15 +120,18 @@ def harvest(device: AbstractIO, model: GameModel):
     #   GO SUB KEY:
     #   GO SUB CLS
     if i == 2:
+        device.show_image("dust_storms")
         device.at(11, 0).print("Пылевые бури погубили урожай!!!")
         device.wait_key()
         device.cls()
 
-    # 1450 IF I=INT PI THEN RANDOMIZE USR VAL "59410":
+    # 1450 IF I=INT PI THEN
+    #   RANDOMIZE USR VAL "59410":
     #   PRINT AT VAL "11",BIN ;"lIWNEWYE DOVDI POGUBILI UROVAJ!!":
     #   GO SUB KEY:
     #   GO SUB CLS
     if i == 3:
+        device.show_image("rains")
         device.at(11, 0).print("Ливневые дожди погубили урожай!!")
         device.wait_key()
         device.cls()
@@ -160,6 +167,7 @@ def harvest(device: AbstractIO, model: GameModel):
     #   GO SUB CLS
     if j == 1:
         model.rats = model.grain // (randint(10) + 7)
+        device.show_image("rats")
         device.at(11, 4).print("На город напали крысы!!!")
         model.grain -= model.rats
         device.wait_key()

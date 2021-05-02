@@ -29,3 +29,7 @@ class AbstractIO(ABC):
     @abstractmethod
     def input(self) -> str:
         pass
+
+    @abstractmethod
+    def show_image(self, name: str):
+        pass

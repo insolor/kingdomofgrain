@@ -1,9 +1,9 @@
 from random import random
 
 from end_game_exception import EndGameException
-from io_devices import AbstractIO
 from game_model import GameModel
 from grain import randint
+from io_devices import AbstractIO
 
 
 def events(device: AbstractIO, model: GameModel):
@@ -34,6 +34,7 @@ def events(device: AbstractIO, model: GameModel):
     #   GO SUB CLS:
     #   GO TO VAL "1610"
     if model.feeding_per_worker < 10 or model.dead_total > model.population * 10:
+        device.show_image("riot")
         device.at(11, 1).print("Народ восстал против тирана!!!")
         device.wait_key()
         device.cls()
@@ -49,6 +50,7 @@ def events(device: AbstractIO, model: GameModel):
         #   GO SUB CLS:
         #   GO TO VAL "1630"
         if (model.population - model.defenders) / 3 < model.defenders < model.dead_starvation:
+            device.show_image("enemies")
             device.at(11, 1).print("Но войска подавили восстание!")
             rebels = (model.population - model.defenders) * int(random() / 5 + 0.1)
             model.dead_in_battles += rebels
@@ -88,7 +90,8 @@ def events(device: AbstractIO, model: GameModel):
     #   GO SUB CLS
     if randint(12) == 1:
         plague = int(random() * 50 + 5)
-        device.at(11, 3).print(f"Чума унесла {plague}%% населения!")
+        device.show_image("graveyard")
+        device.at(11, 3).print(f"Чума унесла {plague}% населения!")
         model.dead_natural_cases += model.population * plague // 100
         device.wait_key()
         device.cls()
@@ -101,6 +104,7 @@ def events(device: AbstractIO, model: GameModel):
     #   GO SUB KEY:
     #   GO SUB CLS
     if randint(100) < 5:
+        device.show_image("baby_boom")
         device.at(11, 4).print("Демографический взрыв!!!")
         dem = int((random() / 2 + 0.5) * model.population)
         model.born += dem
@@ -116,6 +120,7 @@ def events(device: AbstractIO, model: GameModel):
     #   GO SUB CLS:
     #   GO TO VAL "1666"
     if randint(20) == 5:
+        device.show_image("fire")
         device.at(11, 6).ink(2).print("ПОЖА - А - А - АР!!!")
         dead_in_fire = int(model.population * (random() / 3 + 0.3))
         burnt_down_grain = int(model.grain * (random() / 4 + 0.1))
@@ -131,6 +136,7 @@ def events(device: AbstractIO, model: GameModel):
         #   GO SUB CLS
         model.dead_natural_cases += dead_in_fire
         model.grain -= burnt_down_grain
+        device.show_image("graveyard")
         device.at(11, 0).print(f"В огне погибло {dead_in_fire} человек")
         device.at(13, 0).print(f"Сгорело на складах {burnt_down_grain}").at(14, 11).print("буш. зерна")
         device.wait_key()
@@ -145,6 +151,7 @@ def events(device: AbstractIO, model: GameModel):
     #   GO SUB CLS:
     if randint(10) == 2:
         model.agent += 1
+        device.show_image("saboteur")
         device.at(11, 1).print("В город пробрался диверсант")
         device.wait_key()
         device.cls()
@@ -158,6 +165,7 @@ def events(device: AbstractIO, model: GameModel):
         #   PRINT AT VAL "14",VAL "2";"sGORELO ";SGORZER;" BU[.ZERNA":
         #   GO SUB KEY:
         #   GO SUB CLS
+        device.show_image("fire")
         device.at(11, 2).print("Диверсия!!! Подожжены хлебные").at(12, 13).print("склады.")
         burnt_down_grain = int(model.grain * (random() / 3 + 0.3))
         model.grain -= burnt_down_grain
@@ -181,6 +189,7 @@ def events(device: AbstractIO, model: GameModel):
             #   PRINT AT VAL "11",VAL "6";"dIWERSANT SKRYLSQ!!!":
             #   GO SUB KEY:
             #   GO SUB CLS
+            device.show_image("saboteur")
             device.at(11, 6).print("Диверсант скрылся!!!")
             device.wait_key()
             device.cls()
@@ -207,6 +216,7 @@ def events(device: AbstractIO, model: GameModel):
     #   GO SUB CLS
     if (model.feeding_per_worker >= 60 and
             model.population - model.defenders - model.zas // model.sower_productivity >= model.population / 5):
+        device.show_image("parasites")
         device.at(11, 0).print("Тунеядствующие элементы занялись самогоноварением из хлебных")
         device.at(13, 12).print("излишков")
         device.at(14, 1).print("Понижается производительность!")
@@ -222,6 +232,7 @@ def events(device: AbstractIO, model: GameModel):
     #   GO SUB KEY:
     #   GO SUB CLS
     if randint(15) == 8:
+        device.show_image("tools")
         device.at(11, 2).print("Внедрение новых орудий труда    подняло производительность!")
         model.sower_productivity += 2
         model.max_sower_productivity += 5
@@ -265,6 +276,7 @@ def events(device: AbstractIO, model: GameModel):
         #   GO TO VAL "1830"
         if model.ist < 4:
             model.ist += 1
+            device.show_image("bad_harvest")
             device.at(11, 4).print("Истощение земель снижает").at(12, 10).print("урожайность")
             device.wait_key()
             device.cls()
@@ -277,6 +289,7 @@ def events(device: AbstractIO, model: GameModel):
         #   GO SUB CLS
         if model.zas < model.land / 2 and model.ist > -2:
             model.ist -= 1
+            device.show_image("excellent_harvest")
             device.at(11, 3).print("Отведение больших площадей").at(12, 4).print("под пары повышает урожай")
             device.wait_key()
             device.cls()
@@ -291,6 +304,7 @@ def events(device: AbstractIO, model: GameModel):
     #   GO SUB CLS
     if randint(15) == 1 and model.agent > 0:
         stolen = int((random() / 5 + 0.1) * model.grain)
+        device.show_image("parasites")
         device.at(11, 3).print("Группой расхитителей под")
         device.at(12, 2).print(f"предводительством диверсанта похищено {stolen} буш. зерна")
         model.grain -= stolen
