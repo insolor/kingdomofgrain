@@ -6,6 +6,9 @@ from resource_loader import load_image
 
 
 def split_font_image(font_image, char_height) -> Iterable:
+    """
+    Split long vertical bitmap font image into separate characters
+    """
     for y in range(0, font_image.height, char_height):
         box = (0, y, font_image.width, y + char_height)
         yield font_image.crop(box)
@@ -33,18 +36,20 @@ def join_characters(characters: Iterable[Image.Image]):
 
     x = 0
     for char in characters:
-        box = (x, 0)
-        canvas.paste(char, box)
+        canvas.paste(char, (x, 0))
         x += char.width
 
     return canvas
 
 
 def render_text(font, text):
+    """
+    Convert text into an image using the given bitmap font
+    """
     return join_characters(font[c] for c in text)
 
 
-def main():
+def _main():
     font_image = load_image("resources/font.png")
     character_mapping = map_chars_to_images(font_image)
     text_image = render_text(character_mapping, "Привет!!!")
@@ -55,4 +60,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    _main()
