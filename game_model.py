@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from random import randint
 from typing import Optional
 
@@ -36,13 +36,13 @@ class GameModel:
     #   LET SBOR=VAL "2100"+FN S(VAL "600"):
     #   LET NAS=VAL "80"+FN S(VAL "20"):
     #   LET ZEML=VAL "900"+FN S(VAL "200")
-    enemies: int = fn_s(10) + 25  # enemies
-    distance_to_enemies: int = fn_s(10) + 25  # distance to the enemies
+    enemies: int = field(default_factory=lambda: fn_s(10) + 25)  # enemies
+    distance_to_enemies: int = field(default_factory=lambda: fn_s(10) + 25)  # distance to the enemies
 
-    land_price: int = fn_s(10) + 15  # price of an acre of land
-    harvest: int = 2100 + fn_s(600)  # harvested grain
-    population: int = 80 + fn_s(20)  # population
-    land: int = 900 + fn_s(200)  # land area
+    land_price: int = field(default_factory=lambda: fn_s(10) + 15)  # price of an acre of land
+    harvest: int = field(default_factory=lambda: 2100 + fn_s(600))  # harvested grain
+    population: int = field(default_factory=lambda: 80 + fn_s(20))  # population
+    land: int = field(default_factory=lambda: 900 + fn_s(200))  # land area
 
     # 110 LET UROV=INT (SBOR/ZEML):
     #   LET KRYS=150+FN S(VAL "200"):
@@ -54,11 +54,11 @@ class GameModel:
     #   LET NBOG=CENA*ZEML+ZERNO:
     #   LET IST=NOT PI
     grain_yield: int = harvest // land  # yield of grain per acre of land
-    rats: int = 150 + fn_s(200)  # rats (grain eaten by rats)
+    rats: int = field(default_factory=lambda: 150 + fn_s(200))  # rats (grain eaten by rats)
     grain: int = harvest - rats  # grain left
     time: int = 1  # number of a year
 
-    refugees: int = 5 + fn_s(5)  # refugees income
+    refugees: int = field(default_factory=lambda: 5 + fn_s(5))  # refugees income
     agent: int = 0  # enemy agent
     ist: int = 0
 
