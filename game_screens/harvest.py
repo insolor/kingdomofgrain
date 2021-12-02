@@ -149,6 +149,7 @@ def harvest(device: AbstractIO, model: GameModel):
     if random() > 0.7:
         sar = 4 + randint(8)
         model.harvest -= model.harvest // sar
+        device.show_image("locrust")
         device.at(11, 1).print(f"Саранча погубила 1/{sar} урожая!")
         device.wait_key()
         device.cls()
