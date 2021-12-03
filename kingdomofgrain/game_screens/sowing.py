@@ -1,6 +1,6 @@
-from io_devices import AbstractIO
-from game_model import GameModel
-from grain import sub_input, empty_lines
+from kingdomofgrain.game_model import GameModel
+from kingdomofgrain.io_devices import AbstractIO
+from kingdomofgrain.utils import sub_input, empty_lines
 
 
 def sowing(device: AbstractIO, model: GameModel):

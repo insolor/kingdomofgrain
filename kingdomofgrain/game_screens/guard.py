@@ -1,6 +1,6 @@
-from io_devices import AbstractIO
-from game_model import GameModel
-from grain import empty_lines, sub_input
+from kingdomofgrain.game_model import GameModel
+from kingdomofgrain.io_devices import AbstractIO
+from kingdomofgrain.utils import sub_input, empty_lines
 
 
 def guard(device: AbstractIO, model: GameModel):

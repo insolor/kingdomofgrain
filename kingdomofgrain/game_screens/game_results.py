@@ -1,5 +1,5 @@
-from game_model import GameModel
-from io_devices import AbstractIO
+from kingdomofgrain.game_model import GameModel
+from kingdomofgrain.io_devices import AbstractIO
 
 
 def game_results(device: AbstractIO, model: GameModel, result):

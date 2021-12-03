@@ -1,6 +1,6 @@
-from io_devices import AbstractIO
-from game_model import GameModel
-from grain import sub_input, empty_lines
+from ..game_model import GameModel
+from ..io_devices import AbstractIO
+from ..utils import sub_input, empty_lines
 
 
 def purchase_land(device: AbstractIO, model: GameModel):

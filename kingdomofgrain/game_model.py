@@ -9,7 +9,7 @@ def fn_s(k):
 
 @dataclass
 class GameModel:
-    defenders: int
+    defenders: int = 0
 
     # 100 LET WRAGI=FN S(VAL "10")+VAL "25":
     #   LET RASST=FN S(VAL "10")+VAL "25":

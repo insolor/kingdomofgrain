@@ -1,9 +1,8 @@
-from random import random
+from random import random, randint
 
-from end_game_exception import EndGameException
-from game_model import GameModel
-from grain import randint
-from io_devices import AbstractIO
+from kingdomofgrain.end_game_exception import EndGameException
+from kingdomofgrain.game_model import GameModel
+from kingdomofgrain.io_devices import AbstractIO
 
 
 def intervention(device: AbstractIO, model: GameModel):

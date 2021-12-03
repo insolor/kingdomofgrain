@@ -1,8 +1,8 @@
-from random import random
+from random import random, randint
 
-from game_model import GameModel
-from grain import sub_input, empty_lines, randint
-from io_devices import AbstractIO
+from kingdomofgrain.game_model import GameModel
+from kingdomofgrain.io_devices import AbstractIO
+from kingdomofgrain.utils import sub_input, empty_lines
 
 
 def war(device: AbstractIO, model: GameModel):
@@ -74,7 +74,7 @@ def war(device: AbstractIO, model: GameModel):
         else:
             # 1060 LET ZAHW=POS: LET SROK=TIME+FN S(4)
             model.warriors = pos
-            model.srok = model.time + randint(4)
+            model.srok = model.time + randint(1, 4)
 
     # 1070 IF ZAHW<=NOT PI THEN GO TO VAL "1140"
     # 1080 IF SROK<>TIME THEN GO TO VAL "1140"
@@ -143,7 +143,7 @@ def victory(device: AbstractIO, model: GameModel):
     #   LET ZERNO=ZERNO+T(SGN PI)
 
     captured_people = int(model.population * (random() / 3 + 0.3))
-    taken_grain = int(model.warriors * randint(10) + 4)
+    taken_grain: int = model.warriors * randint(1, 10) + 4
     annexed_territory = int(model.land * (random() / 2 + 0.3))
 
     model.population += captured_people

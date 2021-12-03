@@ -1,7 +1,7 @@
-from end_game_exception import EndGameException
-from game_model import GameModel
-from grain import sub_input, empty_lines
-from io_devices import AbstractIO
+from kingdomofgrain.end_game_exception import EndGameException
+from kingdomofgrain.game_model import GameModel
+from kingdomofgrain.io_devices import AbstractIO
+from kingdomofgrain.utils import sub_input, empty_lines
 
 
 def feeding(device: AbstractIO, model: GameModel):

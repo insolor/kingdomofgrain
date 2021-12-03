@@ -1,4 +1,4 @@
-from io_devices.abstract_io import AbstractIO
+from kingdomofgrain.io_devices.abstract_io import AbstractIO
 
 
 class SimpleIO(AbstractIO):

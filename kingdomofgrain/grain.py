@@ -1,10 +1,10 @@
-import random
+from random import randint
 
-import game_screens
+from . import game_screens
+from .end_game_exception import EndGameException
+from .game_model import GameModel
+from .io_devices import AbstractIO
 
-from end_game_exception import EndGameException
-from io_devices import AbstractIO, SimpleIO
-from game_model import GameModel
 
 # BAS file "" created by ZX-Modules
 
@@ -15,48 +15,7 @@ from game_model import GameModel
 
 
 #  21 DEF FN S(K)=INT (RND*K-0.0000001)+SGN PI
-def randint(k):
-    return random.randint(1, k)
 
-
-def save_load():
-    pass
-
-
-def sub_input(device: AbstractIO, model: GameModel):
-    # 4020 POKE VAL "23659",VAL "2":
-    #   POKE VAL "23613",NOT PI:
-    #   INPUT LINE F$:
-    #   POKE VAL "23659",NOT PI:
-    #   IF F$="" THEN
-    #       LET F$="0":
-    #       GO TO VAL "4026"
-    while True:
-        f = device.input()
-        if f == '':
-            f = '0'
-        # 4021 IF F$="k" OR f$="K" THEN
-        #   LET OI=SGN PI:
-        #   GO SUB OITOG:
-        #   GO TO VAL "50"  # to main menu
-        if f == 'k' or f == 'K':
-            raise EndGameException(True)
-        # 4022 IF F$="d" OR f$="D" THEN GO SUB VAL "4040": GO SUB VAL "120"
-        if f == 'd' or f == 'D':
-            save_load()
-            # start_program()
-
-        # 4024 FOR N=SGN PI TO LEN F$:
-        #   IF CODE F$(N)<VAL "48" OR CODE F$(N)>VAL "57" THEN GO TO VAL "4020"
-        # 4025 NEXT N
-        # 4026 RETURN
-        if f.isdecimal():
-            return f
-
-
-def empty_lines(device: AbstractIO):
-    # 4030 PRINT AT VAL "20",BIN ;S$: RETURN
-    device.at(20, 0).print(" " * 64)
 
 
 def main(device: AbstractIO):
@@ -74,7 +33,7 @@ def main(device: AbstractIO):
             # 130 IF U<>NOT PI THEN GO TO VAL "50"
             while True:
                 # 140 LET CENA=VAL "10"+FN S(VAL "40")
-                model.land_price = 10 + randint(40)
+                model.land_price = randint(10, 50)
 
                 # 145 REM RANDOMIZE USR VAL "42675": GO SUB CLS
                 device.cls()
@@ -122,7 +81,3 @@ def main(device: AbstractIO):
         except EndGameException as ex:
             game_screens.game_results(device, model, ex.oi)
         break
-
-
-if __name__ == "__main__":
-    main(SimpleIO())

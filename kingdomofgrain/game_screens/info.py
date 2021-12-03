@@ -1,6 +1,7 @@
-from io_devices import AbstractIO
-from game_model import GameModel
-from grain import randint
+from random import randint
+
+from kingdomofgrain.game_model import GameModel
+from kingdomofgrain.io_devices import AbstractIO
 
 
 def info(device: AbstractIO, model: GameModel):
@@ -49,7 +50,7 @@ def info(device: AbstractIO, model: GameModel):
     # 470 LET I=25+FN S(10):
     #   IF RASST<I THEN PRINT "nAPADA\@T  ";WRAGI;" WOINOW":
     #       PRINT "ONI W ";RASST;" MILQH OT NAS!"
-    i = 25 + randint(10)
+    i = randint(25, 35)
     if model.distance_to_enemies < i:
         device.print(f"Нападают {model.enemies} воинов")
         device.print(f"Они в {model.distance_to_enemies} милях от нас!")
