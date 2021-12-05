@@ -13,9 +13,8 @@ from .io_devices import AbstractIO
 #   6 POKE VAL "23607",VAL "196": POKE VAL "23606",VAL "104": RETURN 
 #   8 POKE VAL "23607",VAL "60": POKE VAL "23606",NOT PI: RETURN
 
-
 #  21 DEF FN S(K)=INT (RND*K-0.0000001)+SGN PI
-
+# def s(n): return random.randint(1, n)
 
 
 def main(device: AbstractIO):

@@ -9,10 +9,10 @@ def intervention(device: AbstractIO, model: GameModel):
     """Intervention of enemies"""
     # 1860 REM \#017\#001WTORVENIE\#017\#000
     # 1870 LET RASST=RASST-FN S(VAL "5")-VAL "10"
-    model.distance_to_enemies -= randint(5) + 10
+    model.distance_to_enemies -= randint(11, 15)
 
     # 1880 IF RASST<FN S(VAL "\{f0}5") THEN GO SUB ATAKA: GO TO VAL "1900"
-    if model.distance_to_enemies < randint(5):
+    if model.distance_to_enemies < randint(1, 5):
         attack_by_enemies(device, model)
 
     # 1890 IF (RASST<VAL "15") AND (RND<0.1) THEN
@@ -65,7 +65,7 @@ def attack_by_enemies(device: AbstractIO, model: GameModel):
 
         # 1950 IF FN S(3)=SGN PI THEN
         #   PRINT AT VAL "15",INT PI;"pROIZO[LA RE[A\@]AQ BITWA!!!"
-        if randint(3) == 1:
+        if randint(1, 3) == 1:
             device.at(15, 1).print("Произошла решающая битва!!!")
 
         # 1960 LET POGIBZ=INT (WRAGI/3)+INT (RND*Z/6):
@@ -76,7 +76,7 @@ def attack_by_enemies(device: AbstractIO, model: GameModel):
         pogibz = model.enemies // 3 + int(random() * model.defenders / 6)
         model.dead_in_battles += pogibz
         model.population -= model.dead_in_battles
-        model.distance_to_enemies = 25 + randint(20)
+        model.distance_to_enemies = randint(26, 45)
         model.enemies = int(model.population / 4) + int(random() * model.population / 5)
 
         # 1965 GO TO KEY:
