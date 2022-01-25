@@ -6,7 +6,7 @@ authors = ["insolor <insolor@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
-Pillow = "^8.4.0"
+Pillow = "^9.0.0"
 pygame = "^2.1.0"
 
 [tool.poetry.dev-dependencies]
