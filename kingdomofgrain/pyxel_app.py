@@ -10,7 +10,6 @@ class App:
     def __init__(self):
         pyxel.init(256, 192)
         self.device = PyxelIO()
-        Thread(target=grain.main, args=(self.device,)).run()
 
     def update(self):
         pass
@@ -19,6 +18,7 @@ class App:
         pass
 
     def run(self):
+        Thread(target=grain.main, args=(self.device,)).run()
         pyxel.run(self.update, self.draw)
 
 
