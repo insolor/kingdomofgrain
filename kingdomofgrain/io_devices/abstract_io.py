@@ -13,6 +13,9 @@ class AbstractIO(ABC):
     def at(self, row: int, column: int) -> AbstractIO:
         return self
 
+    def paper(self, color: int) -> AbstractIO:
+        return self
+
     def ink(self, color: int) -> AbstractIO:
         return self
 
