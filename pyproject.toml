@@ -8,6 +8,7 @@ authors = ["insolor <insolor@gmail.com>"]
 python = "^3.8"
 Pillow = "^10.0.1"
 pygame = "^2.1.0"
+pyxel = "^1.9.18"
 
 [tool.poetry.dev-dependencies]
 
