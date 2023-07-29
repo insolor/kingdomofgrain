@@ -212,8 +212,10 @@ def events(device: AbstractIO, model: GameModel):
     #   LET PROIZ=PROIZ-VAL "2":
     #   GO SUB KEY:
     #   GO SUB CLS
-    if (model.feeding_per_worker >= 60 and
-            model.population - model.defenders - model.zas // model.sower_productivity >= model.population / 5):
+    if (
+            model.feeding_per_worker >= 60
+            and model.population - model.defenders - model.zas // model.sower_productivity >= model.population / 5
+    ):
         device.show_image("parasites")
         device.at(11, 0).print("Тунеядствующие элементы занялись самогоноварением из хлебных")
         device.at(13, 12).print("излишков")

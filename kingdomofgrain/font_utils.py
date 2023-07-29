@@ -2,7 +2,8 @@ from typing import Iterable, Mapping
 
 from PIL import Image
 
-from resource_loader import load_image
+from kingdomofgrain import RESOURCES
+from kingdomofgrain.resource_loader import load_image
 
 
 def split_font_image(font_image, char_height) -> Iterable:
@@ -15,9 +16,9 @@ def split_font_image(font_image, char_height) -> Iterable:
 
 
 # KOI-7 N1 characters from ' ' to 'Ъ'
-chars = ''.join(map(chr, range(32, 64))) + \
-    "юабцдефгхийклмнопярстужвьызшэщчъ" \
-    "ЮАБЦДЕФГХИЙКЛМНОПЯРСТУЖВЬЫЗШЭЩЧЪ"
+chars = "".join(map(chr, range(32, 64))) + "юабцдефгхийклмнопярстужвьызшэщчъ" + "ЮАБЦДЕФГХИЙКЛМНОПЯРСТУЖВЬЫЗШЭЩЧЪ"
+
+char_to_image_index = {char: index for index, char in enumerate(chars)}
 
 
 def map_chars_to_images(font_image) -> Mapping[str, Image.Image]:
@@ -32,7 +33,7 @@ def join_characters(characters: Iterable[Image.Image]):
     width = sum(map(lambda c: c.width, characters))
     height = max(map(lambda c: c.height, characters))
 
-    canvas = Image.new('RGB', (width, height))
+    canvas = Image.new("RGB", (width, height))
 
     x = 0
     for char in characters:
@@ -50,14 +51,16 @@ def render_text(font, text):
 
 
 def _main():
-    font_image = load_image("resources/font.png")
+    font_image = load_image(RESOURCES / "font.png")
     character_mapping = map_chars_to_images(font_image)
     text_image = render_text(character_mapping, "Привет!!!")
     scale_factor = 4
-    text_image = text_image.resize(size=(text_image.width*scale_factor, text_image.height*scale_factor),
-                                   resample=Image.NONE)
+    text_image = text_image.resize(
+        size=(text_image.width * scale_factor, text_image.height * scale_factor),
+        resample=Image.NONE,
+    )
     text_image.show()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     _main()

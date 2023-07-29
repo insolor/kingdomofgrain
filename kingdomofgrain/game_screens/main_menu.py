@@ -25,9 +25,9 @@ def main_menu(device: AbstractIO):
         #  66 GO TO VAL "60"
 
         inkey = device.wait_key()
-        if inkey == '1':
+        if inkey == "1":
             break
-        elif inkey == '2':
+        elif inkey == "2":
             instr(device)
-        elif inkey == '3':
+        elif inkey == "3":
             device.show_image("credits")

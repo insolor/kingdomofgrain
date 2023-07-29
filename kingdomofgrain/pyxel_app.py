@@ -2,7 +2,7 @@ from threading import Thread
 
 import pyxel
 
-from kingdomofgrain import grain
+from kingdomofgrain import game
 from kingdomofgrain.io_devices.pyxel_io import PyxelIO
 
 
@@ -21,7 +21,7 @@ class App:
         pass
 
     def run(self):
-        Thread(target=grain.main, args=(self.device,)).start()
+        Thread(target=game.main, args=(self.device,)).start()
         pyxel.run(self.update, self.draw)
 
 

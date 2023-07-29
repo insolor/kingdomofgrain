@@ -17,16 +17,16 @@ def sub_input(device: AbstractIO, model: GameModel):
     #       GO TO VAL "4026"
     while True:
         f = device.input()
-        if f == '':
-            f = '0'
+        if f == "":
+            f = "0"
         # 4021 IF F$="k" OR f$="K" THEN
         #   LET OI=SGN PI:
         #   GO SUB OITOG:
         #   GO TO VAL "50"  # to main menu
-        if f == 'k' or f == 'K':
+        if f == "k" or f == "K":
             raise EndGameException(True)
         # 4022 IF F$="d" OR f$="D" THEN GO SUB VAL "4040": GO SUB VAL "120"
-        if f == 'd' or f == 'D':
+        if f == "d" or f == "D":
             save_load()
             # start_program()
 

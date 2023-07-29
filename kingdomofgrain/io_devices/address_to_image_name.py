@@ -1,4 +1,3 @@
-
 address_to_image_name = {
     51304: "castle",
     43909: "tools",

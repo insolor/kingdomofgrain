@@ -18,17 +18,17 @@ def info(device: AbstractIO, model: GameModel):
     device.ink(6).at(2, 8).print(f"{model.time} Год правления:").ink(7)
     # 350 IF BEV>BIN THEN PRINT ;"\{b0i7}w GOROD PRI[LO ";BEV;" BEVENCEW"
     if model.refugees > 0:
-        device.bright(0).ink(7).print(f'В город пришло {model.refugees} беженцев')
+        device.bright(0).ink(7).print(f"В город пришло {model.refugees} беженцев")
     # 360 PRINT "rODILOSX  ";ROD;" ^ELOWEK"
-    device.print(f'Родилось {model.born} человек')
+    device.print(f"Родилось {model.born} человек")
     # 370 PRINT "\{b0}uMERLO   ";UMER;" ^ELOWEK"
-    device.bright(0).print(f'Умерло   {model.dead_natural_cases} человек')
+    device.bright(0).print(f"Умерло   {model.dead_natural_cases} человек")
     # 380 IF UMERGOL>BIN THEN PRINT "OT gOLODA - ";UMERGOL;" ^ELOWEK"
     if model.dead_starvation > 0:
-        device.print(f'От голода - {model.dead_starvation} человек')
+        device.print(f"От голода - {model.dead_starvation} человек")
     # 390 IF POGIB>BIN THEN PRINT "\{b0}w BOQH POLEGLO ";POGIB;" ^ELOWEK"
     if model.dead_in_battles > 0:
-        device.bright(0).print(f'В боях полегло {model.dead_in_battles} человек')
+        device.bright(0).print(f"В боях полегло {model.dead_in_battles} человек")
     # 395 IF NAS<=BIN THEN LET NAS=SGN PI
     if model.population <= 0:
         model.population = 1
